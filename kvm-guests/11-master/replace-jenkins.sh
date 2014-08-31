@@ -41,7 +41,7 @@ sudo $SHELL -e <<'EOS'
   umount ./mnt2
   rmdir mnt1 mnt2
 
-  time tar zxvf /data/boxes/kemukins-6.5-x86_64.kvm.box
+  time tar zxvf ../../boxes/kemukins-6.5-x86_64.kvm.box
   time sync
 
   ./kemukins-init.sh
