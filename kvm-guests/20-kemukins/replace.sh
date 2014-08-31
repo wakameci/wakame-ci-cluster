@@ -16,8 +16,6 @@ sleep 20
 sync
 
 sudo $SHELL -e <<'EOS'
-  timestamp=$(date +%Y%m%d.%s).$$
-
   time tar zxvf ../../boxes/kemukins-6.5-x86_64.kvm.box
   time sync
 
