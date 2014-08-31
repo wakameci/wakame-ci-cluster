@@ -8,9 +8,6 @@ set -x
 
 ssh_target=jenkins@172.16.255.11
 
-cd /data/kvm-guests/11-master
-pwd
-
 ssh ${ssh_target} <<EOS
   sudo shutdown -h now
 EOS
