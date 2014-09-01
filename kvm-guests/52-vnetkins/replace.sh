@@ -6,7 +6,7 @@
 set -e
 set -x
 
-ssh_target=jenkins@172.16.255.13
+ssh_target=jenkins@192.168.2.52
 
 ssh ${ssh_target} <<EOS
   sudo shutdown -h now
