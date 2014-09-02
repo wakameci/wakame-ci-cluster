@@ -25,7 +25,19 @@ pidfile=kvm.pid
 rtc="base=utc"
 
 #
-/usr/bin/qemu-kvm -name ${name} \
+function qemu_kvm_path() {
+  local execs="/usr/libexec/qemu-kvm /usr/bin/kvm /usr/bin/qemu-kvm"
+
+  local command_path exe
+  for exe in ${execs}; do
+    [[ -x "${exe}" ]] && command_path=${exe} || :
+  done
+
+  [[ -n "${command_path}" ]] || { echo "[ERROR] command not found: ${execs} (${BASH_SOURCE[0]##*/}:${LINENO})." >&2; return 1; }
+  echo ${command_path}
+}
+
+$(qemu_kvm_path) -name ${name} \
  -cpu ${cpu_type} \
  -m ${mem_size} \
  -smp ${cpu_num} \
