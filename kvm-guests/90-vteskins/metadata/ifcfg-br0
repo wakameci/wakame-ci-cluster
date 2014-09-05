@@ -15,13 +15,3 @@ OVS_EXTRA="
  set-fail-mode  ${DEVICE} secure --
  set-controller ${DEVICE} tcp:127.0.0.1:6633
 "
- #set-controller ${DEVICE} unix:/var/run/openvswitch/${DEVICE}.controller
-
-#DEVICE=ovsbridge0
-#ONBOOT=yes
-#DEVICETYPE=ovs
-#TYPE=OVSBridge
-#BOOTPROTO=static
-#IPADDR=A.B.C.D
-#NETMASK=X.Y.Z.0
-#HOTPLUG=no

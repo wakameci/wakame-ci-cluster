@@ -1,0 +1,6 @@
+[openvnet]
+name=OpenVNet
+baseurl=http://192.168.2.51/repos/packages/rhel/6/vnet/vnspec
+#baseurl=http://axsh.jp/openvnet/packages/rhel/6/vnet/current/
+enabled=1
+gpgcheck=0
