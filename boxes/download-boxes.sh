@@ -14,5 +14,6 @@ boxes="
 
 for box in ${boxes}; do
   echo ... ${box}
+  [[ -f ${box} ]] && continue
   curl -fSkL http://dlc.wakame.axsh.jp/wakameci/kemukins-box-rhel6/current/${box} -o ${box}
 done
