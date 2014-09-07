@@ -6,7 +6,7 @@
 set -e
 set -x
 
-target_node=192.168.2.20
+target_node=172.16.255.20
 ssh_target=jenkins@${target_node}
 box_path=../../boxes/vzkemukins-6.5-x86_64.kvm.box
 
