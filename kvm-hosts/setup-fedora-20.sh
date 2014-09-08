@@ -137,6 +137,10 @@ EOS
 
 chown -R jenkins:jenkins /var/lib/jenkins/.ssh
 
+getent group kvm && {
+  gpasswd -a jenkins kvm
+}
+
 # ifcfg-vboxbr0
 cat <<EOS > /etc/sysconfig/network-scripts/ifcfg-vboxbr0
 DEVICE=vboxbr0
