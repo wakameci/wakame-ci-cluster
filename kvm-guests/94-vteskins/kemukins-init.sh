@@ -66,6 +66,10 @@ if [[ -d execscript ]]; then
   done < <(find -L execscript ! -type d -name '*.sh' | sort)
 fi
 
+if [[ -d guestroot ]]; then
+  rsync -avx guestroot/ ${mnt_path}/
+fi
+
 sync
 
 ##
