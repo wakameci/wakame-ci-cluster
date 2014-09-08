@@ -67,7 +67,7 @@ if [[ -d execscript ]]; then
 fi
 
 if [[ -d guestroot ]]; then
-  rsync -avx guestroot/ ${mnt_path}/
+  rsync -avxS guestroot/ ${mnt_path}/
 fi
 
 sync
