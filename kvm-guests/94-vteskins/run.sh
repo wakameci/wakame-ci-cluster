@@ -6,8 +6,8 @@
 set -e
 set -o pipefail
 
-#[[ -f box-disk1.raw ]]
-#[[ $UID == 0 ]]
+[[ -f box-disk1.raw ]]
+[[ $UID == 0 ]]
 
 [[ -f ./metadata/vmspec.conf ]]
 .     ./metadata/vmspec.conf
