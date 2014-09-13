@@ -1,0 +1,22 @@
+#!/bin/sh
+#
+# This script will be executed *after* all the other init scripts.
+# You can put your own initialization stuff in here if you don't
+# want to do the full Sys V style init stuff.
+
+touch /var/lock/subsys/local
+
+function run_guest() {
+  local guest_id=${1}
+
+  cd /images/${guest_id}-vneskins
+
+  if ! [ -f run.sh ]; then
+    tar zxvf ${guest_id}-vneskins.kvm.box
+  fi
+
+  ./run.sh
+}
+
+run_guest 105
+run_guest 106
