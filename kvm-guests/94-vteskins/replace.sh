@@ -15,16 +15,16 @@ function network_connection?() {
   ping -c 1 -W 3 ${ipaddr}
 }
 
-#if network_connection? ${target_node}; then
-#  ssh ${ssh_target} sudo shutdown -h now
-#  sleep 20
-#  sync
-#fi
+if network_connection? ${target_node}; then
+  ssh ${ssh_target} sudo shutdown -h now
+  sleep 20
+  sync
+fi
 
 sudo $SHELL -e <<EOS
   time tar zxvf ${box_path}
   time sync
 
   ./kemukins-init.sh
- #./run.sh
+  ./run.sh
 EOS
