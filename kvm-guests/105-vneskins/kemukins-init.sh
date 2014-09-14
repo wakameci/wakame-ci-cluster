@@ -32,6 +32,13 @@ function gen_ifcfg() {
   cat   metadata/ifcfg-${device} | tee ${mnt_path}/etc/sysconfig/network-scripts/ifcfg-${device}
 }
 
+function gen_route() {
+  local device=${1:-eth0}
+  [[ -f metadata/route-${device} ]] || return 0
+
+  cat   metadata/route-${device} | tee ${mnt_path}/etc/sysconfig/network-scripts/route-${device}
+}
+
 function gen_network() {
   [[ -f metadata/network ]] || return 0
 
@@ -53,6 +60,7 @@ function gen_yumrepo() {
 
 for ifname in metadata/ifcfg-*; do
   gen_ifcfg ${ifname##*/ifcfg-}
+  gen_route ${ifname##*/ifcfg-}
 done
 gen_network
 gen_fstab
