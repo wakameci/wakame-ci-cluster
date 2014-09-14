@@ -8,13 +8,14 @@ set -x
 set -o pipefail
 
 mnt_path=mnt
+raw=$(cd ${BASH_SOURCE[0]%/*} && pwd)/box-disk1.raw
 
-[[ -f box-disk1.raw ]]
+[[ -f ${raw} ]]
 [[ $UID == 0 ]]
 
 mkdir -p ${mnt_path}
 
-output=$(kpartx -va box-disk1.raw)
+output=$(kpartx -va ${raw})
 loopdev=$(echo "${output}" | awk '{print $3}')
 [[ -n "${loopdev}" ]]
 udevadm settle
@@ -29,6 +30,13 @@ function gen_ifcfg() {
   [[ -f metadata/ifcfg-${device} ]] || return 0
 
   cat   metadata/ifcfg-${device} | tee ${mnt_path}/etc/sysconfig/network-scripts/ifcfg-${device}
+}
+
+function gen_route() {
+  local device=${1:-eth0}
+  [[ -f metadata/route-${device} ]] || return 0
+
+  cat   metadata/route-${device} | tee ${mnt_path}/etc/sysconfig/network-scripts/route-${device}
 }
 
 function gen_network() {
@@ -52,6 +60,7 @@ function gen_yumrepo() {
 
 for ifname in metadata/ifcfg-*; do
   gen_ifcfg ${ifname##*/ifcfg-}
+  gen_route ${ifname##*/ifcfg-}
 done
 gen_network
 gen_fstab
@@ -75,4 +84,4 @@ sync
 ##
 
 umount ${mnt_path}
-kpartx -vd box-disk1.raw
+kpartx -vd ${raw}

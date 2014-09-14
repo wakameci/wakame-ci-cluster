@@ -8,13 +8,14 @@ set -x
 set -o pipefail
 
 mnt_path=mnt
+raw=$(cd ${BASH_SOURCE[0]%/*} && pwd)/box-disk1.raw
 
-[[ -f box-disk1.raw ]]
+[[ -f ${raw} ]]
 [[ $UID == 0 ]]
 
 mkdir -p ${mnt_path}
 
-output=$(kpartx -va box-disk1.raw)
+output=$(kpartx -va ${raw})
 loopdev=$(echo "${output}" | awk '{print $3}')
 [[ -n "${loopdev}" ]]
 udevadm settle
@@ -61,7 +62,6 @@ for ifname in metadata/ifcfg-*; do
   gen_ifcfg ${ifname##*/ifcfg-}
   gen_route ${ifname##*/ifcfg-}
 done
-
 gen_network
 gen_fstab
 for repo in metadata/*.repo; do
@@ -76,7 +76,7 @@ if [[ -d execscript ]]; then
 fi
 
 if [[ -d guestroot ]]; then
-  rsync -avx guestroot/ ${mnt_path}/
+  rsync -avxS guestroot/ ${mnt_path}/
 fi
 
 sync
@@ -84,4 +84,4 @@ sync
 ##
 
 umount ${mnt_path}
-kpartx -vd box-disk1.raw
+kpartx -vd ${raw}
