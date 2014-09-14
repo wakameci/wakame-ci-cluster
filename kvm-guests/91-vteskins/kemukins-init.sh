@@ -62,7 +62,6 @@ for ifname in metadata/ifcfg-*; do
   gen_ifcfg ${ifname##*/ifcfg-}
   gen_route ${ifname##*/ifcfg-}
 done
-
 gen_network
 gen_fstab
 for repo in metadata/*.repo; do
@@ -77,7 +76,7 @@ if [[ -d execscript ]]; then
 fi
 
 if [[ -d guestroot ]]; then
-  rsync -avx guestroot/ ${mnt_path}/
+  rsync -avxS guestroot/ ${mnt_path}/
 fi
 
 sync
