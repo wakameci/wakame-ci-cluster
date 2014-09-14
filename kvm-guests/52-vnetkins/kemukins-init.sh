@@ -8,13 +8,14 @@ set -x
 set -o pipefail
 
 mnt_path=mnt
+raw=$(cd ${BASH_SOURCE[0]%/*} && pwd)/box-disk1.raw
 
-[[ -f box-disk1.raw ]]
+[[ -f ${raw} ]]
 [[ $UID == 0 ]]
 
 mkdir -p ${mnt_path}
 
-output=$(kpartx -va box-disk1.raw)
+output=$(kpartx -va ${raw})
 loopdev=$(echo "${output}" | awk '{print $3}')
 [[ -n "${loopdev}" ]]
 udevadm settle
@@ -65,4 +66,4 @@ sync
 ##
 
 umount ${mnt_path}
-kpartx -vd box-disk1.raw
+kpartx -vd ${raw}
