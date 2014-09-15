@@ -85,3 +85,8 @@ sync
 
 umount ${mnt_path}
 kpartx -vd ${raw}
+
+sleep 3
+
+dmsetup remove ${loopdev}
+losetup -d /dev/${loopdev%%p1}
