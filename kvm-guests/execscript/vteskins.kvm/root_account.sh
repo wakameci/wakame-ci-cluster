@@ -11,16 +11,6 @@ chroot_dir=${1}
 mkdir -p -m 700 ${chroot_dir}/root/.ssh
 chmod       700 ${chroot_dir}/root/.ssh
 
-cat <<'EOS' > ${chroot_dir}/root/.ssh/config
-Host *
-        StrictHostKeyChecking no
-        TCPKeepAlive yes
-        UserKnownHostsFile /dev/null
-        ForwardAgent yes
-EOS
-
-chmod 600 ${chroot_dir}/root/.ssh/config
-
 cat <<'EOS' > ${chroot_dir}/root/.ssh/id_rsa
 -----BEGIN RSA PRIVATE KEY-----
 MIIEowIBAAKCAQEA6f1rIZIr8yinc1FNsQGDZ4Dy76oyHNvIi/AM24CTQUFpR4CF
