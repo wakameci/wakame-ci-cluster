@@ -17,11 +17,6 @@ EOS
 
 chmod 600 ${chroot_dir}/root/.ssh/authorized_keys
 
-chroot $1 $SHELL -ex <<'EOS'
-  usermod -U root
-  echo root:root | chpasswd
-EOS
-
 cat <<'EOS' > ${chroot_dir}/root/.ssh/config
 Host *
         StrictHostKeyChecking no
