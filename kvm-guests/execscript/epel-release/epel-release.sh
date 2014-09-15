@@ -4,7 +4,7 @@
 #  bash
 #
 set -e
-set -o
+set -o pipefail
 
 chroot_dir=${1}
 
