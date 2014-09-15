@@ -31,21 +31,3 @@ Host *
 EOS
 
 chmod 600 ${chroot_dir}/root/.ssh/config
-
-cat <<'EOS' > ${chroot_dir}/root/.bash_profile
-# .bash_profile
-
-# Get the aliases and functions
-if [ -f ~/.bashrc ]; then
-        . ~/.bashrc
-fi
-
-# User specific environment and startup programs
-
-PATH=$PATH:$HOME/bin
-PATH=/opt/axsh/openvnet/ruby/bin/:$PATH
-
-export PATH
-EOS
-
-chmod 644 ${chroot_dir}/root/.bash_profile
