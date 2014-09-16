@@ -52,7 +52,7 @@ $(qemu_kvm_path) -name ${name} \
  i=0
  for brname in ${brnames[@]}; do
    echo -netdev tap,ifname=${name}-${monitor_port}-${i},id=hostnet${i},script=,downscript=
-   echo -device ${nic_driver},netdev=hostnet${i},mac=52:54:00:${RANDOM:0:2}:${RANDOM:0:2}:${RANDOM:0:2},bus=pci.0,addr=0x$((3 + ${i}))
+   echo -device ${nic_driver},netdev=hostnet${i},mac=${macs[${i}]},bus=pci.0,addr=0x$((3 + ${i}))
    i=$((${i} + 1))
  done
  ) \
