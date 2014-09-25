@@ -21,7 +21,7 @@ function network_connection?() {
 #  sync
 #fi
 
-sudo $SHELL -e <<EOS
+sudo /bin/bash -e <<EOS
   time tar zxvf ${box_path}
   time sync
 
