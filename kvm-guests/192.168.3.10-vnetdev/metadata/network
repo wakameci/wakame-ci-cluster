@@ -1,0 +1,2 @@
+NETWORKING=yes
+HOSTNAME=10-vnetdev

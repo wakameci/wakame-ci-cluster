@@ -21,7 +21,7 @@ if network_connection? ${target_node}; then
   sync
 fi
 
-sudo $SHELL -e <<'EOS'
+sudo /bin/bash -e <<'EOS'
   timestamp=$(date +%Y%m%d.%s).$$
 
   cur=./box-disk2.raw
@@ -45,7 +45,7 @@ sudo $SHELL -e <<'EOS'
   rmdir mnt1 mnt2
 EOS
 
-sudo $SHELL -e <<EOS
+sudo /bin/bash -e <<EOS
   time tar zxvf ${box_path}
   time sync
 

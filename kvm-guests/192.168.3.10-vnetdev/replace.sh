@@ -6,10 +6,10 @@
 set -e
 set -x
 
-target_node=192.168.2.90
+target_node=192.168.3.10
 ssh_target=jenkins@${target_node}
 
-distro_ver=6.4
+distro_ver=6.5
 [[ -a distro_ver.conf ]] && . distro_ver.conf
 box_path=../../boxes/kemukins-${distro_ver}-x86_64.kvm.box
 
