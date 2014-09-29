@@ -20,6 +20,7 @@ loopdev=$(echo "${output}" | awk '{print $3}')
 udevadm settle
 
 devpath=/dev/mapper/${loopdev}
+trap "umount -f ${mnt_path}" ERR
 mount ${devpath} ${mnt_path}
 
 ## RHEL
