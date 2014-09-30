@@ -12,6 +12,8 @@ set -o pipefail
 [[ -f ./metadata/vmspec.conf ]]
 .     ./metadata/vmspec.conf
 
+.     ../common/qemu-kvm.conf
+
 #
 vnc_addr=127.0.0.1
 vnc_port=$((11000 + ${offset}))
@@ -21,22 +23,10 @@ serial_addr=127.0.0.1
 serial_port=$((15000 + ${offset}))
 drive_type=virtio
 nic_driver=virtio-net-pci
-pidfile=kvm.pid
 rtc="base=utc"
 
 #
-function qemu_kvm_path() {
-  local execs="/usr/libexec/qemu-kvm /usr/bin/kvm /usr/bin/qemu-kvm"
-
-  local command_path exe
-  for exe in ${execs}; do
-    [[ -x "${exe}" ]] && command_path=${exe} || :
-  done
-
-  [[ -n "${command_path}" ]] || { echo "[ERROR] command not found: ${execs} (${BASH_SOURCE[0]##*/}:${LINENO})." >&2; return 1; }
-  echo ${command_path}
-}
-
+kill_remove_pidfile
 $(qemu_kvm_path) -name ${name} \
  -cpu ${cpu_type} \
  -m ${mem_size} \
@@ -56,7 +46,6 @@ $(qemu_kvm_path) -name ${name} \
    i=$((${i} + 1))
  done
  ) \
- -pidfile ${pidfile} \
  -daemonize
 
 i=0
