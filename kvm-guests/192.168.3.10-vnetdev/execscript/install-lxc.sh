@@ -18,4 +18,5 @@ chroot $1 /bin/bash -ex <<EOS
   echo root:root | sudo chroot /var/lib/lxc/lxc1/rootfs chpasswd
 EOS
 
-sed -i -e 's/^\(lxc.network.link\)/#\1/' $1/var/lib/lxc/lxc1/config
+echo 'lxc.network.veth.pair = veth_kvm1lxc1' >> $1/var/lib/lxc/lxc1/config
+sed -i -e 's/^\(lxc.network.link\)/#\1/'        $1/var/lib/lxc/lxc1/config
