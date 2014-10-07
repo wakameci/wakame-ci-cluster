@@ -8,41 +8,41 @@ set -e
 set -o pipefail
 
 # Config
-VETH=            "veth_kvm1lxc1"
-ETH=             "eth0"
+VETH="veth_kvm1lxc1"
+ETH="eth0"
 
-DP_UUID=         "dp-kvm1lxc1"
-DP_NAME=         ${DP_UID}
-DP_NODEID=       "vna"
-DP_DPID=         "0x0000aaaaaaaaaaaa"
+DP_UUID="dp-kvm1lxc1"
+DP_NAME=${DP_UUID}
+DP_NODEID="vna"
+DP_DPID="0x0000aaaaaaaaaaaa"
 
-NW_PUB_UUID=     "nw-public"
-NW_PUB_NAME=     ${NW_PUB_UUID}
-NW_PUB_NETWORK=  "192.168.3.0"
-NW_PUB_PREFIX=   "24"
-NW_PUB_MODE=     "physical"
+NW_PUB_UUID="nw-public"
+NW_PUB_NAME=${NW_PUB_UUID}
+NW_PUB_NETWORK="192.168.3.0"
+NW_PUB_PREFIX="24"
+NW_PUB_MODE="physical"
 
-NW_KVM1_UUID=    "nw-kvm1"
-NW_KVM1_NAME=    ${NW_KVM1_UUID}
-NW_KVM1_NETWORK= "10.0.0.0"
-NW_KVM1_PREFIX=  "24"
-NW_KVM1_MODE=    "virtual"
+NW_KVM1_UUID="nw-kvm1"
+NW_KVM1_NAME=${NW_KVM1_UUID}
+NW_KVM1_NETWORK="10.0.0.0"
+NW_KVM1_PREFIX="24"
+NW_KVM1_MODE="virtual"
 
-IF_K1L1_UUID=    "if-kvm1lxc1"
-IF_K1L1_MAC=     "fe:21:95:32:35:54"
-IF_K1L1_ADDR=    "10.0.0.200"
+IF_K1L1_UUID="if-kvm1lxc1"
+IF_K1L1_MAC="fe:21:95:32:35:54"
+IF_K1L1_ADDR="10.0.0.200"
 
-IF_PUB_UUID=     "if-public"
-IF_PUB_MAC=      "52:54:00:51:06:47"
-IF_PUB_ADDR=     "192.168.3.10"
+IF_PUB_UUID="if-public"
+IF_PUB_MAC="52:54:00:51:06:47"
+IF_PUB_ADDR="192.168.3.10"
 
-DN_KVM1_BMAC=    "00:18:51:e5:33:01"
-DN_PUB_BMAC=     "00:18:51:e5:33:05"
+DN_KVM1_BMAC="00:18:51:e5:33:01"
+DN_PUB_BMAC="00:18:51:e5:33:05"
 
-DH_UUID=         "if-dhcp1"
-DH_NAME=         ${DH_UUID}
-DH_MAC=          "02:00:00:00:01:01"
-DH_ADDR=         "10.0.0.2"
+DH_UUID="if-dhcp1"
+DH_NAME=${DH_UUID}
+DH_MAC="02:00:00:00:01:01"
+DH_ADDR="10.0.0.2"
 
 # For bundler?
 cd /opt/axsh/openvnet/vnctl/
