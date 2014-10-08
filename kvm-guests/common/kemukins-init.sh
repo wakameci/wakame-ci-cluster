@@ -89,5 +89,7 @@ kpartx -vd ${raw}
 
 sleep 3
 
-dmsetup remove ${loopdev}
-losetup -d /dev/${loopdev%%p1}
+if dmsetup info ${loopdev} 2>/dev/null | egrep ^State: | egrep -w ACTIVE -q; then
+  dmsetup remove ${loopdev}
+  losetup -d /dev/${loopdev%%p1}
+fi

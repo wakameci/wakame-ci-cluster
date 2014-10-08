@@ -93,6 +93,8 @@ EOS
 yum install --disablerepo=updates -y ${addpkg}
 # base's kpartx is broken.
 yum update   --enablerepo=updates -y kpartx
+# anti-shellshock
+yum update   --enablerepo=updates -y bash
 
 # selinux
 sed -i s,SELINUX=enforcing,SELINUX=disabled, /etc/selinux/config
