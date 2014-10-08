@@ -182,6 +182,7 @@ for ifname in em1 eth0; do
   [[ -f /etc/sysconfig/network-scripts/ifcfg-${ifname} ]] || continue
   echo -A POSTROUTING -o ${ifname} -s 10.0.2.0/24     -j MASQUERADE
   echo -A POSTROUTING -o ${ifname} -s 172.16.255.0/24 -j MASQUERADE
+  echo -A POSTROUTING -o ${ifname} -s 172.16.2.0/24   -j MASQUERADE
 done
 )
 COMMIT
