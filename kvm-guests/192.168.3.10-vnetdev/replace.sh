@@ -25,6 +25,8 @@ if network_connection? ${target_node}; then
 fi
 
 sudo /bin/bash -e <<EOS
+  ../common/stop.sh
+
   time tar zxvf ${box_path}
   time sync
 
