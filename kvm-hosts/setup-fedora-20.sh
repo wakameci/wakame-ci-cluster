@@ -171,6 +171,20 @@ NETWORK=172.16.255.0
 BROADCAST=172.16.255.255
 EOS
 
+# ifcfg-nestbr0
+cat <<EOS > /etc/sysconfig/network-scripts/ifcfg-nestbr0
+DEVICE=nestbr0
+TYPE=Bridge
+ONBOOT=yes
+
+BOOTPROTO=static
+
+IPADDR=172.16.2.2
+NETMASK=255.255.255.0
+NETWORK=172.16.2.0
+BROADCAST=172.16.2.255
+EOS
+
 # iptables
 cat <<EOS > /etc/sysconfig/iptables
 # Firewall configuration written by system-config-firewall
@@ -184,6 +198,7 @@ for ifname in em1 eth0; do
   [[ -f /etc/sysconfig/network-scripts/ifcfg-${ifname} ]] || continue
   echo -A POSTROUTING -o ${ifname} -s 10.0.2.0/24     -j MASQUERADE
   echo -A POSTROUTING -o ${ifname} -s 172.16.255.0/24 -j MASQUERADE
+  echo -A POSTROUTING -o ${ifname} -s 172.16.2.0/24   -j MASQUERADE
 done
 )
 COMMIT
