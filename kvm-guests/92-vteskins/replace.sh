@@ -6,7 +6,7 @@
 set -e
 set -x
 
-distro_ver=6.4
+distro_ver=6.5
 [[ -a distro_ver.conf ]] && . distro_ver.conf
 box_path=../../boxes/kemukins-${distro_ver}-x86_64.kvm.box
 
