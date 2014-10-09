@@ -8,7 +8,7 @@ set -x
 
 target_node=172.16.255.11
 ssh_target=jenkins@${target_node}
-box_path=../../boxes/kemukins-6.4-x86_64.kvm.box
+box_path=../../boxes/kemukins-6.5-x86_64.kvm.box
 
 function network_connection?() {
   local ipaddr=${1}
