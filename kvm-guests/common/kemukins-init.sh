@@ -16,7 +16,7 @@ raw=$(cd ${BASH_SOURCE[0]%/*} && pwd)/box-disk1.raw
 mkdir -p ${mnt_path}
 
 output=$(kpartx -va ${raw})
-loopdev=$(echo "${output}" | awk '{print $3}')
+loopdev=$(echo "${output}" | awk '{print $3}' | head -n 1) # loopXp1 should be "/".
 [[ -n "${loopdev}" ]]
 udevadm settle
 
