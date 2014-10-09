@@ -6,5 +6,6 @@
 set -e
 set -o pipefail
 
+sudo sed -i 's,^ONBOOT=.*$,ONBOOT=no,' /var/lib/lxc/lxc1/rootfs/etc/sysconfig/network-scripts/ifcfg-eth0
 sudo lxc-start -d -n lxc1
 sudo lxc-info -n lxc1

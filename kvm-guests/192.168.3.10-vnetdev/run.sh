@@ -12,8 +12,6 @@ set -o pipefail
 [[ -f ./metadata/vmspec.conf ]]
 .     ./metadata/vmspec.conf
 
-.     ../common/qemu-kvm.sh
-
 #
 vnc_addr=127.0.0.1
 vnc_port=$((11000 + ${offset}))
@@ -39,7 +37,6 @@ function qemu_kvm_path() {
   echo ${command_path}
 }
 
-kill_remove_pidfile ${pidfile}
 $(qemu_kvm_path) -name ${name} \
  -cpu ${cpu_type} \
  -m ${mem_size} \
