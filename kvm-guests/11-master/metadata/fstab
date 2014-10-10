@@ -1,4 +1,5 @@
 LABEL=root              /                       ext4    defaults        1 1
+LABEL=swap              swap                    swap    defaults        0 0
 LABEL=jenkins           /var/lib/jenkins        ext4    defaults        1 1
 tmpfs                   /dev/shm                tmpfs   defaults        0 0
 devpts                  /dev/pts                devpts  gid=5,mode=620  0 0
