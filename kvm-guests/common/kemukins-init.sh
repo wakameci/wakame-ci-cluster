@@ -16,11 +16,12 @@ raw=$(cd ${BASH_SOURCE[0]%/*} && pwd)/box-disk1.raw
 mkdir -p ${mnt_path}
 
 output=$(kpartx -va ${raw})
-loopdev=$(echo "${output}" | awk '{print $3}' | head -n 1) # loopXp1 should be "/".
-[[ -n "${loopdev}" ]]
+loopdev_root=$(echo "${output}" | awk '{print $3}' | sed -n 1,1p) # loopXp1 should be "root".
+loopdev_swap=$(echo "${output}" | awk '{print $3}' | sed -n 2,2p) # loopXp2 should be "swap".
+[[ -n "${loopdev_root}" ]]
 udevadm settle
 
-devpath=/dev/mapper/${loopdev}
+devpath=/dev/mapper/${loopdev_root}
 trap "umount -f ${mnt_path}" ERR
 mount ${devpath} ${mnt_path}
 
@@ -89,7 +90,19 @@ kpartx -vd ${raw}
 
 sleep 3
 
-if dmsetup info ${loopdev} 2>/dev/null | egrep ^State: | egrep -w ACTIVE -q; then
-  dmsetup remove ${loopdev}
-  losetup -d /dev/${loopdev%%p1}
-fi
+function detach_partition() {
+  local loopdev=${1}
+  [[ -n "${loopdev}" ]] || return 0
+
+  if dmsetup info ${loopdev} 2>/dev/null | egrep ^State: | egrep -w ACTIVE -q; then
+    dmsetup remove ${loopdev}
+  fi
+
+  local loopdev_path=/dev/${loopdev%p[0-9]*}
+  if losetup -a | egrep ^${loopdev_path}: -q; then
+    losetup -d ${loopdev_path}
+  fi
+}
+
+detach_partition ${loopdev_root}
+detach_partition ${loopdev_swap}
