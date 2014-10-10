@@ -101,3 +101,4 @@ function detach_partition() {
 }
 
 detach_partition ${loopdev_root}
+detach_partition ${loopdev_swap}
