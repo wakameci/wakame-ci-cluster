@@ -96,7 +96,11 @@ function detach_partition() {
 
   if dmsetup info ${loopdev} 2>/dev/null | egrep ^State: | egrep -w ACTIVE -q; then
     dmsetup remove ${loopdev}
-    losetup -d /dev/${loopdev%p[0-9]*}
+  fi
+
+  local loopdev_path=/dev/${loopdev%p[0-9]*}
+  if losetup -a | egrep ^${loopdev_path}: -q; then
+    losetup -d ${loopdev_path}
   fi
 }
 
