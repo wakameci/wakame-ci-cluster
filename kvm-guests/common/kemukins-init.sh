@@ -90,7 +90,14 @@ kpartx -vd ${raw}
 
 sleep 3
 
-if dmsetup info ${loopdev_root} 2>/dev/null | egrep ^State: | egrep -w ACTIVE -q; then
-  dmsetup remove ${loopdev_root}
-  losetup -d /dev/${loopdev_root%p[0-9]*}
-fi
+function detach_partition() {
+  local loopdev=${1}
+  [[ -n "${loopdev}" ]] || return 0
+
+  if dmsetup info ${loopdev} 2>/dev/null | egrep ^State: | egrep -w ACTIVE -q; then
+    dmsetup remove ${loopdev}
+    losetup -d /dev/${loopdev%p[0-9]*}
+  fi
+}
+
+detach_partition ${loopdev_root}
