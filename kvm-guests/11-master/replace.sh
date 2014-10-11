@@ -45,16 +45,3 @@ sudo /bin/bash -e <<EOS
   ./kemukins-init.sh
   ./run.sh
 EOS
-
-sleep 20
-sync
-
-ssh ${ssh_target} <<EOS
-  chkconfig --list jenkins
-  sudo chkconfig jenkins on
-  chkconfig --list jenkins
-
-  date
-  sudo service jenkins restart
-  date
-EOS
