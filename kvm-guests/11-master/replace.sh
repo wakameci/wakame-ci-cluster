@@ -37,7 +37,7 @@ sudo /bin/bash -e <<'EOS'
   mount -o loop -o ro ${old} ./mnt1/
   mount -o loop       ${new} ./mnt2/
 
-  time rsync -avx ./mnt1/ ./mnt2/
+  time rsync -ax ./mnt1/ ./mnt2/
   time sync
 
   umount ./mnt1
