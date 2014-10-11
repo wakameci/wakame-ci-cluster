@@ -57,8 +57,6 @@ sleep 20
 sync
 
 ssh ${ssh_target} <<EOS
-  time sudo yum update -y --disablerepo='*' --enablerepo=jenkins jenkins
-
   chkconfig --list jenkins
   sudo chkconfig jenkins on
   chkconfig --list jenkins
