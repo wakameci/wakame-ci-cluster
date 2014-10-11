@@ -19,7 +19,7 @@ function shutdown_remove_pidfile() {
   local pidfile=${1} monitor_addr=${2} monitor_port=${3}
   [[ -f ${pidfile} ]] || return 0
 
-  local pid=`head -1 ${pidfile}`
+  local pid=$(head -1 ${pidfile})
   if ps -p ${pid}; then
     echo system_powerdown | nc ${monitor_addr} ${monitor_port}
 
