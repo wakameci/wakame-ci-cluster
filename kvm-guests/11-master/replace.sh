@@ -12,7 +12,7 @@ box_path=../../boxes/kemukins-${distro_ver}-x86_64.kvm.box
 
 sudo ./stop.sh
 
-sudo /bin/bash -e <<'EOS'
+sudo /bin/bash -ex <<'EOS'
   timestamp=$(date +%Y%m%d.%s).$$
 
   cur=./box-disk2.raw
@@ -36,7 +36,7 @@ sudo /bin/bash -e <<'EOS'
   rmdir mnt1 mnt2
 EOS
 
-sudo /bin/bash -e <<EOS
+sudo /bin/bash -ex <<EOS
   time tar zxvf ${box_path}
   time sync
 
