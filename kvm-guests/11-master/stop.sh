@@ -23,7 +23,8 @@ function shutdown_remove_pidfile() {
     echo system_powerdown | nc ${monitor_addr} ${monitor_port}
   fi
   rm -f ${pidfile}
-  sleep 3
+  sleep 20
+  sync
 }
 
 shutdown_remove_pidfile ${pidfile} ${monitor_addr} ${monitor_port}

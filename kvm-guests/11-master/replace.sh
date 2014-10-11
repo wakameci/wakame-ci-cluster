@@ -11,8 +11,6 @@ distro_ver=6.5
 box_path=../../boxes/kemukins-${distro_ver}-x86_64.kvm.box
 
 ./stop.sh
-sleep 20
-sync
 
 sudo /bin/bash -e <<'EOS'
   timestamp=$(date +%Y%m%d.%s).$$
