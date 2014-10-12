@@ -25,7 +25,7 @@ function shutdown_remove_pidfile() {
 
     while ps -p ${pid}; do
       sleep 1
-    fi
+    done
   fi
 
   rm -f ${pidfile}
