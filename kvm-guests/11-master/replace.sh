@@ -38,6 +38,7 @@ EOS
 
 sudo /bin/bash -ex <<EOS
   time tar zxvf ${box_path}
+  ../common/qcow2-init.sh
   time sync
 
   ./kemukins-init.sh
