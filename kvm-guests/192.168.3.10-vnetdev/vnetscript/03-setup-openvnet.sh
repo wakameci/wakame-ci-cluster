@@ -48,9 +48,9 @@ IF_PUB_MAC2="52:54:00:51:06:48"
 IF_PUB_ADDR2="192.168.3.11"
 
 DN_KVM1_BMAC="00:18:51:e5:33:01"
-DN_KVM2_BMAC="00:18:51:e5:33:02"
+#DN_KVM2_BMAC="00:18:51:e5:33:02"
 DN_PUB_BMAC1="00:18:51:e5:33:05"
-DN_PUB_BMAC2="00:18:51:e5:33:06"
+#DN_PUB_BMAC2="00:18:51:e5:33:06"
 
 DH_UUID1="if-dhcp1"
 DH_NAME1=${DH_UUID1}
@@ -66,7 +66,7 @@ cd /opt/axsh/openvnet/vnctl/
 
 # Datapaths
 vnctl datapaths add --uuid ${DP_UUID1} --display-name ${DP_NAME1} --node-id ${DP_NODEID1} --dpid ${DP_DPID1}
-#vnctl datapaths add --uuid ${DP_UUID2} --display-name ${DP_NAME2} --node-id ${DP_NODEID2} --dpid ${DP_DPID2}
+vnctl datapaths add --uuid ${DP_UUID2} --display-name ${DP_NAME2} --node-id ${DP_NODEID2} --dpid ${DP_DPID2}
 
 # Networks
 vnctl networks add --uuid ${NW_PUB_UUID} --display-name ${NW_PUB_NAME} --ipv4-network ${NW_PUB_NETWORK} --ipv4-prefix ${NW_PUB_PREFIX} --network-mode ${NW_PUB_MODE}
@@ -74,11 +74,11 @@ vnctl networks add --uuid ${NW_KVM_UUID} --display-name ${NW_KVM_NAME} --ipv4-ne
 
 # VM interfaces (LXC)
 vnctl interfaces add --uuid ${IF_K1L1_UUID} --mac-address ${IF_K1L1_MAC} --network-uuid ${NW_KVM_UUID} --ipv4-address ${IF_K1L1_ADDR} --port-name ${VETH1}
-#vnctl interfaces add --uuid ${IF_K1L2_UUID} --mac-address ${IF_K1L2_MAC} --network-uuid ${NW_KVM_UUID} --ipv4-address ${IF_K1L2_ADDR} --port-name ${VETH2}
+vnctl interfaces add --uuid ${IF_K1L2_UUID} --mac-address ${IF_K1L2_MAC} --network-uuid ${NW_KVM_UUID} --ipv4-address ${IF_K1L2_ADDR} --port-name ${VETH2}
 
 # Public
 vnctl interfaces add --uuid ${IF_PUB_UUID1} --owner-datapath-uuid ${DP_UUID1} --mac-address ${IF_PUB_MAC1} --network-uuid ${NW_PUB_UUID} --ipv4-address ${IF_PUB_ADDR1} --port-name ${ETH} --mode host
-#vnctl interfaces add --uuid ${IF_PUB_UUID2} --owner-datapath-uuid ${DP_UUID2} --mac-address ${IF_PUB_MAC2} --network-uuid ${NW_PUB_UUID} --ipv4-address ${IF_PUB_ADDR2} --port-name ${ETH} --mode host
+vnctl interfaces add --uuid ${IF_PUB_UUID2} --owner-datapath-uuid ${DP_UUID2} --mac-address ${IF_PUB_MAC2} --network-uuid ${NW_PUB_UUID} --ipv4-address ${IF_PUB_ADDR2} --port-name ${ETH} --mode host
 
 # Datapath networks
 vnctl datapaths networks add ${DP_UUID1} ${NW_KVM_UUID} --broadcast-mac-address ${DN_KVM1_BMAC} --interface-uuid ${IF_PUB_UUID1}
@@ -88,6 +88,6 @@ vnctl datapaths networks add ${DP_UUID1} ${NW_PUB_UUID} --broadcast-mac-address 
 
 # DHCP
 vnctl interfaces add --uuid ${DH_UUID1} --mac-address ${DH_MAC1} --network-uuid ${NW_KVM_UUID} --ipv4-address ${DH_ADDR1} --mode simulated
-#vnctl interfaces add --uuid ${DH_UUID2} --mac-address ${DH_MAC2} --network-uuid ${NW_KVM_UUID} --ipv4-address ${DH_ADDR2} --mode simulated
+vnctl interfaces add --uuid ${DH_UUID2} --mac-address ${DH_MAC2} --network-uuid ${NW_KVM_UUID} --ipv4-address ${DH_ADDR2} --mode simulated
 vnctl network-services add --interface-uuid ${DH_UUID1} --display-name ${DH_NAME1} --type "dhcp"
-#vnctl network-services add --interface-uuid ${DH_UUID2} --display-name ${DH_NAME2} --type "dhcp"
+vnctl network-services add --interface-uuid ${DH_UUID2} --display-name ${DH_NAME2} --type "dhcp"
