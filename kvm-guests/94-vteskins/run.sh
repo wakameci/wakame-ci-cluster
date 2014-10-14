@@ -6,7 +6,7 @@
 set -e
 set -o pipefail
 
-[[ -f box-disk1.raw ]]
+[[ -f box-disk1-head.qcow2 ]]
 [[ $UID == 0 ]]
 
 [[ -f ./metadata/vmspec.conf ]]
@@ -49,7 +49,7 @@ $(qemu_kvm_path) -name ${name} \
  -rtc ${rtc} \
  -monitor telnet:127.0.0.1:${monitor_port},server,nowait \
  -serial telnet:${serial_addr}:${serial_port},server,nowait \
- -drive file=./box-disk1.raw,media=disk,boot=on,index=0,cache=none,if=virtio \
+ -drive file=./box-disk1-head.qcow2,media=disk,boot=on,index=0,cache=none,if=virtio \
  $([[ -f ./box-disk2.raw ]] && echo -drive file=./box-disk2.raw,media=disk,boot=off,index=1,cache=none,if=virtio) \
  $(
  i=0
