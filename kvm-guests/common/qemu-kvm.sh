@@ -3,10 +3,10 @@ function kill_remove_pidfile() {
   [[ -f ${pidfile} ]] || return 0
 
   local pid=$(head -1 ${pidfile})
-  if ps -p ${pid}; then
+  while ps -p ${pid}; do
     kill -TERM ${pid} || kill -KILL ${pid}
-  fi
+    sleep 1
+  done
 
   rm -f ${pidfile}
-  sleep 3
 }
