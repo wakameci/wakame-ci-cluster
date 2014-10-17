@@ -2,7 +2,9 @@ ODGS := $(wildcard draw/*.odg)
 PNGS := $(patsubst %.odg,%.png,${ODGS})
 
 all:
+	./init-bridges.sh
 	./replace.sh
+	(cd ../192.168.3.11-vnetdev/ && ./replace.sh)
 
 updatefig: ${PNGS}
 
