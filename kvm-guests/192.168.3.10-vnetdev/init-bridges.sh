@@ -12,12 +12,12 @@ ip_vnet_mng_br0=10.0.1.1
 net_vnet_ovs_br0=10.0.0.0
 net_vnet_mng_br0=10.0.1.0
 
-sudo ifconfig    vnet_ovs_br0 down
+sudo ifconfig    vnet_ovs_br0 down || true
 sudo brctl delbr vnet_ovs_br0 || true
 sudo brctl addbr vnet_ovs_br0
 sudo ifconfig    vnet_ovs_br0 ${ip_vnet_ovs_br0} up
 
-sudo ifconfig    vnet_mng_br0 down
+sudo ifconfig    vnet_mng_br0 down || true
 sudo brctl delbr vnet_mng_br0 || true
 sudo brctl addbr vnet_mng_br0
 sudo ifconfig    vnet_mng_br0 ${ip_vnet_mng_br0} up
