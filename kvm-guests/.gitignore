@@ -2,3 +2,4 @@
 *.raw
 *.pid
 *.qcow2
+kvm.state
