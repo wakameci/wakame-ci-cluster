@@ -17,6 +17,6 @@ sudo /bin/bash -e <<EOS
   ../common/qcow2-init.sh
   time sync
 
-  ./kemukins-init.sh
+  ../common/kemukins-init.sh
   ./run.sh
 EOS
