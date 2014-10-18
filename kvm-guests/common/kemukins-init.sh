@@ -8,7 +8,7 @@ set -x
 set -o pipefail
 
 mnt_path=mnt
-raw=$(cd ${BASH_SOURCE[0]%/*} && pwd)/box-disk1.raw
+raw=$(pwd)/box-disk1.raw
 
 [[ -f ${raw} ]]
 [[ $UID == 0 ]]

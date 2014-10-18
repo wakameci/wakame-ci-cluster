@@ -16,7 +16,7 @@ sudo /bin/bash -e <<EOS
   time tar zxvf ${box_path}
   time sync
 
-  ./kemukins-init.sh
+  ../common/kemukins-init.sh
   ../common/qcow2-init.sh
   ./run.sh
 EOS
