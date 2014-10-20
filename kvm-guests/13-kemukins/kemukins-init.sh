@@ -1,1 +1,0 @@
-../common/kemukins-init.sh
