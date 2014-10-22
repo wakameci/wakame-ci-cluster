@@ -11,7 +11,7 @@ ipaddr=10.0.1.10
 
 cat > $1/etc/openvnet/vna.conf <<EOS
 node {
-  id "vna"
+  id "vna1"
   addr {
     protocol "tcp"
     host "${ipaddr}"
