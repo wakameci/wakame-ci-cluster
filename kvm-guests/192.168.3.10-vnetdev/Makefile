@@ -1,10 +1,19 @@
-ODGS := $(wildcard draw/*.odg)
-PNGS := $(patsubst %.odg,%.png,${ODGS})
+ODGS  := $(wildcard draw/*.odg)
+PNGS  := $(patsubst %.odg,%.png,${ODGS})
+KVMNETWORK := 10.0.1.0/24
 
 all:
 	./init-bridges.sh
 	./replace.sh
 	(cd ../192.168.3.11-vnetdev/ && ./replace.sh)
+
+ipmasq_on:
+	sudo iptables -t nat -A POSTROUTING -s ${KVMNETWORK} -j MASQUERADE
+	sudo iptables -t nat -L --line
+
+ipmasq_off:
+	sudo iptables -t nat -D POSTROUTING -s ${KVMNETWORK} -j MASQUERADE
+	sudo iptables -t nat -L --line
 
 updatefig: ${PNGS}
 
