@@ -9,6 +9,7 @@ set -o pipefail
 boxes="
   kemukins-6.4-x86_64.kvm.box
   kemukins-6.5-x86_64.kvm.box
+  lxckemukins-6.5-x86_64.kvm.box
   vzkemukins-6.5-x86_64.kvm.box
   minimal-6.4-x86_64.kvm.box
   minimal-6.5-x86_64.kvm.box
