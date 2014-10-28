@@ -55,3 +55,27 @@ PING 10.0.0.200 (10.0.0.200) 56(84) bytes of data.
 64 bytes from 10.0.0.200: icmp_seq=3 ttl=64 time=0.640 ms
 ```
 
+Please type "make ipmasq_on", if you want to touch internet on KVMs.
+
+```
+$ make ipmasq_on
+sudo iptables -t nat -A POSTROUTING -s 10.0.1.0/24 -j MASQUERADE
+sudo iptables -t nat -L --line
+Chain PREROUTING (policy ACCEPT)
+num  target     prot opt source               destination
+
+Chain INPUT (policy ACCEPT)
+num  target     prot opt source               destination
+
+Chain OUTPUT (policy ACCEPT)
+num  target     prot opt source               destination
+
+Chain POSTROUTING (policy ACCEPT)
+num  target     prot opt source               destination
+1    RETURN     all  --  192.168.122.0/24     base-address.mcast.net/24
+2    RETURN     all  --  192.168.122.0/24     255.255.255.255
+3    MASQUERADE  tcp  --  192.168.122.0/24    !192.168.122.0/24     masq ports: 1024-65535
+4    MASQUERADE  udp  --  192.168.122.0/24    !192.168.122.0/24     masq ports: 1024-65535
+5    MASQUERADE  all  --  192.168.122.0/24    !192.168.122.0/24
+6    MASQUERADE  all  --  10.0.1.0/24          anywhere
+```
