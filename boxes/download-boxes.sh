@@ -20,7 +20,7 @@ boxes="
 function download_file() {
   local filename=${1}
 
-  curl -fSkLR http://dlc.wakame.axsh.jp/wakameci/kemukins-box-rhel6/current/${filename} -o ${filename}.tmp
+  curl -fSkLR --retry 3 --retry-delay 3 http://dlc.wakame.axsh.jp/wakameci/kemukins-box-rhel6/current/${filename} -o ${filename}.tmp
   mv ${filename}.tmp ${filename}
 }
 
