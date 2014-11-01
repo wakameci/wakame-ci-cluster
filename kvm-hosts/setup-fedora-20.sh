@@ -217,7 +217,7 @@ COMMIT
 EOS
 
 # nested-kvm
-
+# -> /sys/module/kvm_{intel,amd}/parameters/nested
 for kvmmod in kvm_intel kvm_amd; do
   lsmod | grep ${kvmmod} || continue
 
@@ -228,6 +228,10 @@ for kvmmod in kvm_intel kvm_amd; do
 
   cat /sys/module/${kvmmod}/parameters/nested
 done
+
+# nbd
+# -> /sys/module/nbd/parameters/*
+echo "options nbd max_part=15" > /etc/modprobe.d/nbd.conf
 
 # ip-forward
 cat <<EOS > /etc/sysctl.d/enable-ip-forward.conf
