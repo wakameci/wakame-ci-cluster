@@ -9,7 +9,8 @@ set -o pipefail
 chroot_dir=${1}
 
 chroot $1 /bin/bash -ex <<'EOS'
-  releasever=$(< /etc/yum/vars/releasever)
+#  releasever=$(< /etc/yum/vars/releasever)
+  releasever=6.4 # xxx downgrade
 
   yum install --disablerepo=updates -y http://dlc.openvnet.axsh.jp/packages/rhel/openvswitch/${releasever}/kmod-openvswitch-2.3.0-1.el6.x86_64.rpm
   yum install --disablerepo=updates -y http://dlc.openvnet.axsh.jp/packages/rhel/openvswitch/${releasever}/openvswitch-2.3.0-1.x86_64.rpm
