@@ -2,7 +2,7 @@
 
 ## Network Structure
 
-xxx T.B.D. xxx
+![](draw/network_structure.png)
 
 ## Build
 
