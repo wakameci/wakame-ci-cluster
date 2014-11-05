@@ -5,6 +5,10 @@ KVMNETWORK := 192.168.3.0/24
 all:
 	./init-bridges.sh
 	./replace.sh
+	(cd ../192.168.3.90-vteskins/ && ./replace.sh)
+	(cd ../192.168.3.92-vteskins/ && ./replace.sh)
+	(cd ../192.168.3.93-vteskins/ && ./replace.sh)
+	(cd ../192.168.3.94-vteskins/ && ./replace.sh)
 
 ipmasq_on:
 	sudo iptables -t nat -A POSTROUTING -s ${KVMNETWORK} -j MASQUERADE
