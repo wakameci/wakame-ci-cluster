@@ -185,6 +185,13 @@ NETWORK=172.16.2.0
 BROADCAST=172.16.2.255
 EOS
 
+# ifcfg-vbox-br0
+cat <<EOS > /etc/sysconfig/network-scripts/ifcfg-vbox-br0
+DEVICE=vbox-br0
+TYPE=Bridge
+ONBOOT=yes
+EOS
+
 # iptables
 cat <<EOS > /etc/sysconfig/iptables
 # Firewall configuration written by system-config-firewall
