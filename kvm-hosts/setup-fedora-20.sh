@@ -144,7 +144,7 @@ getent group kvm && {
 }
 
 # ifcfg-vboxbr0
-cat <<EOS > /etc/sysconfig/network-scripts/ifcfg-vboxbr0.bak
+cat <<EOS > /etc/sysconfig/network-scripts/ifcfg-vboxbr0
 DEVICE=vboxbr0
 TYPE=Bridge
 ONBOOT=yes
