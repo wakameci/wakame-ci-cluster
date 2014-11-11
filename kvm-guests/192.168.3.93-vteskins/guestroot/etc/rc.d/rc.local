@@ -4,19 +4,21 @@
 # You can put your own initialization stuff in here if you don't
 # want to do the full Sys V style init stuff.
 
+declare start=5
+
 touch /var/lock/subsys/local
 
 function run_guest() {
-  local guest_id=${1}
+  local ctid=${1}
 
-  cd /images/${guest_id}-vneskins
-
-  if ! [ -f run.sh ]; then
-    tar zxvf ${guest_id}-vneskins.kvm.box
-  fi
-
+  cd /lxc/private/${1}
   ./run.sh
 }
 
-run_guest 105
-run_guest 106
+declare ctid1=`expr "${start}" + 0`
+[[ ! -z ${ctid1} ]]
+declare ctid2=`expr ${ctid1} + 1`
+[[ ${ctid1} != ${ctid2} ]]
+
+run_guest ${ctid1}
+run_guest ${ctid2}

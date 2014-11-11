@@ -6,7 +6,7 @@
 set -e
 set -x
 
-declare start=5
+declare start=1
 
 declare chroot_dir=${1}
 [[ ! -z ${chroot_dir} ]]
