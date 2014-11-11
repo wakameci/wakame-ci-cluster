@@ -91,7 +91,7 @@ DEVICE=eth1
 BOOTPROTO=static
 ONBOOT=yes
 TYPE=Ethernet
-IPADDR=10.50.0.${ctid}
+IPADDR=10.50.0.10${ctid}
 NETMASK=255.255.255.0
 EOS
 }
