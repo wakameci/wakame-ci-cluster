@@ -52,10 +52,10 @@ Second, run following command on a console.
 
 ```
 $ telnet localhost 15091
-itest1 login: kemukins
-Password: kemukins
-[kemukins@itest1 ~]$ git clone https://github.com/axsh/openvnet-testspec.git
-[kemukins@itest1 ~]$ cd openvnet-testspec
-[kemukins@itest1 openvnet-testspec]$ bundle install --without=development
-[kemukins@itest1 openvnet-testspec]$ ./bin/dev-spec
+itest1 login: root
+Password: root
+[root@itest1 ~]$ git clone https://github.com/axsh/openvnet-testspec.git
+[root@itest1 ~]$ cd openvnet-testspec
+[root@itest1 openvnet-testspec]$ bundle install --without=development
+[root@itest1 openvnet-testspec]$ ./bin/dev-spec
 ```
