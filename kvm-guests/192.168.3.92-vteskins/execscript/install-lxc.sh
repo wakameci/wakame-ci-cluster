@@ -133,10 +133,15 @@ function install_lxc() {
   install_lxc_conf ${ctid}
   install_ifcfg    ${ctid}
 
-chroot ${chroot_dir} /bin/bash -ex <<EOS
-  lxc-create -f /etc/lxc/${ctid}.conf -n ${ctid}
-  echo root:root | sudo chroot /lxc/private/${ctid} chpasswd
+  chroot ${chroot_dir} /bin/bash -ex <<EOS
+    lxc-create -f /etc/lxc/${ctid}.conf -n ${ctid}
 EOS
+
+  if [[ -d lxcscript ]]; then
+    while read line; do
+      eval ${line} ${chroot_dir}/lxc/private/${ctid}
+    done < <(find -L lxcscript ! -type d -name '*.sh' | sort)
+  fi
 
   render_run_sh ${ctid} > ${chroot_dir}/lxc/private/${ctid}/run.sh
   chmod 755 ${chroot_dir}/lxc/private/${ctid}/run.sh
