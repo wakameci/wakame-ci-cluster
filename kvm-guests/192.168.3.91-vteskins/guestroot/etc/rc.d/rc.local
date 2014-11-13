@@ -1,0 +1,24 @@
+#!/bin/sh
+#
+# This script will be executed *after* all the other init scripts.
+# You can put your own initialization stuff in here if you don't
+# want to do the full Sys V style init stuff.
+
+declare start=1
+
+touch /var/lock/subsys/local
+
+function run_guest() {
+  local ctid=${1}
+
+  cd /lxc/private/${1}
+  ./run.sh
+}
+
+declare ctid1=`expr "${start}" + 0`
+[[ ! -z ${ctid1} ]]
+declare ctid2=`expr ${ctid1} + 1`
+[[ ${ctid1} != ${ctid2} ]]
+
+run_guest ${ctid1}
+run_guest ${ctid2}
