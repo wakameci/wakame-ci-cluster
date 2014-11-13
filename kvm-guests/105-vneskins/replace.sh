@@ -18,4 +18,5 @@ sudo /bin/bash -e <<EOS
 
   ../common/kemukins-init.sh
  #./run.sh
+  ./pack-box.sh
 EOS
