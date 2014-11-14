@@ -21,6 +21,8 @@ monitor_addr=127.0.0.1
 monitor_port=$((14000 + ${offset}))
 serial_addr=127.0.0.1
 serial_port=$((15000 + ${offset}))
+qmp_addr=127.0.0.1
+qmp_port=$((16000 + ${offset}))
 drive_type=virtio
 nic_driver=virtio-net-pci
 pidfile=kvm.pid
@@ -59,6 +61,9 @@ $(qemu_kvm_path) -name ${name} \
    i=$((${i} + 1))
  done
  ) \
+ -chardev socket,port=${qmp_port},host=${qmp_addr},server,nowait,id=qga0 \
+ -device virtio-serial \
+ -device virtserialport,chardev=qga0,name=org.qemu.guest_agent.0 \
  -pidfile ${pidfile} \
  -incoming "exec: cat $(pwd)/kvm.state" \
  -daemonize
