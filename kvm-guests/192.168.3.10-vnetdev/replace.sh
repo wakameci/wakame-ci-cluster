@@ -11,7 +11,7 @@ ssh_target=jenkins@${target_node}
 
 distro_ver=6.5
 [[ -a distro_ver.conf ]] && . distro_ver.conf
-box_path=../../boxes/kemukins-${distro_ver}-x86_64.kvm.box
+box_path=../../boxes/kemumaki-${distro_ver}-x86_64.kvm.box
 
 function network_connection?() {
   local ipaddr=${1}
@@ -30,6 +30,6 @@ sudo /bin/bash -e <<EOS
   time tar zxvf ${box_path}
   time sync
 
-  ../common/kemukins-init.sh
+  ../common/kemumaki-init.sh
   ./run.sh
 EOS

@@ -23,9 +23,9 @@ Fisrt, run following command on a console.
 
 ```
 $ telnet localhost 15310
-10-vnetdev login: kemukins
-Password: kemukins
-[kemukins@10-vnetdev ~]$ 0000-runall.sh
+10-vnetdev login: kemumaki
+Password: kemumaki
+[kemumaki@10-vnetdev ~]$ 0000-runall.sh
 localhost login: root
 Password: root
 [root@localhost ~]# ifup eth0
@@ -39,9 +39,9 @@ Second, run following command on another console.
 
 ```
 $ telnet localhost 15311
-11-vnetdev login: kemukins
-Password: kemukins
-[kemukins@11-vnetdev ~]$ 0000-runall.sh
+11-vnetdev login: kemumaki
+Password: kemumaki
+[kemumaki@11-vnetdev ~]$ 0000-runall.sh
 localhost login: root
 Password: root
 [root@localhost ~]# ifup eth0

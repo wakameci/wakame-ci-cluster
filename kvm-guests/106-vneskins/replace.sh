@@ -16,7 +16,7 @@ sudo /bin/bash -e <<EOS
   time tar zxvf ${box_path}
   time sync
 
-  ../common/kemukins-init.sh
+  ../common/kemumaki-init.sh
  #./run.sh
   ./pack-box.sh
 EOS

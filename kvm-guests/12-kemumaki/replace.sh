@@ -6,9 +6,9 @@
 set -e
 set -x
 
-distro_ver=6.6
+distro_ver=6.4
 [[ -a distro_ver.conf ]] && . distro_ver.conf
-box_path=../../boxes/vzkemukins-${distro_ver}-x86_64.kvm.box
+box_path=../../boxes/kemumaki-${distro_ver}-x86_64.kvm.box
 
 sudo /bin/bash -e <<EOS
   ../common/stop.sh
@@ -16,7 +16,7 @@ sudo /bin/bash -e <<EOS
   time tar zxvf ${box_path}
   time sync
 
-  ../common/kemukins-init.sh
+  ../common/kemumaki-init.sh
   ../common/qcow2-init.sh
   ./run.sh
 EOS
