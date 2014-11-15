@@ -62,7 +62,7 @@ zip
 nfs-utils
 #
 acpid
-# additional packages: kemukins
+# additional packages: kemumaki
 bridge-utils
 iptables-services
 ## ci tool
@@ -106,7 +106,7 @@ sed -i "s/^\(^Defaults\s*requiretty\).*/# \1/" /etc/sudoers
 ln -fs /usr/share/zoneinfo/Japan /etc/localtime
 
 #------------------------------------------------------------
-# kemukins
+# kemumaki
 #------------------------------------------------------------
 
 # jenkins
@@ -126,7 +126,7 @@ mkdir -p -m 700 /var/lib/jenkins/.ssh
 chmod       700 /var/lib/jenkins/.ssh
 
 cat <<EOS > /var/lib/jenkins/.ssh/authorized_keys
-ssh-dss AAAAB3NzaC1kc3MAAACBAJXPRxTHqW0DtVYK/G/unjaeKV2E3pZIdRFkWgGhImTw1HczMW81jBgGRL7NQS2ijrwr4QKZ+nergLslsl6IeKIF1G8q0wb3PFlFxy2cEdF+Z0kYgoLz0wV+zPEUfubLfl7Dvkg1+LZSwikohu18pM3tZa0wixypkJHIeKIJXIYLAAAAFQDqFSLlIDRXiUQHO+L/kD/qkg2ykwAAAIAQR+QuQvFLw2EOl8SNOT6nqOzjWE5VM2/9gGBMPhk2IhoAhxz7VgF1H5jPQMhe2nq1opTHsKd7pW7zi7cfO65qL/UQWtAlYvkoir8Gn7+UpYrPLa2wtLP+u2O8nB6ure56B/t5OhPib8FL0fXhF2vaURJ/nerfSAdbfL8Lk+9rngAAAIALY5M6hhtJCVT2uH400D3Dz+l3vG613UEFKahHZpIdVAwlMyQEFyRBd07Dfjw5u1KwRbyJX4u41MBmqhXDYPyPED/bB/CddOiR3tjq7Im9kMp9+P4NB4uo4088/ntfCFXgFHb10UBYBhI5VqqTx7DZ+KeG5SOckk2BDgEUrWEshw== kemukins-login
+ssh-dss AAAAB3NzaC1kc3MAAACBAJXPRxTHqW0DtVYK/G/unjaeKV2E3pZIdRFkWgGhImTw1HczMW81jBgGRL7NQS2ijrwr4QKZ+nergLslsl6IeKIF1G8q0wb3PFlFxy2cEdF+Z0kYgoLz0wV+zPEUfubLfl7Dvkg1+LZSwikohu18pM3tZa0wixypkJHIeKIJXIYLAAAAFQDqFSLlIDRXiUQHO+L/kD/qkg2ykwAAAIAQR+QuQvFLw2EOl8SNOT6nqOzjWE5VM2/9gGBMPhk2IhoAhxz7VgF1H5jPQMhe2nq1opTHsKd7pW7zi7cfO65qL/UQWtAlYvkoir8Gn7+UpYrPLa2wtLP+u2O8nB6ure56B/t5OhPib8FL0fXhF2vaURJ/nerfSAdbfL8Lk+9rngAAAIALY5M6hhtJCVT2uH400D3Dz+l3vG613UEFKahHZpIdVAwlMyQEFyRBd07Dfjw5u1KwRbyJX4u41MBmqhXDYPyPED/bB/CddOiR3tjq7Im9kMp9+P4NB4uo4088/ntfCFXgFHb10UBYBhI5VqqTx7DZ+KeG5SOckk2BDgEUrWEshw== kemumaki-login
 EOS
 
 cat <<EOS > /var/lib/jenkins/.ssh/config
@@ -157,9 +157,9 @@ NETWORK=10.0.2.0
 BROADCAST=10.0.2.255
 EOS
 
-# ifcfg-kemukinsbr0
-cat <<EOS > /etc/sysconfig/network-scripts/ifcfg-kemukinsbr0
-DEVICE=kemukinsbr0
+# ifcfg-kemumakibr0
+cat <<EOS > /etc/sysconfig/network-scripts/ifcfg-kemumakibr0
+DEVICE=kemumakibr0
 TYPE=Bridge
 ONBOOT=yes
 
