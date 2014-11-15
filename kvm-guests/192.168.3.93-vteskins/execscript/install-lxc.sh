@@ -127,7 +127,7 @@ function install_lxc() {
   local ctid=${1}
 
   mkdir -p ${chroot_dir}/lxc/private/${ctid}
-  tar zpxf ${chroot_dir}/lxc/template/cache/vz.kemukins.x86_64.tar.gz -C ${chroot_dir}/lxc/private/${ctid}/
+  tar zpxf ${chroot_dir}/lxc/template/cache/vz.kemumaki.x86_64.tar.gz -C ${chroot_dir}/lxc/private/${ctid}/
   sed -i s,^HOSTNAME=.*,HOSTNAME=vm${ctid}, ${chroot_dir}/lxc/private/${ctid}/etc/sysconfig/network
 
   install_lxc_conf ${ctid}
