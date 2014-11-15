@@ -7,11 +7,11 @@ set -e
 set -o pipefail
 
 boxes="
-    kemukins-6.4-x86_64.kvm.box
-    kemukins-6.5-x86_64.kvm.box
-    kemukins-6.6-x86_64.kvm.box
- lxckemukins-6.6-x86_64.kvm.box
-  vzkemukins-6.6-x86_64.kvm.box
+    kemumaki-6.4-x86_64.kvm.box
+    kemumaki-6.5-x86_64.kvm.box
+    kemumaki-6.6-x86_64.kvm.box
+ lxckemumaki-6.6-x86_64.kvm.box
+  vzkemumaki-6.6-x86_64.kvm.box
      minimal-6.3-x86_64.kvm.box
      minimal-6.4-x86_64.kvm.box
      minimal-6.5-x86_64.kvm.box
@@ -21,7 +21,7 @@ boxes="
 function download_file() {
   local filename=${1}
 
-  curl -fSkLR --retry 3 --retry-delay 3 http://dlc.wakame.axsh.jp/wakameci/kemukins-box-rhel6/current/${filename} -o ${filename}.tmp
+  curl -fSkLR --retry 3 --retry-delay 3 http://dlc.wakame.axsh.jp/wakameci/kemumaki-box-rhel6/current/${filename} -o ${filename}.tmp
   mv ${filename}.tmp ${filename}
 }
 
