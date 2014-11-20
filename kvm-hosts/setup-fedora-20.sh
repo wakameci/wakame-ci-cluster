@@ -259,11 +259,15 @@ for ifcfg in /etc/sysconfig/network-scripts/ifcfg-e*; do
   [[ -f ${ifcfg} ]] || continue
   sed -i "s,0=,=," ${ifcfg}
 done
-systemctl stop    NetworkManager.service
+if systemctl status  NetowrkManager.service; then
+   systemctl stop    NetworkManager.service
+fi
 systemctl start   network.service
 
 ## firewalld.service -> iptables.service
-systemctl stop    firewalld.service
+if systemctl status  firewalld.service; then
+   systemctl stop    firewalld.service
+fi
 systemctl start   iptables.service
 
 service network restart
