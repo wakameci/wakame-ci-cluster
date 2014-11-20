@@ -97,7 +97,9 @@ yum update   --enablerepo=updates -y kpartx
 yum update   --enablerepo=updates -y bash
 
 # selinux
-sed -i s,SELINUX=enforcing,SELINUX=disabled, /etc/selinux/config
+if [[ -f /etc/selinux/config ]]; then
+  sed -i s,SELINUX=enforcing,SELINUX=disabled, /etc/selinux/config
+fi
 
 # sudo
 sed -i "s/^\(^Defaults\s*requiretty\).*/# \1/" /etc/sudoers
