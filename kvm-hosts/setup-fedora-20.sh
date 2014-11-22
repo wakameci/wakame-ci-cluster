@@ -95,6 +95,8 @@ yum install --disablerepo=updates -y ${addpkg}
 yum update   --enablerepo=updates -y kpartx
 # anti-shellshock
 yum update   --enablerepo=updates -y bash
+# kvm on lxc
+yum install --enablerepo=updates -y lxc lxc-templates lxc-extra
 
 # selinux
 sed -i s,SELINUX=enforcing,SELINUX=disabled, /etc/selinux/config
