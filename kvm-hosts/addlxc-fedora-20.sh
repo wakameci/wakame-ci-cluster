@@ -62,6 +62,11 @@ lxc.cgroup.devices.allow = c 10:200 rwm
 
 # nbd
 lxc.cgroup.devices.allow = c 43:* rwm
+
+# loop-control
+lxc.cgroup.devices.allow = b 7:* rwm
+# loopX
+lxc.cgroup.devices.allow = c 10:237 rwm
 EOS
 }
 
