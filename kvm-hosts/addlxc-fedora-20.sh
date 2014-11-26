@@ -74,6 +74,13 @@ lxc.cgroup.devices.allow = c 10:229 rwm
 
 # hpet
 lxc.cgroup.devices.allow = c 10:228 rwm
+
+# control device-mapper
+# via https://lists.linuxcontainers.org/pipermail/lxc-users/2014-January/006077.html
+lxc.cgroup.devices.allow = c 10:236 rwm
+lxc.cgroup.devices.allow = b 252:* rwm
+# dm-X control/loopXpX
+lxc.cgroup.devices.allow = b 253:* rwm
 EOS
 }
 
