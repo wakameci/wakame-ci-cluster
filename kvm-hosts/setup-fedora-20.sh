@@ -125,6 +125,9 @@ if ! [[ -f /etc/yum.repos.d/jenkins.repo ]]; then
 fi
 chkconfig jenkins off
 
+curl -fsSkL https://github.com/hansode/buildbook-rhel6/raw/master/jenkins.slave/guestroot/var/lib/jenkins/slave.jar -o /var/lib/jenkins/slave.jar
+chown jenkins:jenkins /var/lib/jenkins/slave.jar
+
 usermod -s /bin/bash jenkins
 egrep -w ^jenkins /etc/sudoers || {
   echo "jenkins ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
