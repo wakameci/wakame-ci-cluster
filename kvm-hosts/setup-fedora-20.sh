@@ -86,6 +86,7 @@ qemu-img
 parted
 kpartx
 zip
+e2fsprogs
 %end
 EOS
 )
