@@ -221,6 +221,10 @@ COMMIT
 COMMIT
 EOS
 
+# loop
+# -> /sys/module/loop/parameters/*
+echo "options loop max_loop=127" > /etc/modprobe.d/loop.conf
+
 # nested-kvm
 # -> /sys/module/kvm_{intel,amd}/parameters/nested
 for kvmmod in kvm_intel kvm_amd; do
