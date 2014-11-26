@@ -144,9 +144,6 @@ echo ${hostname} > ${rootfs_path}/etc/hostname
 
 #### copy.txt
 
-mkdir -p ${rootfs_path}/lib/modules
-rsync -ax /lib/modules/$(uname -r) ${rootfs_path}/lib/modules/
-
 #### execscript
 
 mount -o bind /proc ${rootfs_path}/proc
