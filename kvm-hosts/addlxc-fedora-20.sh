@@ -35,6 +35,11 @@ lxc.kmsg = 0
 lxc.mount.entry = proc   ${rootfs_path}/proc                   proc    defaults        0 0
 lxc.mount.entry = sysfs  ${rootfs_path}/sys                    sysfs   defaults        0 0
 
+# via http://www.janoszen.com/2013/05/14/lxc-tutorial/
+# Allow any mknod (but not using the node)
+lxc.cgroup.devices.allow = c *:* m
+lxc.cgroup.devices.allow = b *:* m
+
 # /dev/null and zero
 lxc.cgroup.devices.allow = c 1:3 rwm
 lxc.cgroup.devices.allow = c 1:5 rwm
@@ -51,6 +56,11 @@ lxc.cgroup.devices.allow = c 1:8 rwm
 lxc.cgroup.devices.allow = c 136:* rwm
 lxc.cgroup.devices.allow = c 5:2 rwm
 
+# loop-control
+lxc.cgroup.devices.allow = b 7:* rwm
+# loopX
+lxc.cgroup.devices.allow = c 10:237 rwm
+
 # rtc
 lxc.cgroup.devices.allow = c 254:0 rwm
 
@@ -62,11 +72,6 @@ lxc.cgroup.devices.allow = c 10:200 rwm
 
 # nbd
 lxc.cgroup.devices.allow = c 43:* rwm
-
-# loop-control
-lxc.cgroup.devices.allow = b 7:* rwm
-# loopX
-lxc.cgroup.devices.allow = c 10:237 rwm
 EOS
 }
 
