@@ -86,7 +86,10 @@ qemu-img
 parted
 kpartx
 zip
+## 1box build
 e2fsprogs
+## mussel
+openssl
 %end
 EOS
 )
