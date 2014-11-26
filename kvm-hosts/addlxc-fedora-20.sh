@@ -151,20 +151,14 @@ EOS
 
 chroot ${rootfs_path} bash -ex <<EOS
   usermod -L root
-  curl -fsSkL https://raw.githubusercontent.com/hansode/add-github-user.sh/master/add-github-user.sh -o /usr/local/bin/add-github-user.sh
+  until curl -fsSkL https://raw.githubusercontent.com/hansode/add-github-user.sh/master/add-github-user.sh -o /usr/local/bin/add-github-user.sh; do
+    sleep 1
+  done
   chmod +x /usr/local/bin/add-github-user.sh
   /usr/local/bin/add-github-user.sh axsh
   /usr/local/bin/add-github-user.sh hansode
 EOS
 # echo root:${rootpass} | chpasswd
-
-chroot ${rootfs_path} bash -ex <<EOS
-  cd /home/axsh
-  curl -fsSkL https://raw.githubusercontent.com/wakameci/wakame-ci-cluster/master/kvm-hosts/setup-fedora-20.sh -o ./setup-fedora-20.sh
-  chmod +x ./setup-fedora-20.sh
-  sed -i s,--disablerepo=updates,, ./setup-fedora-20.sh
-  ls -l ./setup-fedora-20.sh
-EOS
 
 umount ${rootfs_path}/proc
 
@@ -179,3 +173,16 @@ lxc-device -n ${ctid} add /dev/net/tun
 
 # > PTY allocation request failed on channel 0
 lxc-device -n ${ctid} add /dev/ptmx
+
+# setup kvm-host
+lxc-attach -n ${ctid} -- bash -ex <<EOS
+  cd /tmp
+  until curl -fsSkL https://raw.githubusercontent.com/wakameci/wakame-ci-cluster/master/kvm-hosts/setup-fedora-20.sh -o ./setup-fedora-20.sh; do
+    sleep 1
+  done
+  chmod +x ./setup-fedora-20.sh
+  sed -i s,--disablerepo=updates,, ./setup-fedora-20.sh
+  ls -l ./setup-fedora-20.sh
+  ./setup-fedora-20.sh
+  rm ./setup-fedora-20.sh
+EOS
