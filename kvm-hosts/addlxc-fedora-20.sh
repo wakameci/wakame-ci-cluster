@@ -201,3 +201,10 @@ lxc-attach -n ${ctid} -- bash -ex <<EOS
   ./setup-fedora-20.sh
   rm ./setup-fedora-20.sh
 EOS
+
+# > $ ping 192.168.2.249
+# > ping: icmp open socket: Operation not permitted
+# http://comments.gmane.org/gmane.linux.redhat.fedora.general/409425
+lxc-attach -n ${ctid} -- bash -ex <<EOS
+  yum -y reinstall iputils
+EOS
