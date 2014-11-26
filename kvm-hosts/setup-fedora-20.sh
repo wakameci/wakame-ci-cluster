@@ -234,8 +234,11 @@ for kvmmod in kvm_intel kvm_amd; do
 
   echo "options ${kvmmod/_/-} nested=1" > /etc/modprobe.d/${kvmmod/_/-}.conf
 
-  modprobe -r ${kvmmod}
-  modprobe    ${kvmmod}
+
+  if [[ "$(< /sys/module/${kvmmod}/parameters/nested)" != "Y" ]]; then
+    modprobe -r ${kvmmod}
+    modprobe    ${kvmmod}
+  fi
 
   cat /sys/module/${kvmmod}/parameters/nested
 done
