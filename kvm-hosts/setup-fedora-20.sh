@@ -118,13 +118,12 @@ ln -fs /usr/share/zoneinfo/Japan /etc/localtime
 # kemumaki
 #------------------------------------------------------------
 
-# jenkins
-if ! [[ -f /etc/yum.repos.d/jenkins.repo ]]; then
-  curl -fSkL http://pkg.jenkins-ci.org/redhat/jenkins.repo -o /etc/yum.repos.d/jenkins.repo
-  rpm --import http://pkg.jenkins-ci.org/redhat/jenkins-ci.org.key
-  yum install --disablerepo=updates -y jenkins
-fi
-chkconfig jenkins off
+getent group  jenkins >/dev/null || groupadd -r jenkins
+getent passwd jenkins >/dev/null || useradd  -g jenkins -d /var/lib/jenkins -s /bin/bash -r -m jenkins
+usermod -s /bin/bash jenkins
+
+getent group  jenkins
+getent passwd jenkins
 
 curl -fsSkL https://github.com/hansode/buildbook-rhel6/raw/master/jenkins.slave/guestroot/var/lib/jenkins/slave.jar -o /var/lib/jenkins/slave.jar
 chown jenkins:jenkins /var/lib/jenkins/slave.jar
