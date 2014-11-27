@@ -90,6 +90,7 @@ zip
 e2fsprogs
 ## mussel
 openssl
+which
 %end
 EOS
 )
