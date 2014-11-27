@@ -59,8 +59,8 @@ if [[ -f /etc/sysconfig/network-scripts/ifcfg-${bridge_if} ]]; then
   echo already exists: /etc/sysconfig/network-scripts/ifcfg-${bridge_if}. 2>&1
   exit 1
 fi
-if [[ -f /etc/sysconfig/network-scripts/ifcfg-${base_if} ]]; then
-  echo already exists: /etc/sysconfig/network-scripts/ifcfg-${bridge_if}. 2>&1
+if [[ ! -f /etc/sysconfig/network-scripts/ifcfg-${base_if} ]]; then
+  echo does not exist: /etc/sysconfig/network-scripts/ifcfg-${bridge_if}. 2>&1
   exit 1
 fi
 
