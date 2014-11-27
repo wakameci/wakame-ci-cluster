@@ -125,9 +125,6 @@ usermod -s /bin/bash jenkins
 getent group  jenkins
 getent passwd jenkins
 
-curl -fsSkL https://github.com/hansode/buildbook-rhel6/raw/master/jenkins.slave/guestroot/var/lib/jenkins/slave.jar -o /var/lib/jenkins/slave.jar
-chown jenkins:jenkins /var/lib/jenkins/slave.jar
-
 usermod -s /bin/bash jenkins
 egrep -w ^jenkins /etc/sudoers || {
   echo "jenkins ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
@@ -153,6 +150,9 @@ chown -R jenkins:jenkins /var/lib/jenkins/.ssh
 getent group kvm && {
   gpasswd -a jenkins kvm
 }
+
+curl -fsSkL https://github.com/hansode/buildbook-rhel6/raw/master/jenkins.slave/guestroot/var/lib/jenkins/slave.jar -o /var/lib/jenkins/slave.jar
+chown jenkins:jenkins /var/lib/jenkins/slave.jar
 
 # ifcfg-vboxbr0
 cat <<EOS > /etc/sysconfig/network-scripts/ifcfg-vboxbr0
