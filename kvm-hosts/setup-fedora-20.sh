@@ -121,6 +121,7 @@ ln -fs /usr/share/zoneinfo/Japan /etc/localtime
 getent group  jenkins >/dev/null || groupadd -r jenkins
 getent passwd jenkins >/dev/null || useradd  -g jenkins -d /var/lib/jenkins -s /bin/bash -r -m jenkins
 usermod -s /bin/bash jenkins
+chmod 755 /var/lib/jenkins
 
 getent group  jenkins
 getent passwd jenkins
