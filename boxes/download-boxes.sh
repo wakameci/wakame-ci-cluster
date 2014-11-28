@@ -20,7 +20,18 @@ boxes="
 
 function download_file() {
   local filename=${1}
-  [[ -f ${filename}.tmp ]] && return 0
+  if [[ -f ${filename}.tmp ]]; then
+    # %Y time of last modification, seconds since Epoc
+    local lastmod=$(stat -c %Y ${filename}.tmp)
+    local now=$(date +%s)
+    local ttl=$((60 * 60 * 6)) # 6 hours
+
+    if [[ "$((${now} - ${lastmod}))" -lt ${ttl} ]]; then
+      return 0
+    fi
+
+    rm -f ${filename}.tmp
+  fi
 
   curl -fSkLR --retry 3 --retry-delay 3 http://dlc.wakame.axsh.jp/wakameci/kemumaki-box-rhel6/current/${filename} -o ${filename}.tmp
   mv ${filename}.tmp ${filename}
