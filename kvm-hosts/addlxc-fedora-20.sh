@@ -23,7 +23,7 @@ lxc.network.flags = up
 #lxc.network.link = lxcbr0
 lxc.network.link = kemumakikol0
 lxc.network.name = eth0
-lxc.network.mtu = 1472
+#lxc.network.mtu = 1472
 #lxc.network.hwaddr = 52:54:00:$(LANG=C LC_ALL=C date +%H:%M:%S)
 lxc.rootfs = ${rootfs_path}
 lxc.rootfs.mount = ${rootfs_path}
@@ -104,7 +104,7 @@ BROADCAST=192.168.2.255
 GATEWAY=192.168.2.1
 IPADDR=192.168.2.${ctid}
 NETMASK=255.255.255.0
-MTU=1472
+#MTU=1472
 EOS
 }
 
