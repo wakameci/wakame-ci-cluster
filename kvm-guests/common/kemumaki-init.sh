@@ -60,6 +60,12 @@ function gen_yumrepo() {
   cat   metadata/${repo}.repo | tee ${mnt_path}/etc/yum.repos.d/${repo}.repo
 }
 
+function config_grub_console() {
+  [[ -f ${mnt_path}/boot/grub/grub.conf ]] || return 0
+
+  sed -i 's/\(root=[^ ]*\) .*/\1 console=tty0 console=ttyS1/' ${mnt_path}/boot/grub/grub.conf
+}
+
 for ifname in metadata/ifcfg-*; do
   gen_ifcfg ${ifname##*/ifcfg-}
   gen_route ${ifname##*/ifcfg-}
@@ -70,6 +76,8 @@ for repo in metadata/*.repo; do
   repo=${repo##*/}
   gen_yumrepo ${repo%%.repo}
 done
+
+config_grub_console
 
 if [[ -d execscript ]]; then
   while read line; do
