@@ -21,6 +21,7 @@ monitor_addr=127.0.0.1
 monitor_port=$((14000 + ${offset}))
 serial_addr=127.0.0.1
 serial_port=$((15000 + ${offset}))
+console=${console:-file:console.log}
 qmp_addr=127.0.0.1
 qmp_port=$((16000 + ${offset}))
 drive_type=virtio
@@ -51,6 +52,7 @@ $(qemu_kvm_path) -name ${name} \
  -rtc ${rtc} \
  -monitor telnet:127.0.0.1:${monitor_port},server,nowait \
  -serial telnet:${serial_addr}:${serial_port},server,nowait \
+ -serial ${console} \
  -drive file=./box-disk1-head.qcow2,media=disk,boot=on,index=0,cache=none,if=virtio \
  $([[ -f ./box-disk2.raw ]] && echo -drive file=./box-disk2.raw,media=disk,boot=off,index=1,cache=none,if=virtio) \
  $(
