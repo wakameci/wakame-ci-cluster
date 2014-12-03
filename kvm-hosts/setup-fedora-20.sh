@@ -93,6 +93,7 @@ openssl
 which
 # beremetail/hardware
 pciutils
+lshw
 %end
 EOS
 )
