@@ -91,6 +91,8 @@ e2fsprogs
 ## mussel
 openssl
 which
+# beremetail/hardware
+pciutils
 %end
 EOS
 )
