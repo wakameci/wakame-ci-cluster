@@ -16,6 +16,20 @@ distro_ver=20
 mkdir -p /etc/yum/vars
 echo ${distro_ver} > /etc/yum/vars/releasever
 
+# keep cache
+function configure_keepcache() {
+  local keepcache=1
+
+  egrep -q ^keepcache= /etc/yum.conf && {
+    sed -i "s,^keepcache=.*,keepcache=${keepcache}," /etc/yum.conf
+  } || {
+    echo keepcache=${keepcache} >> /etc/yum.conf
+  }
+
+  egrep ^keepcache= /etc/yum.conf
+}
+configure_keepcache
+
 # %packages
 addpkg=$(cat <<EOS | egrep -v '^%|^@|^#|^$'
 %packages --nobase --ignoremissing
