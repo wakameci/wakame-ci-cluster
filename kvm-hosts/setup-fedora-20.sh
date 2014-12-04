@@ -119,6 +119,8 @@ yum update   --enablerepo=updates -y kpartx
 yum update   --enablerepo=updates -y bash
 # kvm on lxc
 yum install --enablerepo=updates -y lxc lxc-templates lxc-extra
+# "udevadm settle" freeze
+yum update   --enablerepo=updates -y device-mapper
 
 # selinux
 if [[ -f /etc/selinux/config ]]; then
