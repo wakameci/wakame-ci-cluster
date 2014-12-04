@@ -102,6 +102,7 @@ kpartx
 zip
 ## 1box build
 e2fsprogs
+tar
 ## mussel
 openssl
 which
