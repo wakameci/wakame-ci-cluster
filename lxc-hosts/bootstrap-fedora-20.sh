@@ -128,7 +128,7 @@ readonly hostname=ct${ctid}.$(hostname)
 
 ### create container
 
-lxc-create -n ${ctid} -t fedora
+lxc-create -n ${ctid} -t fedora -- -R 20
 
 ### configure networking
 
