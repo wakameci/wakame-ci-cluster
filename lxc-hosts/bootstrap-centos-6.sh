@@ -67,13 +67,13 @@ lxc.cgroup.devices.allow = c 232:10 rwm
 lxc.cgroup.devices.allow = c 10:200 rwm
 
 # nbd
-lxc.cgroup.devices.allow = c 43:* rwm
+#lxc.cgroup.devices.allow = c 43:* rwm
 
 # fuse
-lxc.cgroup.devices.allow = c 10:229 rwm
+#lxc.cgroup.devices.allow = c 10:229 rwm
 
 # hpet
-lxc.cgroup.devices.allow = c 10:228 rwm
+#lxc.cgroup.devices.allow = c 10:228 rwm
 
 # control device-mapper
 # via https://lists.linuxcontainers.org/pipermail/lxc-users/2014-January/006077.html
@@ -128,7 +128,7 @@ readonly hostname=ct${ctid}.$(hostname)
 
 ### create container
 
-lxc-create -n ${ctid} -t fedora -- -R 20
+lxc-create -n ${ctid} -t centos -- -R 6
 
 ### configure networking
 
@@ -139,6 +139,14 @@ install_ifcfg    ${ctid}
 
 sed -i s,^HOSTNAME=.*,HOSTNAME=${hostname}, ${rootfs_path}/etc/sysconfig/network
 echo ${hostname} > ${rootfs_path}/etc/hostname
+
+### configure /dev/pts
+# PTY allocation request failed on channel 0
+# via http://comments.gmane.org/gmane.linux.kernel.containers.lxc.general/2901
+cat <<-'EOS' > ${rootfs_path}/etc/init/devpts.conf
+	start on startup
+	exec mount -t devpts none /dev/pts -o rw,noexec,nosuid,gid=5,mode=0620
+	EOS
 
 ### post-install
 
@@ -155,6 +163,7 @@ EOS
 
 chroot ${rootfs_path} bash -ex <<EOS
   usermod -L root
+  echo root:${rootpass} | chpasswd
   until curl -fsSkL https://raw.githubusercontent.com/hansode/add-github-user.sh/master/add-github-user.sh -o /usr/local/bin/add-github-user.sh; do
     sleep 1
   done
@@ -163,30 +172,10 @@ chroot ${rootfs_path} bash -ex <<EOS
   /usr/local/bin/add-github-user.sh hansode
   /usr/local/bin/add-github-user.sh t-iwano
 EOS
-# echo root:${rootpass} | chpasswd
+#echo root:${rootpass} | chpasswd
 
 umount ${rootfs_path}/proc
 
 ### start container
 
 ./lxc-start.sh ${ctid}
-
-# setup kvm-host
-lxc-attach -n ${ctid} -- bash -ex <<EOS
-  cd /tmp
-  until curl -fsSkL https://raw.githubusercontent.com/wakameci/wakame-ci-cluster/master/kvm-hosts/setup-fedora-20.sh -o ./setup-fedora-20.sh; do
-    sleep 1
-  done
-  chmod +x ./setup-fedora-20.sh
-  sed -i s,--disablerepo=updates,, ./setup-fedora-20.sh
-  ls -l ./setup-fedora-20.sh
-  ./setup-fedora-20.sh
-  rm ./setup-fedora-20.sh
-EOS
-
-# > $ ping 192.168.2.249
-# > ping: icmp open socket: Operation not permitted
-# http://comments.gmane.org/gmane.linux.redhat.fedora.general/409425
-lxc-attach -n ${ctid} -- bash -ex <<EOS
-  yum -y reinstall iputils
-EOS
