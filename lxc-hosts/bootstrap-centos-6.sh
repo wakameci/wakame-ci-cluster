@@ -179,3 +179,16 @@ umount ${rootfs_path}/proc
 ### start container
 
 ./lxc-start.sh ${ctid}
+
+# setup kvm-host
+lxc-attach -n ${ctid} -- bash -ex <<EOS
+  cd /tmp
+  until curl -fsSkL https://raw.githubusercontent.com/wakameci/wakame-ci-cluster/master/kvm-hosts/setup-centos-6.sh -o ./setup-centos-6.sh; do
+    sleep 1
+  done
+  chmod +x ./setup-centos-6.sh
+  sed -i s,--disablerepo=updates,, ./setup-centos-6.sh
+  ls -l ./setup-centos-6.sh
+  ./setup-centos-6.sh
+  rm ./setup-centos-6.sh
+EOS
