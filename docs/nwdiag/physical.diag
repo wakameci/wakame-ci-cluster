@@ -1,0 +1,36 @@
+{
+  network global {
+    ci01.dh [address = "x.x.x.99"];
+    ci02.dh [address = "x.x.x.100"];
+    ci03.dh [address = "x.x.x.101"];
+
+    axshgw [address = "x.x.x.167", color = "#cccccc"];
+  }
+
+  network dh {
+    address = "10.2.161.0/24";
+
+    ci01.dh [address = ".99"];
+    ci02.dh [address = ".100"];
+    ci03.dh [address = ".101"];
+  }
+
+  network axsh01 {
+    address = "192.168.1.0/24";
+
+    axshgw [address = ".1"];
+    opty [address = ".100", color = "#cccccc"];
+  }
+
+  network axsh02 {
+    address = "192.168.2.0/24";
+
+    axshgw [address = ".1"];
+
+    phys023 [address = ".23"];
+    phys024 [address = ".24"];
+    phys025 [address = ".25"];
+    phys026 [address = ".26"];
+    phys027 [address = ".27"];
+  }
+}
