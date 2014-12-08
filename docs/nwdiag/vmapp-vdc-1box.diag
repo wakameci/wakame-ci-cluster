@@ -1,0 +1,31 @@
+{
+  inet [shape = cloud];
+  inet -- router;
+
+  network nat {
+    label = "nat";
+    router;
+    host [label = "host (jenkins)"];
+  }
+
+  network vboxbr0 {
+    label = "vboxbr0";
+    address = "10.0.2.0/24";
+
+    host [address = ".2"];
+    box  [address = ".15", label = "1box"];
+
+    "i-node01" [address = ".21"];
+    "i-node02" [address = ".22"];
+    "i-lb01"   [address = ".31"];
+  }
+
+  network br1a {
+    label = "br1";
+    address = "10.1.0.1/24";
+
+    box  [address = ".1"];
+
+    "i-lb01"   [address = ".31"];
+  }
+}

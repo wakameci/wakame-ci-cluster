@@ -1,0 +1,111 @@
+{
+  inet [shape = cloud];
+  inet -- router;
+
+  network edgesw {
+    label = "edgewsw";
+    address = "192.168.2.0/24";
+
+    router;
+    phys024a [address = ".41"];
+  }
+
+  network nestbr0 {
+    label = "nestbr0";
+    address = "172.16.2.0/24";
+
+    phys024a [address = ".2" ];
+    kemu50 [address = ".50"];
+  }
+
+  network vnet-itest-0 {
+    label = "vnet-itest-0";
+    address = "172.16.90.0/24";
+    color = "#cccccc";
+
+    kemu90 [address = ".9" ];
+    kemu91 [address = ".10"];
+    kemu92 [address = ".11"];
+  }
+
+  network vnet-itest-1 {
+    label = "vnet-itest-1";
+    color = "#cccccc";
+    kemu93 [address = "172.16.91.10"];
+  }
+
+  network vnet-br0 {
+    label = "vnet-br0";
+    address = "192.168.2.0/24";
+
+    kemu50 [address = ".1"]; // fakegw
+    kemu51 [address = ".51"];
+
+    kemu90 [address = ".90"];
+    kemu91 [address = ".91"];
+    kemu92 [address = ".92"];
+    kemu93 [address = ".93"];
+    kemu94 [address = ".94"];
+  }
+
+  network vnet-itest-2 {
+    label = "vnet-itest-2";
+    color = "#cccccc";
+    kemu90 [address = "(ovs)"];
+    kemu94 [address = "10.101.0.100 (vlan100)"];
+  }
+
+  network br0a {
+    label = "br0";
+    color = "#cccccc";
+    kemu91 [address = "(ovs)"];
+    vm1    [address = "(dhcp)"];
+    vm2    [address = "(dhcp)"];
+  }
+
+  network br0b {
+    label = "br0";
+    color = "#cccccc";
+    kemu92 [address = "(ovs)"];
+    vm3    [address = "(dhcp)"];
+    vm4    [address = "(dhcp)"];
+  }
+
+  network br0c {
+    label = "br0";
+    color = "#cccccc";
+    kemu93 [address = "(ovs)"];
+    vm5    [address = "(dhcp)"];
+    vm6    [address = "(dhcp)"];
+  }
+
+  network br1a {
+    label = "br1";
+    address = "10.50.0.0/24";
+    color = "#cccccc";
+
+    kemu91 [address = ".2"];
+    vm1    [address = ".101"];
+    vm2    [address = ".102"];
+  }
+
+  network br1b {
+    label = "br1";
+    address = "10.50.0.0/24";
+    color = "#cccccc";
+
+    kemu92 [address = ".2"];
+    vm3    [address = ".103"];
+    vm4    [address = ".104"];
+  }
+
+  network br1c {
+    label = "br1";
+    address = "10.50.0.0/24";
+    color = "#cccccc";
+
+    kemu93 [address = ".2"];
+    vm5    [address = ".105"];
+    vm6    [address = ".106"];
+  }
+}

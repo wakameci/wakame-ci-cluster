@@ -1,0 +1,76 @@
+{
+   node_width = 64;
+   node_height = 15;
+   span_width = 24;
+   span_height = 0;
+   default_fontsize = 10;
+
+   "developer";
+   "github";
+   "hipchat";
+   "jenkins";
+   "slave";
+   "1box";
+   "yumrepo";
+
+   "developer" -> "github" [label = "git push"];
+   "developer" <- "github";
+                  "github" --> "hipchat" [label = "notify"];
+                  "github" <-- "hipchat";
+
+   "developer" -> "github" [label = "new PR"];
+   "developer" <- "github" [label = "PR#"];
+                  "github" --> "hipchat" [label = "notify"];
+                  "github" <-- "hipchat";
+
+   "developer" --> "jenkins" [label = "branch base build"];
+
+   "jenkins" -> "github" [label = "git fetch"];
+   "jenkins" <- "github";
+
+
+   "jenkins" -> "slave" [label = "rspec"];
+   "jenkins" <- "slave";
+   "jenkins" -> "github" [label = "add result to PR#"];
+   "jenkins" <- "github";
+   "jenkins" -> "hipchat" [label = "post result"];
+   "jenkins" <- "hipchat";
+
+   "jenkins" -> "slave" [label = "rpmbuild"];
+   "jenkins" <- "slave";
+   "jenkins" -> "github" [label = "add result to PR#"];
+   "jenkins" <- "github";
+   "jenkins" -> "hipchat" [label = "post result"];
+   "jenkins" <- "hipchat";
+
+   "jenkins" -> "slave" [label = "upload yum"];
+                "slave" -> "yumrepo" [label = "upload yumrepo"];
+                "slave" <- "yumrepo";
+   "jenkins" <- "slave";
+   "jenkins" -> "github" [label = "add result to PR#"];
+   "jenkins" <- "github";
+
+   "jenkins" -> "slave" [label = "build 1box"];
+                "slave" -> "1box" [label = "build vmimage"];
+                           "1box" -> "yumrepo" [label = "yum install"];
+                           "1box" <- "yumrepo";
+                "slave" <- "1box";
+   "jenkins" <- "slave";
+
+   "jenkins" -> "slave" [label = "run 1box"];
+                "slave" -> "1box" [label = "run kvm"];
+                "slave" <- "1box";
+   "jenkins" <- "slave";
+
+   "jenkins" -> "slave" [label = "smoketesting"];
+                "slave" -> "1box" [label = "call api..."];
+                "slave" <- "1box";
+   "jenkins" <- "slave";
+   "jenkins" -> "github" [label = "notify result"];
+   "jenkins" <- "github";
+   "jenkins" -> "hipchat" [label = "post result"];
+   "jenkins" <- "hipchat";
+
+   "developer" -> "github" [label = "merge branch"];
+   "developer" <- "github" [label = "PR# closed"];
+}
