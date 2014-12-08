@@ -78,73 +78,73 @@
     label = "kemumakibr0";
     address = "172.16.255.0/24";
 
-    ci01.dh      [address = "172.16.255.2"];
-    master       [address = "172.16.255.11", color = "#33cc33"];
-    vzkemumaki20a [address = "172.16.255.20", label = "vzkemumaki20", color = "#cccccc"];
+    ci01.dh      [address = ".2"];
+    master       [address = ".11", color = "#33cc33"];
+    vzkemumaki20a [address = ".20", label = "vzkemumaki20", color = "#cccccc"];
   }
 
   network kemumakibr0b {
     label = "kemumakibr0";
     address = "172.16.255.0/24";
 
-    ci02.dh      [address = "172.16.255.2"];
-    kemumaki12b  [address = "172.16.255.12", label = "kemumaki12"];
-    kemumaki13b  [address = "172.16.255.13", label = "kemumaki13"];
-    vzkemumaki20b [address = "172.16.255.20", label = "vzkemumaki20", color = "#cccccc"];
+    ci02.dh      [address = ".2"];
+    kemumaki12b  [address = ".12", label = "kemumaki12"];
+    kemumaki13b  [address = ".13", label = "kemumaki13"];
+    vzkemumaki20b [address = ".20", label = "vzkemumaki20", color = "#cccccc"];
   }
 
   network kemumakibr0c {
     label = "kemumakibr0";
     address = "172.16.255.0/24";
 
-    ci03.dh      [address = "172.16.255.2"];
-    kemumaki12c  [address = "172.16.255.12", label = "kemumaki12"];
-    kemumaki13c  [address = "172.16.255.13", label = "kemumaki13"];
-    vzkemumaki20c [address = "172.16.255.20", label = "vzkemumaki20", color = "#cccccc"];
-    lxckemumaki21c[address = "172.16.255.21", label = "lxckemumaki21", color = "#cccccc"];
+    ci03.dh      [address = ".2"];
+    kemumaki12c  [address = ".12", label = "kemumaki12"];
+    kemumaki13c  [address = ".13", label = "kemumaki13"];
+    vzkemumaki20c [address = ".20", label = "vzkemumaki20", color = "#cccccc"];
+    lxckemumaki21c[address = ".21", label = "lxckemumaki21", color = "#cccccc"];
   }
 
   network vzbr0a {
     label = "vzbr0";
     address = "172.16.254.0/24";
 
-    vzkemumaki20a [address = "172.16.254.1", label = "vzkemumaki20", color = "#cccccc"];
+    vzkemumaki20a [address = ".1", label = "vzkemumaki20", color = "#cccccc"];
 
-    ct101a [address = "172.16.254.101", label = "ct101"];
-    ct102a [address = "172.16.254.102", label = "ct102"];
-    ct103a [address = "172.16.254.103", label = "ct103"];
+    ct101a [address = ".101", label = "ct101"];
+    ct102a [address = ".102", label = "ct102"];
+    ct103a [address = ".103", label = "ct103"];
   }
 
   network vzbr0b {
     label = "vzbr0";
     address = "172.16.254.0/24";
 
-    vzkemumaki20b [address = "172.16.254.1", label = "vzkemumaki20", color = "#cccccc"];
+    vzkemumaki20b [address = ".1", label = "vzkemumaki20", color = "#cccccc"];
 
-    ct101b [address = "172.16.254.101", label = "ct101"];
-    ct102b [address = "172.16.254.102", label = "ct102"];
-    ct103b [address = "172.16.254.103", label = "ct103"];
+    ct101b [address = ".101", label = "ct101"];
+    ct102b [address = ".102", label = "ct102"];
+    ct103b [address = ".103", label = "ct103"];
   }
 
   network vzbr0c {
     label = "vzbr0";
     address = "172.16.254.0/24";
 
-    vzkemumaki20c [address = "172.16.254.1", label = "vzkemumaki20", color = "#cccccc"];
+    vzkemumaki20c [address = ".1", label = "vzkemumaki20", color = "#cccccc"];
 
-    ct101c [address = "172.16.254.101", label = "ct101"];
-    ct102c [address = "172.16.254.102", label = "ct102"];
-    ct103c [address = "172.16.254.103", label = "ct103"];
+    ct101c [address = ".101", label = "ct101"];
+    ct102c [address = ".102", label = "ct102"];
+    ct103c [address = ".103", label = "ct103"];
   }
 
   network lxcbr0c {
     label = "lxcbr0";
     address = "172.16.254.0/24";
 
-    lxckemumaki21c [address = "172.16.254.1", label = "lxckemumaki21", color = "#cccccc"];
+    lxckemumaki21c [address = ".1", label = "lxckemumaki21", color = "#cccccc"];
 
-    lxc101 [address = "172.16.254.101", label = "lxc101"];
-    lxc102 [address = "172.16.254.102", label = "lxc102"];
-    lxc103 [address = "172.16.254.103", label = "lxc103"];
+    lxc101 [address = ".101", label = "lxc101"];
+    lxc102 [address = ".102", label = "lxc102"];
+    lxc103 [address = ".103", label = "lxc103"];
   }
 }
