@@ -280,5 +280,5 @@ service ntpdate restart
 service ntpd    restart
 
 ##
-service iptables restart
+service iptables restart || :
 service network  restart
