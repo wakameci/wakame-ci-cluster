@@ -296,7 +296,7 @@ systemctl start  ntpdate
 systemctl start  ntpd
 
 ## NetworkManager.service -> network.service
-for ifcfg in /etc/sysconfig/network-scripts/ifcfg-e*; do
+for ifcfg in /etc/sysconfig/network-scripts/ifcfg-{e,p}*; do
   [[ -f ${ifcfg} ]] || continue
   sed -i "s,0=,=," ${ifcfg}
 done
