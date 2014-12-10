@@ -113,7 +113,9 @@ lshw
 EOS
 )
 
-yum install --disablerepo=updates -y ${addpkg}
+# enable to run script many times
+# yum install --disablerepo=updates -y ${addpkg}
+yum install -y ${addpkg}
 # base's kpartx is broken.
 yum update   --enablerepo=updates -y kpartx
 # anti-shellshock
@@ -226,7 +228,8 @@ cat <<EOS > /etc/sysconfig/iptables
 :POSTROUTING ACCEPT [0:0]
 :OUTPUT ACCEPT [0:0]
 $(
-for ifname in em1 eth0; do
+PRIMARY_NIC=${PRIMARY_NIC:-"em1 eth0"}
+for ifname in ${PRIMARY_NIC}; do
   [[ -f /etc/sysconfig/network-scripts/ifcfg-${ifname} ]] || continue
   echo -A POSTROUTING -o ${ifname} -s 10.0.2.0/24     -j MASQUERADE
   echo -A POSTROUTING -o ${ifname} -s 172.16.255.0/24 -j MASQUERADE
@@ -296,7 +299,7 @@ systemctl start  ntpdate
 systemctl start  ntpd
 
 ## NetworkManager.service -> network.service
-for ifcfg in /etc/sysconfig/network-scripts/ifcfg-e*; do
+for ifcfg in /etc/sysconfig/network-scripts/ifcfg-{e,p}*; do
   [[ -f ${ifcfg} ]] || continue
   sed -i "s,0=,=," ${ifcfg}
 done
