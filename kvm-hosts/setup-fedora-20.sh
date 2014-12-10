@@ -113,7 +113,9 @@ lshw
 EOS
 )
 
-yum install --disablerepo=updates -y ${addpkg}
+# enable to run script many times
+# yum install --disablerepo=updates -y ${addpkg}
+yum install -y ${addpkg}
 # base's kpartx is broken.
 yum update   --enablerepo=updates -y kpartx
 # anti-shellshock
