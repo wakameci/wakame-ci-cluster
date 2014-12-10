@@ -278,3 +278,10 @@ chkconfig ntpd    on
 
 service ntpdate restart
 service ntpd    restart
+
+## iptables
+sed -i 's,^IPTABLES_MODULES_UNLOAD="yes",IPTABLES_MODULES_UNLOAD="no",' /etc/sysconfig/iptables-config
+service iptables restart
+
+##
+service network  restart
