@@ -278,3 +278,7 @@ chkconfig ntpd    on
 
 service ntpdate restart
 service ntpd    restart
+
+##
+service iptables restart
+service network  restart
