@@ -100,6 +100,9 @@ qemu-img
 parted
 kpartx
 zip
+## qemu dependency
+# qemu-system-x86_64: symbol lookup error: qemu-system-x86_64: undefined symbol: glfs_discard_async
+glusterfs
 ## 1box build
 e2fsprogs
 tar
