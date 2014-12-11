@@ -148,6 +148,15 @@ cat <<-'EOS' > ${rootfs_path}/etc/init/devpts.conf
 	exec mount -t devpts none /dev/pts -o rw,noexec,nosuid,gid=5,mode=0620
 	EOS
 
+### configure udev
+# lxc-template disables /sbin/start_udevd in /etc/rc.d/rc.sysinit.
+# however device-mapper depends on udevd.
+# if udevd is not running, udevadm command will fail and /dev/mapper/loopNpN will not exist.
+cat <<-'EOS' > ${rootfs_path}/etc/init/lxc-udev.conf
+	start on startup
+	exec /sbin/udevd
+	EOS
+
 ### post-install
 
 #### copy.txt
