@@ -16,6 +16,9 @@ boxes="
      minimal-6.4-x86_64.kvm.box
      minimal-6.5-x86_64.kvm.box
      minimal-6.6-x86_64.kvm.box
+
+    kemumaki-7.0.1406-x86_64.kvm.box
+     minimal-7.0.1406-x86_64.kvm.box
 "
 
 function download_file() {
@@ -33,7 +36,15 @@ function download_file() {
     rm -f ${filename}.tmp
   fi
 
-  curl -fSkLR --retry 3 --retry-delay 3 http://dlc.wakame.axsh.jp/wakameci/kemumaki-box-rhel6/current/${filename} -o ${filename}.tmp
+  # minimal-7.0.1406-x86_64.kvm.box
+  local boxes=( ${filename//-/ } )
+  # -> minimal 7.0.1406 x86_64.kvm.box
+  local versions=( ${boxes[1]//./ } )
+  # -> 7 0 1406
+  local majorver=${versions[0]}
+  # -> 7
+
+  curl -fSkLR --retry 3 --retry-delay 3 http://dlc.wakame.axsh.jp/wakameci/kemumaki-box-rhel${majorver}/current/${filename} -o ${filename}.tmp
   mv ${filename}.tmp ${filename}
 }
 
