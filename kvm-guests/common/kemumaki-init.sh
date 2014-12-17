@@ -22,8 +22,14 @@ loopdev_swap=$(echo "${output}" | awk '{print $3}' | sed -n 2,2p) # loopXp2 shou
 udevadm settle
 
 devpath=/dev/mapper/${loopdev_root}
-trap "umount -f ${mnt_path}" ERR
+trap "
+ umount -f ${mnt_path}/dev
+ umount -f ${mnt_path}/proc
+ umount -f ${mnt_path}
+" ERR
 mount ${devpath} ${mnt_path}
+mount --bind /proc ${mnt_path}/proc
+mount --bind /dev  ${mnt_path}/dev
 
 ## RHEL
 
@@ -61,9 +67,16 @@ function gen_yumrepo() {
 }
 
 function config_grub_console() {
-  [[ -f ${mnt_path}/boot/grub/grub.conf ]] || return 0
+  # grub1
+  if [[ -f ${mnt_path}/boot/grub/grub.conf ]]; then
+    sed -i 's/\(root=[^ ]*\) .*/\1 console=tty0 console=ttyS1/' ${mnt_path}/boot/grub/grub.conf
+  fi
 
-  sed -i 's/\(root=[^ ]*\) .*/\1 console=tty0 console=ttyS1/' ${mnt_path}/boot/grub/grub.conf
+  # grub2
+  if [[ -f ${mnt_path}/boot/grub2/grub.cfg ]]; then
+    sed -i 's,^GRUB_CMDLINE_LINUX=.*,GRUB_CMDLINE_LINUX="console=tty0 console=ttyS1",' ${mnt_path}/etc/default/grub
+    chroot ${mnt_path} grub2-mkconfig -o /boot/grub2/grub.cfg
+  fi
 }
 
 for ifname in metadata/ifcfg-*; do
@@ -93,6 +106,8 @@ sync
 
 ##
 
+umount ${mnt_path}/dev
+umount ${mnt_path}/proc
 umount ${mnt_path}
 kpartx -vd ${raw}
 
