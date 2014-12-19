@@ -5,6 +5,7 @@
 #
 
 #
+offset=${offset:-1}
 vnc_addr=127.0.0.1
 vnc_port=$((11000 + ${offset}))
 monitor_addr=127.0.0.1
