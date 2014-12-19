@@ -24,10 +24,10 @@ serial_port=$((15000 + ${offset}))
 console=${console:-file:console.log}
 qmp_addr=127.0.0.1
 qmp_port=$((16000 + ${offset}))
-drive_type=virtio
-nic_driver=virtio-net-pci
+drive_type=${drive_type:-virtio}
+nic_driver=${nic_driver:-virtio-net-pci}
 pidfile=kvm.pid
-rtc="base=utc"
+rtc=${rtc:-"base=utc"}
 
 #
 function qemu_kvm_path() {
