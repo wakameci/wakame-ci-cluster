@@ -16,5 +16,6 @@ set -o pipefail
 
 #
 kill_remove_pidfile ${pidfile}
-$(qemu_command) -incoming "exec: cat $(pwd)/kvm.state"
+$(qemu_command) \
+  -incoming "exec: cat $(pwd)/kvm.state"
 attach_vif_to_bridge
