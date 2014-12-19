@@ -42,7 +42,10 @@ function qemu_kvm_path() {
   echo ${command_path}
 }
 
+#
 kill_remove_pidfile ${pidfile}
+
+#
 $(qemu_kvm_path) -name ${name} \
  -cpu ${cpu_type} \
  -m ${mem_size} \
@@ -69,6 +72,7 @@ $(qemu_kvm_path) -name ${name} \
  -pidfile ${pidfile} \
  -daemonize
 
+#
 i=0
 for brname in ${brnames[@]}; do
   ip link set ${name}-${monitor_port}-${i} up
