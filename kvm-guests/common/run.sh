@@ -24,10 +24,10 @@ serial_port=$((15000 + ${offset}))
 console=${console:-file:console.log}
 qmp_addr=127.0.0.1
 qmp_port=$((16000 + ${offset}))
-drive_type=virtio
-nic_driver=virtio-net-pci
+drive_type=${drive_type:-virtio}
+nic_driver=${nic_driver:-virtio-net-pci}
 pidfile=kvm.pid
-rtc="base=utc"
+rtc=${rtc:-"base=utc"}
 
 #
 function qemu_kvm_path() {
@@ -53,8 +53,8 @@ $(qemu_kvm_path) -name ${name} \
  -monitor telnet:127.0.0.1:${monitor_port},server,nowait \
  -serial telnet:${serial_addr}:${serial_port},server,nowait \
  -serial ${console} \
- -drive file=./box-disk1-head.qcow2,media=disk,boot=on,index=0,cache=none,if=virtio \
- $([[ -f ./box-disk2.raw ]] && echo -drive file=./box-disk2.raw,media=disk,boot=off,index=1,cache=none,if=virtio) \
+ -drive file=./box-disk1-head.qcow2,media=disk,boot=on,index=0,cache=none,if=${drive_type} \
+ $([[ -f ./box-disk2.raw ]] && echo -drive file=./box-disk2.raw,media=disk,boot=off,index=1,cache=none,if=${drive_type}) \
  $(
  i=0
  for brname in ${brnames[@]}; do
