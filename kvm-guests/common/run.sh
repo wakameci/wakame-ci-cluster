@@ -18,7 +18,7 @@ set -o pipefail
 kill_remove_pidfile ${pidfile}
 
 #
-eval $(qemu_command)
+$(qemu_command)
 
 #
 i=0

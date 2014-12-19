@@ -18,7 +18,7 @@ set -o pipefail
 kill_remove_pidfile ${pidfile}
 
 #
-eval $(qemu_command) -incoming \"exec: cat $(pwd)/kvm.state\"
+$(qemu_command) -incoming "exec: cat $(pwd)/kvm.state"
 
 #
 i=0
