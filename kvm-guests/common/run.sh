@@ -21,9 +21,4 @@ kill_remove_pidfile ${pidfile}
 $(qemu_command)
 
 #
-i=0
-for brname in ${brnames[@]}; do
-  ip link set ${name}-${monitor_port}-${i} up
-  brctl addif ${brnames[${i}]} ${name}-${monitor_port}-${i}
-  i=$((${i} + 1))
-done
+attach_vif_to_bridge

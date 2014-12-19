@@ -77,3 +77,13 @@ $(qemu_kvm_path) -name ${name} \
  -daemonize
 EOS
 }
+
+#
+function attach_vif_to_bridge() {
+  i=0
+  for brname in ${brnames[@]}; do
+    ip link set ${name}-${monitor_port}-${i} up
+    brctl addif ${brnames[${i}]} ${name}-${monitor_port}-${i}
+    i=$((${i} + 1))
+  done
+}
