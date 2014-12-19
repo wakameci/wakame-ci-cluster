@@ -16,9 +16,5 @@ set -o pipefail
 
 #
 kill_remove_pidfile ${pidfile}
-
-#
 $(qemu_command)
-
-#
 attach_vif_to_bridge
