@@ -53,8 +53,8 @@ $(qemu_kvm_path) -name ${name} \
  -monitor telnet:127.0.0.1:${monitor_port},server,nowait \
  -serial telnet:${serial_addr}:${serial_port},server,nowait \
  -serial ${console} \
- -drive file=./box-disk1-head.qcow2,media=disk,boot=on,index=0,cache=none,if=virtio \
- $([[ -f ./box-disk2.raw ]] && echo -drive file=./box-disk2.raw,media=disk,boot=off,index=1,cache=none,if=virtio) \
+ -drive file=./box-disk1-head.qcow2,media=disk,boot=on,index=0,cache=none,if=${drive_type} \
+ $([[ -f ./box-disk2.raw ]] && echo -drive file=./box-disk2.raw,media=disk,boot=off,index=1,cache=none,if=${drive_type}) \
  $(
  i=0
  for brname in ${brnames[@]}; do
