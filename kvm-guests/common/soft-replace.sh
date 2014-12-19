@@ -4,6 +4,7 @@
 #  bash
 #
 set -e
+set -o pipefail
 set -x
 
 sudo /bin/bash -e <<EOS

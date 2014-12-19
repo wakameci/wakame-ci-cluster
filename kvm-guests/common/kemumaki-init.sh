@@ -4,8 +4,8 @@
 #  bash
 #
 set -e
-set -x
 set -o pipefail
+set -x
 
 mnt_path=mnt
 raw=$(pwd)/box-disk1.raw

@@ -10,9 +10,9 @@ set -x
 [[ -f ./metadata/vmspec.conf ]]
 .     ./metadata/vmspec.conf
 
+.     ../common/qemu-kvm.sh
+
 #
-monitor_addr=127.0.0.1
-monitor_port=$((14000 + ${offset}))
 
 nc ${monitor_addr} ${monitor_port} <<-EOS
 	migrate_set_speed 1g
