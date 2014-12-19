@@ -11,5 +11,4 @@ set -o pipefail
 .     ../common/qemu-kvm.sh
 
 #
-pidfile=kvm.pid
 kill_remove_pidfile ${pidfile}

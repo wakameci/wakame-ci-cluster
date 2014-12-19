@@ -4,6 +4,22 @@
 #  bash
 #
 
+#
+vnc_addr=127.0.0.1
+vnc_port=$((11000 + ${offset}))
+monitor_addr=127.0.0.1
+monitor_port=$((14000 + ${offset}))
+serial_addr=127.0.0.1
+serial_port=$((15000 + ${offset}))
+console=${console:-file:console.log}
+qmp_addr=127.0.0.1
+qmp_port=$((16000 + ${offset}))
+drive_type=${drive_type:-virtio}
+nic_driver=${nic_driver:-virtio-net-pci}
+pidfile=kvm.pid
+rtc=${rtc:-"base=utc"}
+
+#
 function kill_remove_pidfile() {
   local pidfile=${1}
   [[ -f ${pidfile} ]] || return 0
