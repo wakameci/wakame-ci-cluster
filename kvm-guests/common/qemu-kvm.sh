@@ -1,3 +1,9 @@
+# -*-Shell-script-*-
+#
+# requires:
+#  bash
+#
+
 function kill_remove_pidfile() {
   local pidfile=${1}
   [[ -f ${pidfile} ]] || return 0
