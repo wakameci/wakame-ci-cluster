@@ -15,19 +15,6 @@ set -o pipefail
 .     ../common/qemu-kvm.sh
 
 #
-function qemu_kvm_path() {
-  local execs="/usr/libexec/qemu-kvm /usr/bin/kvm /usr/bin/qemu-kvm"
-
-  local command_path exe
-  for exe in ${execs}; do
-    [[ -x "${exe}" ]] && command_path=${exe} || :
-  done
-
-  [[ -n "${command_path}" ]] || { echo "[ERROR] command not found: ${execs} (${BASH_SOURCE[0]##*/}:${LINENO})." >&2; return 1; }
-  echo ${command_path}
-}
-
-#
 kill_remove_pidfile ${pidfile}
 
 #
