@@ -11,6 +11,8 @@ set -e
 set -o pipefail
 set -x
 
+PATH=/bin:/usr/bin:/sbin:/usr/sbin
+
 function render_lxc_conf() {
   local ctid=${1:-101}
 
