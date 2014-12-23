@@ -10,6 +10,8 @@ set -e
 set -o pipefail
 set -x
 
+PATH=/bin:/usr/bin:/sbin:/usr/sbin
+
 ctid=${1}
 if [[ -z "${ctid}" ]]; then
   echo "$0 <ctid>" >&2
