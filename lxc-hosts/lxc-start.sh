@@ -17,6 +17,7 @@ if [[ -z "${ctid}" ]]; then
 fi
 
 lxc-start -n ${ctid} -d -l DEBUG -o /var/log/lxc/${ctid}.log
+lxc-wait  -n ${ctid} -s RUNNING
 
 ###
 
