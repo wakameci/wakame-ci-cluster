@@ -79,6 +79,49 @@ function config_grub_console() {
   fi
 }
 
+function render_tty_conf() {
+  cat <<-'EOS'
+	# tty - getty
+	#
+	# This service maintains a getty on the specified device.
+
+	stop on runlevel [S016]
+
+	respawn
+	instance $TTY
+	#exec /sbin/mingetty $TTY
+	script
+	    if [[ "$TTY" == "/dev/ttyS0" ]]; then
+	      exec /sbin/mingetty --autologin=root $TTY
+	    else
+	      exec /sbin/mingetty $TTY
+	    fi
+	end script
+	usage 'tty TTY=/dev/ttyX  - where X is console id'
+	EOS
+}
+
+function render_autologin_conf() {
+  cat <<-'EOS'
+	[Service]
+	ExecStart=
+	ExecStart=-/sbin/agetty --autologin=root -s %I
+	EOS
+}
+
+function config_tty() {
+  # upstart
+  if [[ -f ${mnt_path}/etc/init/tty.conf ]]; then
+    render_tty_conf | tee ${mnt_path}/etc/init/tty.conf
+  fi
+
+  # systemd
+  if [[   -d ${mnt_path}/etc/systemd/system/getty.target.wants ]]; then
+    mkdir -p ${mnt_path}/etc/systemd/system/getty\@ttyS0.service.d
+    render_autologin_conf | tee ${mnt_path}/etc/systemd/system/getty\@ttyS0.service.d/autologin.conf
+  fi
+}
+
 for ifname in metadata/ifcfg-*; do
   gen_ifcfg ${ifname##*/ifcfg-}
   gen_route ${ifname##*/ifcfg-}
@@ -91,6 +134,7 @@ for repo in metadata/*.repo; do
 done
 
 config_grub_console
+config_tty
 
 if [[ -d execscript ]]; then
   while read line; do
