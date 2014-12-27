@@ -13,7 +13,7 @@ index=$(printf "%04d" ${current})
 serial=$(date +%s)
 
 sudo bash -ex <<EOS
-  ./stop.sh
+  ../common/stop.sh
 
   [[ -f kvm.state ]] && \
   mv -i kvm.state _kvm_${serial}.state
@@ -23,5 +23,5 @@ sudo bash -ex <<EOS
   mv -i box-disk1-head.qcow2 _box-disk1_${serial}.qcow2
   cp -i box-disk1_${index}.qcow2 box-disk1-head.qcow2
 
-  ./resume.sh
+  ../common/resume.sh
 EOS
