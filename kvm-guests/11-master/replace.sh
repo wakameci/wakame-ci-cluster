@@ -38,8 +38,7 @@ sudo /bin/bash -ex <<'EOS'
 EOS
 
 sudo /bin/bash -ex <<EOS
-  time tar zxvf ${box_path}
-  time sync
+  ../common/unpack-box.sh ${box_path}
 
   ../common/kemumaki-init.sh
   ../common/qcow2-init.sh
