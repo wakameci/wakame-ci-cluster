@@ -1,0 +1,3 @@
+[submodule "kvm-guests/vendor/buildbook-rhel6"]
+	path = kvm-guests/vendor/buildbook-rhel6
+	url = https://github.com/wakameci/buildbook-rhel6
