@@ -18,6 +18,7 @@ qmp_port=$((16000 + ${offset}))
 drive_type=${drive_type:-virtio}
 nic_driver=${nic_driver:-virtio-net-pci}
 pidfile=kvm.pid
+logfile=${logfile:-kvm.log}
 rtc=${rtc:-"base=utc"}
 
 #
@@ -74,6 +75,7 @@ $(qemu_kvm_path) -name ${name} \
  -device virtio-serial \
  -device virtserialport,chardev=qga0,name=org.qemu.guest_agent.0 \
  -pidfile ${pidfile} \
+ -D ${logfile} \
  -daemonize
 EOS
 }
