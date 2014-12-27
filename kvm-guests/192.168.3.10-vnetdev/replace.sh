@@ -28,8 +28,7 @@ fi
 sudo /bin/bash -e <<EOS
   ../common/stop.sh
 
-  time tar zxvf ${box_path}
-  time sync
+  ../common/unpack-box.sh ${box_path}
 
   ../common/kemumaki-init.sh
   ./run.sh
