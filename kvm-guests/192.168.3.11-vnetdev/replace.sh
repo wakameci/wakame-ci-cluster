@@ -4,6 +4,7 @@
 #  bash
 #
 set -e
+set -o pipefail
 set -x
 
 target_node=192.168.3.11

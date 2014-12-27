@@ -4,6 +4,7 @@
 #  bash
 #
 set -e
+set -o pipefail
 set -x
 
 distro_ver=6.4

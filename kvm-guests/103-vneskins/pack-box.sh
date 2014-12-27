@@ -4,6 +4,7 @@
 #  bash
 #
 set -e
+set -o pipefail
 
 readonly abs_dirname=$(cd ${BASH_SOURCE[0]%/*} && pwd)
 
