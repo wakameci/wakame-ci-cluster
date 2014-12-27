@@ -3,3 +3,6 @@
 *.pid
 *.qcow2
 kvm.state
+kvm.log
+console.log
+distro_ver.conf
