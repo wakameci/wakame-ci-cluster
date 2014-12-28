@@ -10,7 +10,7 @@ chroot_dir=${1}
 centos_ver=6.5
 
 chroot $1 /bin/bash -ex <<'EOS'
-  yum install --disablerepo=updates -y lxc lxc-libs lxc-templates bridge-utils rsync
+  yum install --disablerepo=updates -y lxc lxc-libs lxc-templates
 EOS
 
 chroot $1 /bin/bash -ex <<EOS
