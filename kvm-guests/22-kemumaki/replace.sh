@@ -7,7 +7,7 @@ set -e
 set -o pipefail
 set -x
 
-distro_ver=6.6
+distro_ver=7.0.1406
 [[ -a distro_ver.conf ]] && . distro_ver.conf
 box_path=../../boxes/lxckemumaki-${distro_ver}-x86_64.kvm.box
 
