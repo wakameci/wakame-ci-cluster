@@ -10,4 +10,5 @@ chroot_dir=${1}
 
 chroot $1 /bin/bash -ex <<'EOS'
   yum install --disablerepo=updates -y qemu-kvm qemu-img
+  yum install --disablerepo=updates -y bridge-utils rsync
 EOS
