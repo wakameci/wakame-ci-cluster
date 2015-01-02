@@ -28,7 +28,7 @@ function download_file() {
     # %Y time of last modification, seconds since Epoc
     local lastmod=$(stat -c %Y ${filename}.tmp)
     local now=$(date +%s)
-    local ttl=$((60 * 60 * 6)) # 6 hours
+    local ttl=$((60 * 50)) # 1 min
 
     if [[ "$((${now} - ${lastmod}))" -lt ${ttl} ]]; then
       return 0
