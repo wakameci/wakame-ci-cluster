@@ -20,11 +20,20 @@ fi
 
 ### add device
 
-lxc-device -n ${ctid} add /dev/kvm
-lxc-device -n ${ctid} add /dev/net/tun
+lxc-attach -n ${ctid} -- bash -ex <<-EOS
+  [[ -c /dev/kvm     ]] || {
+    mknod -m 666 /dev/kvm     c 10 232
+  }
+  [[ -c /dev/net/tun ]] || {
+    mkdir -p     /dev/net
+    mknod -m 666 /dev/net/tun c 10 200
+   }
+EOS
 
 # > PTY allocation request failed on channel 0
-lxc-device -n ${ctid} add /dev/ptmx
+lxc-attach -n ${ctid} -- bash -ex <<-EOS
+  [[ -c /dev/ptmx ]] || mknod -m 666 /dev/ptmx c 5 2
+EOS
 
 # /dev/loopX and /dev/dm-X
 for i in {0..127}; do
