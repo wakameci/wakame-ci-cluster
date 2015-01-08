@@ -49,6 +49,11 @@ function download_file() {
   mv ${filename}.tmp ${filename}
 }
 
+case "${#}" in
+  0) ;;
+  *) boxes="${@}" ;;
+esac
+
 for box in ${boxes}; do
   echo ... ${box}
 
