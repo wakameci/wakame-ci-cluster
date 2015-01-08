@@ -2,13 +2,21 @@
 
 Script to create VM instances.
 
+## Install
+
+```
+$ git checkout https://github.com/wakameci/wakame-ci-cluster.git
+$ cd wakame-ci-cluster
+$ git submodule update --init --recursive
+```
+
 ## Usage
 
 First, download base images.
 
+
 ```
-$ git checkout https://github.com/wakameci/wakame-ci-cluster.git
-$ cd wakame-ci-cluster/boxes
+$ cd boxes
 $ ./download-boxes.sh
 ```
 
