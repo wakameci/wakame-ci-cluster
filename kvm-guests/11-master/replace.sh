@@ -7,10 +7,6 @@ set -e
 set -o pipefail
 set -x
 
-distro_ver=6.6
-[[ -a distro_ver.conf ]] && . distro_ver.conf
-box_path=../../boxes/kemumaki-${distro_ver}-x86_64.kvm.box
-
 sudo ./stop.sh
 
 sudo /bin/bash -ex <<'EOS'
@@ -38,9 +34,7 @@ sudo /bin/bash -ex <<'EOS'
 EOS
 
 sudo /bin/bash -ex <<EOS
-  ../common/unpack-box.sh ${box_path}
-
-  ../common/kemumaki-init.sh
+  ./build.sh
   ../common/qcow2-init.sh
   ./run.sh
 EOS
