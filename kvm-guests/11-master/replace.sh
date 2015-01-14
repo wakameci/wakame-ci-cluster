@@ -7,7 +7,9 @@ set -e
 set -o pipefail
 set -x
 
-sudo ./stop.sh
+sudo /bin/bash -e <<EOS
+  ../common/stop.sh
+EOS
 
 sudo /bin/bash -ex <<'EOS'
   timestamp=$(date +%Y%m%d.%s).$$
