@@ -5,10 +5,12 @@
 #
 set -e
 set -o pipefail
+set -x
 
-[[ $UID == 0 ]]
+[[ -f ./metadata/vmspec.conf ]]
+.     ./metadata/vmspec.conf
 
 .     ../common/qemu-kvm.sh
 
 #
-kill_remove_pidfile ${pidfile}
+shutdown_remove_pidfile ${pidfile} ${monitor_addr} ${monitor_port}
