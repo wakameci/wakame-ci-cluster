@@ -7,6 +7,10 @@ set -e
 set -o pipefail
 set -x
 
+if ! [[ -f ./box-disk2.raw ]]; then
+  exit 0
+fi
+
 sudo /bin/bash -ex <<'EOS'
   timestamp=$(date +%Y%m%d.%s).$$
 
