@@ -11,5 +11,5 @@ sudo /bin/bash -e <<EOS
   ../common/stop.sh
   ../common/qcow2-init.sh
   time sync
-  ./run.sh
+  ../common/run.sh
 EOS
