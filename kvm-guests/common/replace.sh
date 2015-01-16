@@ -9,7 +9,7 @@ set -x
 
 sudo /bin/bash -e <<EOS
   ../common/stop.sh
-  ./build.sh
+  ../common/build.sh
   ../common/qcow2-init.sh
-  ./run.sh
+  ../common/run.sh
 EOS
