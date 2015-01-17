@@ -165,6 +165,8 @@ function detach_partition() {
     dmsetup remove ${loopdev}
   fi
 
+  udevadm settle
+
   local loopdev_path=/dev/${loopdev%p[0-9]*}
   if losetup -a | egrep ^${loopdev_path}: -q; then
     losetup -d ${loopdev_path}
