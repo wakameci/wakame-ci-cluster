@@ -27,7 +27,10 @@ function qemu_kvm_path() {
 
   local command_path= exe=
   for exe in ${execs}; do
-    [[ -x "${exe}" ]] && command_path=${exe} || :
+    if [[ -x "${exe}" ]]; then
+      command_path=${exe}
+      break
+    fi
   done
 
   [[ -n "${command_path}" ]] || { echo "[ERROR] command not found: ${execs} (${BASH_SOURCE[0]##*/}:${LINENO})." >&2; return 1; }
