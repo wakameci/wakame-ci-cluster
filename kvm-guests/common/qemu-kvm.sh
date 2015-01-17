@@ -25,7 +25,7 @@ rtc=${rtc:-"base=utc"}
 function qemu_kvm_path() {
   local execs="/usr/libexec/qemu-kvm /usr/bin/kvm /usr/bin/qemu-kvm"
 
-  local command_path exe
+  local command_path= exe=
   for exe in ${execs}; do
     [[ -x "${exe}" ]] && command_path=${exe} || :
   done
