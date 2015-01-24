@@ -7,8 +7,8 @@ set -e
 set -o pipefail
 set -x
 
-mnt_path=mnt
-raw=$(pwd)/box-disk1.raw
+mnt_path=${mnt_path:-mnt}
+raw=${raw:-$(pwd)/box-disk1.raw}
 
 [[ -f ${raw} ]]
 [[ $UID == 0 ]]
