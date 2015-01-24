@@ -139,7 +139,7 @@ config_tty
 if [[ -d execscript ]]; then
   while read line; do
     eval ${line} ${mnt_path}
-  done < <(find -L execscript ! -type d -name '*.sh' | sort)
+  done < <(find -L execscript ! -type d -perm -a=x | sort)
 fi
 
 if [[ -d guestroot ]]; then
