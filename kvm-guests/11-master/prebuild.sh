@@ -19,6 +19,7 @@ sudo /bin/bash -ex <<'EOS'
   new=./box-disk2.raw
 
   mkdir -p old
+  fsck.ext4 -y ${cur}
   mv -i ${cur} ${old}
 
   ./mk2nd-disk.sh
