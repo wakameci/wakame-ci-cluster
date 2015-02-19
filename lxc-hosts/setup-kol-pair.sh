@@ -72,7 +72,7 @@ You should run "\$ sudo service network restart"
 EOS
 
 if [[ -f /etc/sysconfig/iptables ]]; then
-  sed -i s,${${base_if}},${${bridge_if}},g /etc/sysconfig/iptables
+  sed -i s,${base_if},${bridge_if},g /etc/sysconfig/iptables
   cat <<EOS
 You should run "\$ sudo service iptables restart"
 EOS
