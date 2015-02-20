@@ -128,9 +128,11 @@ declare rootpass=${rootpass:-root}
 readonly rootfs_path=/var/lib/lxc/${ctid}/rootfs
 readonly hostname=ct${ctid}.$(hostname)
 
+distro_ver=20
+
 ### create container
 
-lxc-create -n ${ctid} -t fedora -- -R 20
+lxc-create -n ${ctid} -t fedora -- -R ${distro_ver}
 
 ### configure networking
 
@@ -176,14 +178,14 @@ umount ${rootfs_path}/proc
 # setup kvm-host
 lxc-attach -n ${ctid} -- bash -ex <<EOS
   cd /tmp
-  until curl -fsSkL https://raw.githubusercontent.com/wakameci/wakame-ci-cluster/master/kvm-hosts/setup-fedora-20.sh -o ./setup-fedora-20.sh; do
+  until curl -fsSkL https://raw.githubusercontent.com/wakameci/wakame-ci-cluster/master/kvm-hosts/setup-fedora-${distro_ver}.sh -o ./setup-fedora-${distro_ver}.sh; do
     sleep 1
   done
-  chmod +x ./setup-fedora-20.sh
-  sed -i s,--disablerepo=updates,, ./setup-fedora-20.sh
-  ls -l ./setup-fedora-20.sh
-  ./setup-fedora-20.sh
-  rm ./setup-fedora-20.sh
+  chmod +x ./setup-fedora-${distro_ver}.sh
+  sed -i s,--disablerepo=updates,, ./setup-fedora-${distro_ver}.sh
+  ls -l ./setup-fedora-${distro_ver}.sh
+  ./setup-fedora-${distro_ver}.sh
+  rm ./setup-fedora-${distro_ver}.sh
 EOS
 
 # > $ ping 192.168.2.249
