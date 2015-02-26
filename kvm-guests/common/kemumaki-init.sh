@@ -13,6 +13,9 @@ raw=${raw:-$(pwd)/box-disk1.raw}
 [[ -f ${raw} ]]
 [[ $UID == 0 ]]
 
+# remove tail "/".
+mnt_path=${mnt_path%/}
+
 mkdir -p ${mnt_path}
 
 output=$(kpartx -va ${raw})
@@ -136,14 +139,14 @@ done
 config_grub_console
 config_tty
 
+if [[ -d guestroot ]]; then
+  rsync -avxSL guestroot/ ${mnt_path}/
+fi
+
 if [[ -d execscript ]]; then
   while read line; do
     eval ${line} ${mnt_path}
   done < <(find -L execscript ! -type d -perm -a=x | sort)
-fi
-
-if [[ -d guestroot ]]; then
-  rsync -avxSL guestroot/ ${mnt_path}/
 fi
 
 sync
