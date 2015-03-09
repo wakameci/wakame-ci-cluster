@@ -7,13 +7,17 @@ set -e
 set -o pipefail
 
 chroot_dir=${1}
-centos_ver=6.5
+centos_ver=6.6
 
 chroot $1 /bin/bash -ex <<EOS
   lxc-create -t centos -n lxc1 -- -R ${centos_ver}
   echo root:root | sudo chroot /var/lib/lxc/lxc1/rootfs chpasswd
+  #sudo chroot /var/lib/lxc/lxc1/rootfs yum install -y http://rpmforge.sw.be/redhat/el6/en/x86_64/rpmforge/RPMS/rpmforge-release-0.5.3-1.el6.rf.x86_64.rpm
+  #sudo chroot /var/lib/lxc/lxc1/rootfs yum install iperf3
   lxc-create -t centos -n lxc2 -- -R ${centos_ver}
   echo root:root | sudo chroot /var/lib/lxc/lxc2/rootfs chpasswd
+  #sudo chroot /var/lib/lxc/lxc2/rootfs yum install -y http://rpmforge.sw.be/redhat/el6/en/x86_64/rpmforge/RPMS/rpmforge-release-0.5.3-1.el6.rf.x86_64.rpm
+  #sudo chroot /var/lib/lxc/lxc2/rootfs yum install iperf3
 EOS
 
 cat > $1/var/lib/lxc/lxc1/config <<'EOS'

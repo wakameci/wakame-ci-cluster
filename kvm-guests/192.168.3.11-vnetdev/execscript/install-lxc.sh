@@ -7,7 +7,7 @@ set -e
 set -o pipefail
 
 chroot_dir=${1}
-centos_ver=6.5
+centos_ver=6.6
 
 chroot $1 /bin/bash -ex <<EOS
   lxc-create -t centos -n lxc1 -- -R ${centos_ver}
