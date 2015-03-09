@@ -17,49 +17,166 @@ root     15480  9.7  4.0 5425116 671340 ?      Sl   19:22   1:14 qemu-system-x86
 root     25325 13.0  1.4 5604284 236364 ?      Sl   19:33   0:09 qemu-system-x86_64 -enable-kvm -name kemu311 -cpu qemu64,+vmx -m 1024 -smp 1 -vnc 127.0.0.1:11311 -k en-us -rtc base=utc -monitor telnet:127.0.0.1:14311,server,nowait -serial telnet:127.0.0.1:15311,server,nowait -drive file=./box-disk1.raw,media=disk,boot=on,index=0,cache=none,if=virtio -netdev tap,ifname=kemu311-14311-0,id=hostnet0,script=,downscript= -device virtio-net-pci,netdev=hostnet0,mac=52:54:00:51:06:48,bus=pci.0,addr=0x3 -netdev tap,ifname=kemu311-14311-1,id=hostnet1,script=,downscript= -device virtio-net-pci,netdev=hostnet1,mac=52:54:00:51:16:48,bus=pci.0,addr=0x4 -pidfile kvm.pid -daemonize
 ```
 
-## Usage
+```
+$ brctl show
+bridge name	bridge id		STP enabled	interfaces
+vnet_mng_br0		8000.62fb6f507bcb	no		kemu310-14310-1
+							kemu311-14311-1
+vnet_ovs_br0		8000.964537a5533c	no		kemu310-14310-0
+							kemu311-14311-0
+```
 
-Fisrt, run following command on a console.
+Both KVM's are now running and need some further configuring.
+
+## Configuration
+
+### KVM1
+
+Connect to KVM1 :
 
 ```
 $ telnet localhost 15310
-10-vnetdev login: kemumaki
-Password: kemumaki
-[kemumaki@10-vnetdev ~]$ 0000-runall.sh
-localhost login: root
-Password: root
-[root@localhost ~]# ifup eth0
-[root@localhost ~]# ifconfig |grep -A 1 eth0
-eth0      Link encap:Ethernet  HWaddr 00:18:51:E5:35:01  
-          inet addr:10.0.0.200  Bcast:10.0.0.255  Mask:255.255.255.0
+```
+And run the configuration script
+```
+ 0000-runall.sh
+```
+This wil automatically connect you to lxc1, you can log in with the following credentials. 
 
 ```
+localhost login: root
+Password: root
+```
+Bring the eth0 interface up :
+```
+[root@localhost ~]# ifup eth0
+[root@localhost ~]# ifconfig |grep -A 1 eth0
+eth0      Link encap:Ethernet  HWaddr 00:18:51:E5:35:01
+          inet addr:10.0.0.200  Bcast:10.0.0.255  Mask:255.255.255.0
+```
 
-Second, run following command on another console.
+This also needs to be done on lxc2. You can now SSH to the KVM :
+
+```
+$ ssh 10.0.1.10
+login : root
+password : root
+```
+
+Open lxc2 :
+
+```
+[root@10-vnetdev ~]# lxc-console -n lxc2
+```
+
+And bring the eth0 interface up
+
+```
+[root@localhost ~]# ifup eth0
+[root@localhost ~]# ifconfig |grep -A 1 eth0
+eth0      Link encap:Ethernet  HWaddr 00:18:51:E5:35:02
+          inet addr:10.0.0.201  Bcast:10.0.0.255  Mask:255.255.255.0
+```
+
+The KVM is now fully up and running. lxc1 and lxc2 should be able to ping eachother
+
+```
+[root@10-vnetdev ~]# ovs-vsctl show
+4de9be19-b1d0-46c7-abfd-063f8c4184cf
+    Bridge "br0"
+        Controller "tcp:127.0.0.1:6633"
+            is_connected: true
+        fail_mode: standalone
+        Port "eth0"
+            Interface "eth0"
+        Port "veth_kvm1lxc2"
+            Interface "veth_kvm1lxc2"
+        Port "veth_kvm1lxc1"
+            Interface "veth_kvm1lxc1"
+        Port "br0"
+            Interface "br0"
+                type: internal
+    ovs_version: "2.3.1"
+```
+
+### KVM2
+
+The same process needs to be repeated for KVM2.
+
+Connect to the KVM :
 
 ```
 $ telnet localhost 15311
-11-vnetdev login: kemumaki
-Password: kemumaki
-[kemumaki@11-vnetdev ~]$ 0000-runall.sh
+```
+And run the configuration script
+```
+$ 0000-runall.sh
+```
+This wil automatically connect you to lxc1, you can log in with the following credentials. 
+
+```
 localhost login: root
 Password: root
+```
+Bring the eth0 interface up :
+```
 [root@localhost ~]# ifup eth0
 [root@localhost ~]# ifconfig |grep -A 1 eth0
-eth0      Link encap:Ethernet  HWaddr 00:18:51:E5:35:03  
+eth0      Link encap:Ethernet  HWaddr 00:18:51:E5:35:03
           inet addr:10.0.0.202  Bcast:10.0.0.255  Mask:255.255.255.0
-[root@localhost ~]# ping 10.0.0.200
-PING 10.0.0.200 (10.0.0.200) 56(84) bytes of data.
-64 bytes from 10.0.0.200: icmp_seq=1 ttl=64 time=3.26 ms
-64 bytes from 10.0.0.200: icmp_seq=2 ttl=64 time=0.683 ms
-64 bytes from 10.0.0.200: icmp_seq=3 ttl=64 time=0.640 ms
 ```
+
+This also needs to be done on lxc2. You can now SSH to the KVM :
+
+```
+$ ssh 10.0.1.11
+login : root
+password : root
+```
+
+Open lxc2 :
+
+```
+[root@11-vnetdev ~]#  lxc-console -n lxc2
+```
+
+And bring the eth0 interface up
+
+```
+[root@localhost ~]# ifup eth0
+[root@localhost ~]# ifconfig |grep -A 1 eth0
+eth0      Link encap:Ethernet  HWaddr 00:18:51:E5:35:04
+          inet addr:10.0.0.203  Bcast:10.0.0.255  Mask:255.255.255.0
+```
+
+The KVM is now fully up and running. lxc1 and lxc2 should be able to ping eachother.
+
+```
+[root@11-vnetdev ~]# ovs-vsctl show
+88a97019-146c-43d6-838d-0343eccc58e9
+    Bridge "br0"
+        Controller "tcp:127.0.0.1:6633"
+            is_connected: true
+        fail_mode: standalone
+        Port "br0"
+            Interface "br0"
+                type: internal
+        Port "veth_kvm2lxc2"
+            Interface "veth_kvm2lxc2"
+        Port "eth0"
+            Interface "eth0"
+        Port "veth_kvm2lxc1"
+            Interface "veth_kvm2lxc1"
+    ovs_version: "2.3.1"
+```
+
+## Internet access on KVM
 
 Please type "make ipmasq_on", if you want to touch internet on KVMs.
 
 ```
 $ make ipmasq_on
-sudo iptables -t nat -A POSTROUTING -s 10.0.1.0/24 -j MASQUERADE
+sudo iptables -t nat -A POSTROUTING -s 10.0.1.0/24 -o eth0 -j MASQUERADE
 sudo iptables -t nat -L --line
 Chain PREROUTING (policy ACCEPT)
 num  target     prot opt source               destination
@@ -72,10 +189,5 @@ num  target     prot opt source               destination
 
 Chain POSTROUTING (policy ACCEPT)
 num  target     prot opt source               destination
-1    RETURN     all  --  192.168.122.0/24     base-address.mcast.net/24
-2    RETURN     all  --  192.168.122.0/24     255.255.255.255
-3    MASQUERADE  tcp  --  192.168.122.0/24    !192.168.122.0/24     masq ports: 1024-65535
-4    MASQUERADE  udp  --  192.168.122.0/24    !192.168.122.0/24     masq ports: 1024-65535
-5    MASQUERADE  all  --  192.168.122.0/24    !192.168.122.0/24
-6    MASQUERADE  all  --  10.0.1.0/24          anywhere
+1    MASQUERADE  all  --  10.0.1.0/24          anywhere
 ```
