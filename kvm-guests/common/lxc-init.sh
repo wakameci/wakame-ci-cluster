@@ -19,5 +19,4 @@ while [  $COUNTER -lt ${lxc_count} ]; do
 EOS
 done
 
-echo $PWD
 . ../common/lxc/iperf3.sh ${chroot_dir} ${centos_ver} ${lxc_count}
