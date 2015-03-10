@@ -8,16 +8,9 @@ set -o pipefail
 
 chroot_dir=${1}
 centos_ver=6.6
+lxc_count=2
 
-chroot $1 /bin/bash -ex <<EOS
-  lxc-create -t centos -n lxc1 -- -R ${centos_ver}
-  echo root:root | sudo chroot /var/lib/lxc/lxc1/rootfs chpasswd
-  lxc-create -t centos -n lxc2 -- -R ${centos_ver}
-  echo root:root | sudo chroot /var/lib/lxc/lxc2/rootfs chpasswd
-  wget http://dl.fedoraproject.org/pub/epel/6/x86_64/iperf3-3.0.10-1.el6.x86_64.rpm
-  rpm -i --root=/var/lib/lxc/lxc1/rootfs --nodeps iperf3-3.0.10-1.el6.x86_64.rpm
-  rpm -i --root=/var/lib/lxc/lxc2/rootfs --nodeps iperf3-3.0.10-1.el6.x86_64.rpm
-EOS
+. ../common/lxc-init.sh ${chroot_dir} ${centos_ver} ${lxc_count}
 
 cat > $1/var/lib/lxc/lxc1/config <<'EOS'
 lxc.network.type = veth
