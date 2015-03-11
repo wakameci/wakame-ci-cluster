@@ -7,13 +7,8 @@ set -e
 set -o pipefail
 
 chroot_dir=${1}
-lxc_count=${2}
+lxc_suffix=${2}
 
-COUNTER=0
-while [  $COUNTER -lt ${lxc_count} ]; do
-  let COUNTER=COUNTER+1    
-  chroot ${chroot_dir} /bin/bash -ex <<EOS
-    yum -y install nc --installroot=/var/lib/lxc/lxc${COUNTER}/rootfs/
+chroot ${chroot_dir} /bin/bash -ex <<EOS
+  yum -y install nc --installroot=/var/lib/lxc/lxc${lxc_suffix}/rootfs/
 EOS
-done
-

@@ -19,11 +19,6 @@ while [  $COUNTER -lt ${lxc_count} ]; do
     lxc-create -t centos -n lxc${COUNTER} -- -R ${centos_ver}
     echo root:root | sudo chroot /var/lib/lxc/lxc${COUNTER}/rootfs chpasswd
 EOS
-done
-
-COUNTER=0
-while [  $COUNTER -lt ${lxc_count} ]; do
-  let COUNTER=COUNTER+1  
   let mac_hex=$(printf '%02x\n' $mac_start)
 
   cat > ${chroot_dir}/var/lib/lxc/lxc${COUNTER}/config <<EOS
@@ -40,10 +35,11 @@ while [  $COUNTER -lt ${lxc_count} ]; do
     lxc.network.veth.pair = veth_kvm${kvm_suffix}lxc${COUNTER}
 
 EOS
+  . ../common/lxc/iperf3.sh ${chroot_dir} ${COUNTER}
+  . ../common/lxc/tcpdump.sh ${chroot_dir} ${COUNTER}
+  . ../common/lxc/nc.sh ${chroot_dir} ${COUNTER}
+  . ../common/lxc/strace.sh ${chroot_dir} ${COUNTER}  
   let mac_start=mac_start+1
 done
 
-. ../common/lxc/iperf3.sh ${chroot_dir} ${lxc_count}
-. ../common/lxc/tcpdump.sh ${chroot_dir} ${lxc_count}
-. ../common/lxc/nc.sh ${chroot_dir} ${lxc_count}
-. ../common/lxc/strace.sh ${chroot_dir} ${lxc_count}
+
