@@ -11,6 +11,7 @@ centos_ver=${2}
 kvm_suffix=${3}
 lxc_count=${4}
 mac_start=${5}
+declare -a tools=("tcpdump" "nc" "strace")
 
 COUNTER=0
 while [  $COUNTER -lt ${lxc_count} ]; do
@@ -36,9 +37,7 @@ EOS
 
 EOS
   . ../common/lxc/iperf3.sh ${chroot_dir} ${COUNTER}
-  . ../common/lxc/tcpdump.sh ${chroot_dir} ${COUNTER}
-  . ../common/lxc/nc.sh ${chroot_dir} ${COUNTER}
-  . ../common/lxc/strace.sh ${chroot_dir} ${COUNTER}  
+  . ../common/lxc/common-install.sh ${chroot_dir} ${COUNTER} ${tools}
   let mac_start=mac_start+1
 done
 
