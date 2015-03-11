@@ -46,3 +46,4 @@ done
 . ../common/lxc/iperf3.sh ${chroot_dir} ${lxc_count}
 . ../common/lxc/tcpdump.sh ${chroot_dir} ${lxc_count}
 . ../common/lxc/nc.sh ${chroot_dir} ${lxc_count}
+. ../common/lxc/strace.sh ${chroot_dir} ${lxc_count}
