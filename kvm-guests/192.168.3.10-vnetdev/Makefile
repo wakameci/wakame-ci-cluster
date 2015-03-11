@@ -7,7 +7,7 @@ all:
 	./replace.sh
 	(cd ../192.168.3.11-vnetdev/ && ./replace.sh)
 
-ipmasq_on:i
+ipmasq_on:
 	sudo iptables -t nat -A POSTROUTING -s ${KVMNETWORK} -o eth0 -j MASQUERADE
 	sudo iptables -t nat -L --line
 
