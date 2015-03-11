@@ -43,4 +43,6 @@ EOS
   let mac_start=mac_start+1
 done
 
-. ../common/lxc/iperf3.sh ${chroot_dir} ${centos_ver} ${lxc_count}
+. ../common/lxc/iperf3.sh ${chroot_dir} ${lxc_count}
+. ../common/lxc/tcpdump.sh ${chroot_dir} ${lxc_count}
+. ../common/lxc/nc.sh ${chroot_dir} ${lxc_count}
