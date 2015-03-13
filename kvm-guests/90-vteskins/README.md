@@ -8,11 +8,12 @@ This environment uses nested kvm.
 
 **Terminology**
 
+* The bare metal on which this environment runs is referred to as the `Host`.
 * itest-edge, itest1, itest2, itest3, legacy1 and router are referred to as `Layer 1 KVM`
 * vm1, vm2, vm3, vm4, vm5 and vm6 are referred to as `Layter 2 KVM` or `nested KVM`
+
 * All networking between machines in *Layer 1 KVM* is referred to as the `physical network`. It might be virtual in reality, but from OpenVNet's point of view it's the physical network. It's the network infrastructure that's *just there* and OpenVNet has no control over. OpenVNet will build virtual networks on top of it.
 * All networking between machines in *Layer 2 KVM* is referred to as the `virtual network`. These are the networks that OpenVNet creates and manages.
-* The bare metal on which this environment runs is referred to as the `Host`.
 
 **Networking related remarks**
 
