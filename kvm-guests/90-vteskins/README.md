@@ -24,3 +24,20 @@ This environment uses nested kvm.
 * All the `router` machine does is route packets between the above two subnets.
 * The itest-edge and legacy1 machines, represent a non OpenVNet managed physical network being connected to OpenVNet's virtual networks. Legacy1 is the network, itest-edge does the connecting.
 
+## Setup
+
+### Make sure nested KVM is enabled on the host
+
+```
+cat /sys/module/kvm_intel/parameters/nested
+Y
+```
+
+If the following command didn't output **Y**, try this.
+
+```
+sudo modprobe -r kvm_intel
+sudo modprobe kvm_intel 'options nested=1'
+```
+
+If you're not using an intel processor, the commands will be slightly different. Sorry but you're on your own for that one. I'm sure Google can help. ;)
