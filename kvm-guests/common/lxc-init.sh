@@ -11,7 +11,7 @@ centos_ver=${2}
 kvm_suffix=${3}
 lxc_count=${4}
 mac_start=${5}
-declare -a tools=("tcpdump" "nc" "strace")
+declare -a tools=("tcpdump" "nc" "strace" "sysstat")
 
 COUNTER=0
 while [  $COUNTER -lt ${lxc_count} ]; do
