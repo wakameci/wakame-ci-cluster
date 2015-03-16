@@ -96,7 +96,8 @@ $(qemu_kvm_path) -name ${name} \
  -device virtserialport,chardev=qga0,name=org.qemu.guest_agent.0 \
  -pidfile ${pidfile} \
  -D ${logfile} \
- -daemonize
+ -daemonize \
+ -enable-kvm
 EOS
 }
 
