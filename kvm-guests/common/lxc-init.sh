@@ -11,7 +11,7 @@ centos_ver=${2}
 kvm_suffix=${3}
 lxc_count=${4}
 mac_start=${5}
-declare -a tools=("tcpdump" "nc" "strace" "sysstat")
+declare -a tools=("tcpdump" "nc" "strace" "sysstat" "iperf3")
 
 COUNTER=0
 while [  $COUNTER -lt ${lxc_count} ]; do
@@ -36,8 +36,9 @@ EOS
     lxc.network.veth.pair = veth_kvm${kvm_suffix}lxc${COUNTER}
 
 EOS
-  . ../common/lxc/iperf3.sh ${chroot_dir} ${COUNTER}
-  . ../common/lxc/common-install.sh ${chroot_dir} ${COUNTER} ${tools}
+  . ../common/lxc/check-repos.sh ${chroot_dir} ${COUNTER}
+  . ../common/lxc/common-install.sh ${chroot_dir} ${COUNTER} ${tools}  
+
   let mac_start=mac_start+1
 done
 
