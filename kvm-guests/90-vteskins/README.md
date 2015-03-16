@@ -22,7 +22,7 @@ This environment uses nested kvm.
 * itest1 and itest2 are in the same *physical* subnet. OpenVNet will use MAC2MAC between them.
 * itest3 is in another *physical* subnet. OpenVNet will use MAC2MAC over GRE tunnels between it and the other machines.
 * All the `router` machine does is route packets between the above two subnets.
-* The itest-edge and legacy1 machines, represent a non OpenVNet managed physical network being connected to OpenVNet's virtual networks. Legacy1 is the network, itest-edge does the connecting.
+* The itest-edge and legacy1 machines represent a non OpenVNet managed physical network being connected to OpenVNet's virtual networks. Legacy1 is a machine in that physical network, itest-edge does the connecting.
 
 ## Setup
 
@@ -88,7 +88,7 @@ cd ../95-vteskins/
 
 ## Running the integration test
 
-The following commands need to be executed on the host. This guide will use [rvm](https://rvm.io) to set up Ruby. Refer to their guides to get rvm installed on your system.
+The following commands need to be executed on the `Host`. This guide will use [rvm](https://rvm.io) to set up Ruby. Refer to their guides to get rvm installed on your system.
 
 We are going to use Ruby 2.2.0 for this test. Install it.
 
