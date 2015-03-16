@@ -40,4 +40,85 @@ sudo modprobe -r kvm_intel
 sudo modprobe kvm_intel 'options nested=1'
 ```
 
+To make the above command persist after reboot, add the following line to `/etc/modprobe.d/modprobe.conf`.
+
+```
+options kvm_intel nested=1
+```
+
 If you're not using an intel processor, the commands will be slightly different. Sorry but you're on your own for that one. I'm sure Google can help. ;)
+
+### Download the boxes
+
+Download the boxes like it says in the top level README. If you haven't already.
+
+This will download 12 GB. Make sure you have room for that on you HD.
+
+```
+cd wakame-ci-cluster/boxes
+./download-boxes.sh
+```
+
+### Build and run all VMs
+
+```
+cd wakame-ci-cluster/kvm-guests/90-vteskins/
+./build_and_run_all.sh
+```
+
+### Run without rebuilding
+
+Have you already built the VMs and just want to run them without rebuilding from scratch? Here's how you do it.
+
+```
+cd wakame-ci-cluster/kvm-guests/90-vteskins/
+./init_bridges.sh
+./run.sh
+cd ../91-vteskins/
+./run.sh
+cd ../92-vteskins/
+./run.sh
+cd ../93-vteskins/
+./run.sh
+cd ../94-vteskins/
+./run.sh
+cd ../95-vteskins/
+./run.sh
+```
+
+## Running the integration test
+
+The following commands need to be executed on the host. This guide will use [rvm](https://rvm.io) to set up Ruby. Refer to their guides to get rvm installed on your system.
+
+We are going to use Ruby 2.2.0 for this test. Install it.
+
+```
+rvm install 2.2.0
+```
+
+Now get the integration test from Github.
+
+```
+git clone https://github.com/axsh/openvnet-testspec
+```
+
+Use Ruby 2.2.0 to install the integration test's dependencies.
+
+```
+rvm use 2.2.0
+gem install bundler
+cd openvnet-testspec
+bundle install
+```
+
+First run the simple test to make sure that everything's working.
+
+```
+bin/itest-spec run simple
+```
+
+If this ran alright, run all tests.
+
+```
+bin/itest-spec run
+```
