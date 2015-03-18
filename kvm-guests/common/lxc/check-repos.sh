@@ -11,11 +11,9 @@ lxc_suffix=${2}
 
 # EPEL
 
-file="/var/lib/lxc/lxc${lxc_suffix}/rootfs/etc/yum.repos.d/epel.repo"
-if [ ! -f ${file} ]; then
-  chroot ${chroot_dir} /bin/bash -ex <<EOS
-    cp /etc/yum.repos.d/epel.repo ${file}
+chroot ${chroot_dir} /bin/bash -ex <<EOS
+  yum install -y epel-release --installroot=/var/lib/lxc/lxc${lxc_suffix}/rootfs/
 EOS
-fi
+
 
 
