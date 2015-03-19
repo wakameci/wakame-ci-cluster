@@ -128,9 +128,12 @@ declare rootpass=${rootpass:-root}
 readonly rootfs_path=/var/lib/lxc/${ctid}/rootfs
 readonly hostname=ct${ctid}.$(hostname)
 
+distro_name=centos
+distro_ver=6
+
 ### create container
 
-lxc-create -n ${ctid} -t centos -- -R 6
+lxc-create -n ${ctid} -t ${distro_name} -- -R ${distro_ver}
 
 ### configure networking
 
@@ -194,12 +197,12 @@ umount ${rootfs_path}/proc
 # setup kvm-host
 lxc-attach -n ${ctid} -- bash -ex <<EOS
   cd /tmp
-  until curl -fsSkL https://raw.githubusercontent.com/wakameci/wakame-ci-cluster/master/kvm-hosts/setup-centos-6.sh -o ./setup-centos-6.sh; do
+  until curl -fsSkL https://raw.githubusercontent.com/wakameci/wakame-ci-cluster/master/kvm-hosts/setup-${distro_name}-${distro_ver}.sh -o ./setup-${distro_name}-${distro_ver}.sh; do
     sleep 1
   done
-  chmod +x ./setup-centos-6.sh
-  sed -i s,--disablerepo=updates,, ./setup-centos-6.sh
-  ls -l ./setup-centos-6.sh
-  ./setup-centos-6.sh
-  rm ./setup-centos-6.sh
+  chmod +x ./setup-${distro_name}-${distro_ver}.sh
+  sed -i s,--disablerepo=updates,, ./setup-${distro_name}-${distro_ver}.sh
+  ls -l ./setup-${distro_name}-${distro_ver}.sh
+  ./setup-${distro_name}-${distro_ver}.sh
+  rm ./setup-${distro_name}-${distro_ver}.sh
 EOS
