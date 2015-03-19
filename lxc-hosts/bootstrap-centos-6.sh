@@ -68,13 +68,13 @@ lxc.cgroup.devices.allow = c 232:10 rwm
 lxc.cgroup.devices.allow = c 10:200 rwm
 
 # nbd
-#lxc.cgroup.devices.allow = c 43:* rwm
+lxc.cgroup.devices.allow = c 43:* rwm
 
 # fuse
-#lxc.cgroup.devices.allow = c 10:229 rwm
+lxc.cgroup.devices.allow = c 10:229 rwm
 
 # hpet
-#lxc.cgroup.devices.allow = c 10:228 rwm
+lxc.cgroup.devices.allow = c 10:228 rwm
 
 # control device-mapper
 # via https://lists.linuxcontainers.org/pipermail/lxc-users/2014-January/006077.html
