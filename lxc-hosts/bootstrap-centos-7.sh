@@ -128,7 +128,7 @@ readonly rootfs_path=/var/lib/lxc/${ctid}/rootfs
 readonly hostname=ct${ctid}.$(hostname)
 
 distro_name=centos
-distro_ver=6
+distro_ver=7
 
 ### create container
 
@@ -143,23 +143,6 @@ install_ifcfg    ${ctid}
 
 sed -i s,^HOSTNAME=.*,HOSTNAME=${hostname}, ${rootfs_path}/etc/sysconfig/network
 echo ${hostname} > ${rootfs_path}/etc/hostname
-
-### configure /dev/pts
-# PTY allocation request failed on channel 0
-# via http://comments.gmane.org/gmane.linux.kernel.containers.lxc.general/2901
-cat <<-'EOS' > ${rootfs_path}/etc/init/devpts.conf
-	start on startup
-	exec mount -t devpts none /dev/pts -o rw,noexec,nosuid,gid=5,mode=0620
-	EOS
-
-### configure udev
-# lxc-template disables /sbin/start_udevd in /etc/rc.d/rc.sysinit.
-# however device-mapper depends on udevd.
-# if udevd is not running, udevadm command will fail and /dev/mapper/loopNpN will not exist.
-cat <<-'EOS' > ${rootfs_path}/etc/init/lxc-udev.conf
-	start on startup
-	exec /sbin/udevd
-	EOS
 
 ### post-install
 
@@ -202,4 +185,11 @@ lxc-attach -n ${ctid} -- bash -ex <<EOS
   ls -l ./setup-${distro_name}-${distro_ver}.sh
   ./setup-${distro_name}-${distro_ver}.sh
   rm ./setup-${distro_name}-${distro_ver}.sh
+EOS
+
+# > $ ping 192.168.2.249
+# > ping: icmp open socket: Operation not permitted
+# http://comments.gmane.org/gmane.linux.redhat.fedora.general/409425
+lxc-attach -n ${ctid} -- bash -ex <<EOS
+  yum -y reinstall iputils
 EOS
