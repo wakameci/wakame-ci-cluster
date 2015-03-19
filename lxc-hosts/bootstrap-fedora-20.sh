@@ -5,7 +5,6 @@
 #
 # usage:
 #  $0 CTID (192.168.2.CTID)
-#  
 #
 set -e
 set -o pipefail
