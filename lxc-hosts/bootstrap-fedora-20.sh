@@ -167,7 +167,6 @@ chroot ${rootfs_path} bash -ex <<EOS
   /usr/local/bin/add-github-user.sh hansode
   /usr/local/bin/add-github-user.sh t-iwano
 EOS
-# echo root:${rootpass} | chpasswd
 
 umount ${rootfs_path}/proc
 

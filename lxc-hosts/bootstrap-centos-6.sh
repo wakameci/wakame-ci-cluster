@@ -176,7 +176,6 @@ EOS
 
 chroot ${rootfs_path} bash -ex <<EOS
   usermod -L root
-  echo root:${rootpass} | chpasswd
   until curl -fsSkL https://raw.githubusercontent.com/hansode/add-github-user.sh/master/add-github-user.sh -o /usr/local/bin/add-github-user.sh; do
     sleep 1
   done
@@ -185,7 +184,6 @@ chroot ${rootfs_path} bash -ex <<EOS
   /usr/local/bin/add-github-user.sh hansode
   /usr/local/bin/add-github-user.sh t-iwano
 EOS
-#echo root:${rootpass} | chpasswd
 
 umount ${rootfs_path}/proc
 
