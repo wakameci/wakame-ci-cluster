@@ -5,7 +5,6 @@
 #
 # usage:
 #  $0 CTID (192.168.2.CTID)
-#  
 #
 set -e
 set -o pipefail
@@ -128,11 +127,12 @@ declare rootpass=${rootpass:-root}
 readonly rootfs_path=/var/lib/lxc/${ctid}/rootfs
 readonly hostname=ct${ctid}.$(hostname)
 
+distro_name=fedora
 distro_ver=20
 
 ### create container
 
-lxc-create -n ${ctid} -t fedora -- -R ${distro_ver}
+lxc-create -n ${ctid} -t ${distro_name} -- -R ${distro_ver}
 
 ### configure networking
 
@@ -167,7 +167,6 @@ chroot ${rootfs_path} bash -ex <<EOS
   /usr/local/bin/add-github-user.sh hansode
   /usr/local/bin/add-github-user.sh t-iwano
 EOS
-# echo root:${rootpass} | chpasswd
 
 umount ${rootfs_path}/proc
 
@@ -178,14 +177,14 @@ umount ${rootfs_path}/proc
 # setup kvm-host
 lxc-attach -n ${ctid} -- bash -ex <<EOS
   cd /tmp
-  until curl -fsSkL https://raw.githubusercontent.com/wakameci/wakame-ci-cluster/master/kvm-hosts/setup-fedora-${distro_ver}.sh -o ./setup-fedora-${distro_ver}.sh; do
+  until curl -fsSkL https://raw.githubusercontent.com/wakameci/wakame-ci-cluster/master/kvm-hosts/setup-${distro_name}-${distro_ver}.sh -o ./setup-${distro_name}-${distro_ver}.sh; do
     sleep 1
   done
-  chmod +x ./setup-fedora-${distro_ver}.sh
-  sed -i s,--disablerepo=updates,, ./setup-fedora-${distro_ver}.sh
-  ls -l ./setup-fedora-${distro_ver}.sh
-  ./setup-fedora-${distro_ver}.sh
-  rm ./setup-fedora-${distro_ver}.sh
+  chmod +x ./setup-${distro_name}-${distro_ver}.sh
+  sed -i s,--disablerepo=updates,, ./setup-${distro_name}-${distro_ver}.sh
+  ls -l ./setup-${distro_name}-${distro_ver}.sh
+  ./setup-${distro_name}-${distro_ver}.sh
+  rm ./setup-${distro_name}-${distro_ver}.sh
 EOS
 
 # > $ ping 192.168.2.249

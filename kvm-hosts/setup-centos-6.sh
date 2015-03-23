@@ -82,7 +82,6 @@ bridge-utils
 iptables-services
 ## ci tool
 java-1.6.0-openjdk
-#java-1.7.0-openjdk
 dejavu-sans-fonts
 ## compilers & rpm/yum build tools
 make
