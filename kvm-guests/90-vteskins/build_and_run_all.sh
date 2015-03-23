@@ -33,5 +33,6 @@ function for_all_layer_2() {
 # Set the PATH variable so chrooted centos will know where to find stuff
 export PATH=/bin:/sbin:/usr/bin:/usr/sbin
 
-for_all_layer_2 "./build.sh && ./pack-box.sh"
+for_all_layer_2 "./build.sh"
+for_all_layer_2 "./pack-box.sh"
 for_all_layer_1 "./replace.sh"
