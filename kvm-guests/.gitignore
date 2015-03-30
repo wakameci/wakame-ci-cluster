@@ -1,5 +1,6 @@
 *.box
 *.raw
+*.rpm-qa
 *.pid
 *.qcow2
 kvm.state
