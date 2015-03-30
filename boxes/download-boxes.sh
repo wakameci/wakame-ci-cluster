@@ -3,6 +3,11 @@
 # requires:
 #  bash
 #
+# usage:
+#  $ ./download-boxes.sh
+#  $ ./download-boxes.sh [box-name]
+#  $ ./download-boxes.sh [box-name] [box-name] [box-name] ...
+#
 set -e
 set -o pipefail
 
