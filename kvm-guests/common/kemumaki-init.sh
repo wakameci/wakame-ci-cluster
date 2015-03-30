@@ -156,25 +156,26 @@ sync
 umount ${mnt_path}/dev
 umount ${mnt_path}/proc
 umount ${mnt_path}
-kpartx -vd ${raw}
 
-sleep 3
+# remove DM and loop devices associated with the raw image.
+function detach_raw() {
+  local raw_path=$1
 
-function detach_partition() {
-  local loopdev=${1}
-  [[ -n "${loopdev}" ]] || return 0
+  kpartx -vd ${raw_path}
 
-  if dmsetup info ${loopdev} 2>/dev/null | egrep ^State: | egrep -w ACTIVE -q; then
-    dmsetup remove ${loopdev}
-  fi
+  local loop_path=
+  for loop_path in $(losetup --associated ${raw_path} | awk -F\: '{print $1}'); do
+    local loop_name=${loop_path#/dev/}
+    # list and remove /dev/mapper dependants of the loop device.
+    for dm in $(dmsetup deps | grep "${loop_name}p" | awk -F\: '{print $1}'); do
+      dmsetup remove "/dev/mapper/${dm}"
+      echo "Detached DM device: /dev/mapper/${dm}"
+    done
+    udevadm settle
 
-  udevadm settle
-
-  local loopdev_path=/dev/${loopdev%p[0-9]*}
-  if losetup -a | egrep ^${loopdev_path}: -q; then
-    losetup -d ${loopdev_path}
-  fi
+    losetup -d $loop_path
+    echo "Detached loop device: ${loop_path}"
+  done
 }
 
-detach_partition ${loopdev_root}
-detach_partition ${loopdev_swap}
+detach_raw ${raw}
