@@ -8,31 +8,70 @@ set -o pipefail
 set -x
 
 mnt_path=${mnt_path:-mnt}
-raw=${raw:-$(pwd)/box-disk1.raw}
-
-[[ -f ${raw} ]]
-[[ $UID == 0 ]]
-
 # remove tail "/".
 mnt_path=${mnt_path%/}
+raw=${raw:-$(pwd)/box-disk1.raw}
 
-mkdir -p ${mnt_path}
+kpartx_output=
 
-output=$(kpartx -va ${raw})
-loopdev_root=$(echo "${output}" | awk '{print $3}' | sed -n 1,1p) # loopXp1 should be "root".
-loopdev_swap=$(echo "${output}" | awk '{print $3}' | sed -n 2,2p) # loopXp2 should be "swap".
-[[ -n "${loopdev_root}" ]]
-udevadm settle
+function attach_raw() {
+  local raw_path=$1
 
-devpath=/dev/mapper/${loopdev_root}
-trap "
- umount -f ${mnt_path}/dev
- umount -f ${mnt_path}/proc
- umount -f ${mnt_path}
-" ERR
-mount ${devpath} ${mnt_path}
-mount --bind /proc ${mnt_path}/proc
-mount --bind /dev  ${mnt_path}/dev
+  kpartx_output="$(kpartx -va ${raw_path})"
+  udevadm settle
+}
+
+function mount_raw() {
+  local raw_path=$1 mnt_path=$2
+
+  loopdev_root=$(echo "${kpartx_output}" | awk '{print $3}' | sed -n 1,1p) # loopXp1 should be "root".
+  loopdev_swap=$(echo "${kpartx_output}" | awk '{print $3}' | sed -n 2,2p) # loopXp2 should be "swap".
+  [[ -n "${loopdev_root}" ]]
+
+  local devpath=/dev/mapper/${loopdev_root}
+  trap "
+   umount -f ${mnt_path}/dev
+   umount -f ${mnt_path}/proc
+   umount -f ${mnt_path}
+  " ERR
+
+  mkdir -p ${mnt_path}
+
+  mount ${devpath}   ${mnt_path}
+  mount --bind /proc ${mnt_path}/proc
+  mount --bind /dev  ${mnt_path}/dev
+}
+
+function umount_raw() {
+  local raw_path=$1 mnt_path=$2
+
+  umount ${mnt_path}/dev
+  umount ${mnt_path}/proc
+  umount ${mnt_path}
+
+  rmdir  ${mnt_path}
+}
+
+# remove DM and loop devices associated with the raw image.
+function detach_raw() {
+  local raw_path=$1
+
+  kpartx -vd ${raw_path}
+
+  local loop_path=
+  for loop_path in $(losetup --associated ${raw_path} | awk -F\: '{print $1}'); do
+    local loop_name=${loop_path#/dev/}
+    # list and remove /dev/mapper dependants of the loop device.
+    for dm in $(dmsetup deps | grep "${loop_name}p" | awk -F\: '{print $1}'); do
+      dmsetup remove "/dev/mapper/${dm}"
+      echo "Detached DM device: /dev/mapper/${dm}"
+    done
+    udevadm settle
+
+    losetup -d $loop_path
+    echo "Detached loop device: ${loop_path}"
+  done
+}
 
 ## RHEL
 
@@ -125,6 +164,24 @@ function config_tty() {
   fi
 }
 
+##
+
+if ! [[ -f ${raw} ]]; then
+  echo "[ERROR] No such file: ${raw}" >&2
+  exit 1
+fi
+
+if ! [[ $UID == 0 ]]; then
+  echo "[ERROR] Must run as root." >&2
+  exit 1
+fi
+
+##
+
+attach_raw ${raw}
+mount_raw  ${raw} ${mnt_path}
+
+{
 for ifname in metadata/ifcfg-*; do
   gen_ifcfg ${ifname##*/ifcfg-}
   gen_route ${ifname##*/ifcfg-}
@@ -150,31 +207,9 @@ if [[ -d execscript ]]; then
 fi
 
 sync
+}
 
 ##
 
-umount ${mnt_path}/dev
-umount ${mnt_path}/proc
-umount ${mnt_path}
-kpartx -vd ${raw}
-
-sleep 3
-
-function detach_partition() {
-  local loopdev=${1}
-  [[ -n "${loopdev}" ]] || return 0
-
-  if dmsetup info ${loopdev} 2>/dev/null | egrep ^State: | egrep -w ACTIVE -q; then
-    dmsetup remove ${loopdev}
-  fi
-
-  udevadm settle
-
-  local loopdev_path=/dev/${loopdev%p[0-9]*}
-  if losetup -a | egrep ^${loopdev_path}: -q; then
-    losetup -d ${loopdev_path}
-  fi
-}
-
-detach_partition ${loopdev_root}
-detach_partition ${loopdev_swap}
+umount_raw ${raw} ${mnt_path}
+detach_raw ${raw}
