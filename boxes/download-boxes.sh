@@ -72,5 +72,6 @@ for box in ${boxes}; do
     [[ "${remote_md5}" == "${local_md5}" ]] && continue
   fi
 
+  download_file ${box}.rpm-qa
   download_file ${box}
 done
