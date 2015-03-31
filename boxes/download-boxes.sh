@@ -24,9 +24,12 @@ boxes="
    kagechiyo-6.6-x86_64.kvm.box
 
     kemumaki-7.0.1406-x86_64.kvm.box
- lxckemumaki-7.0.1406-x86_64.kvm.box
+    kemumaki-7.1.1503-x86_64.kvm.box
+ lxckemumaki-7.1.1503-x86_64.kvm.box
      minimal-7.0.1406-x86_64.kvm.box
+     minimal-7.1.1503-x86_64.kvm.box
    kagechiyo-7.0.1406-x86_64.kvm.box
+   kagechiyo-7.1.1503-x86_64.kvm.box
 "
 
 function download_file() {
