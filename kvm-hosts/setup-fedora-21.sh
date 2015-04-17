@@ -172,6 +172,9 @@ getent group kvm && {
 curl -fsSkL https://github.com/hansode/buildbook-rhel6/raw/master/jenkins.slave/guestroot/var/lib/jenkins/slave.jar -o /var/lib/jenkins/slave.jar
 chown jenkins:jenkins /var/lib/jenkins/slave.jar
 
+mkdir /var/lib/jenkins/workspace
+chown jenkins:jenkins /var/lib/jenkins/workspace
+
 # ifcfg-vboxbr0
 cat <<EOS > /etc/sysconfig/network-scripts/ifcfg-vboxbr0
 DEVICE=vboxbr0
