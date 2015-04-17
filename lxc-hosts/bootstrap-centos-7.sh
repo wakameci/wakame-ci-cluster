@@ -36,6 +36,9 @@ lxc.kmsg = 0
 lxc.mount.entry = proc   ${rootfs_path}/proc                   proc    defaults        0 0
 lxc.mount.entry = sysfs  ${rootfs_path}/sys                    sysfs   defaults        0 0
 
+# lxc.mount.entry = /dev/sdX  /var/lib/lxc/${ctid}/rootfs/data   ext4    defaults        0 0
+# lxc.mount.entry = /dev/sdX  /var/lib/lxc/${ctid}/rootfs/var/lib/jenkins/workspace   ext4    defaults        0 0
+
 # via http://www.janoszen.com/2013/05/14/lxc-tutorial/
 # > Allow any mknod (but not using the node)
 # one of usage is for /dev/loopX
