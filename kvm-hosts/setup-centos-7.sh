@@ -11,7 +11,7 @@ LANG=C
 LC_ALL=C
 
 distro_name=centos
-distro_ver=7.0.1406
+distro_ver=7
 
 # hold releasever
 mkdir -p /etc/yum/vars
