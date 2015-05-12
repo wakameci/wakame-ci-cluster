@@ -273,7 +273,7 @@ done
 echo "options nbd max_part=15" > /etc/modprobe.d/nbd.conf
 
 # ip-forward
-sed -i 's,^net.ipv4.ip_forward.+,net.ipv4.ip_forward = 1,' /etc/sysctl.conf
+sed -i 's,^net.ipv4.ip_forward.*,net.ipv4.ip_forward = 1,' /etc/sysctl.conf
 
 ## ntp
 chkconfig ntpdate on
