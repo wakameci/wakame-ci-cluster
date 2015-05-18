@@ -24,7 +24,7 @@ lxc-wait  -n "${ctid}" -s RUNNING
 
 ###
 
-./lxc-device.sh "${ctid}"
+"${BASH_SOURCE[0]%/*}/lxc-device.sh" "${ctid}"
 
 ###
 

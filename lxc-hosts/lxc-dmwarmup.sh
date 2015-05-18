@@ -21,5 +21,5 @@ fi
 
 # warm up device-mapper
 if lxc-attach -n "${ctid}" -- <<< "type -P dmsetup"; then
-  lxc-attach -n "${ctid}" -- < ${BASH_SOURCE[0]%/*}/../kvm-hosts/check-dm.sh
+  lxc-attach -n "${ctid}" -- < "${BASH_SOURCE[0]%/*}/../kvm-hosts/check-dm.sh"
 fi

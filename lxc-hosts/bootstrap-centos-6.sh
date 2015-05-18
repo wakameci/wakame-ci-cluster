@@ -192,7 +192,7 @@ umount ${rootfs_path}/proc
 
 ### start container
 
-./lxc-start.sh ${ctid}
+"${BASH_SOURCE[0]%/*}/lxc-start.sh" "${ctid}"
 
 # setup kvm-host
 lxc-attach -n ${ctid} -- bash -ex <<EOS
