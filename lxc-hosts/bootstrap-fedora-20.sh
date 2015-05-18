@@ -190,6 +190,9 @@ lxc-attach -n ${ctid} -- bash -ex <<EOS
   rm ./setup-${distro_name}-${distro_ver}.sh
 EOS
 
+# warm up device-mapper
+"${BASH_SOURCE[0]%/*}/lxc-dmwarmup.sh" "${ctid}"
+
 # > $ ping 192.168.2.249
 # > ping: icmp open socket: Operation not permitted
 # http://comments.gmane.org/gmane.linux.redhat.fedora.general/409425

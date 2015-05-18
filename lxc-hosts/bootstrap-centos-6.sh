@@ -206,3 +206,6 @@ lxc-attach -n ${ctid} -- bash -ex <<EOS
   ./setup-${distro_name}-${distro_ver}.sh
   rm ./setup-${distro_name}-${distro_ver}.sh
 EOS
+
+# warm up device-mapper
+"${BASH_SOURCE[0]%/*}/lxc-dmwarmup.sh" "${ctid}"
