@@ -19,13 +19,7 @@ if [[ -z "${ctid}" ]]; then
   exit 1
 fi
 
-lxc-start -n "${ctid}" -d -l DEBUG -o "/var/log/lxc/${ctid}.log"
-lxc-wait  -n "${ctid}" -s RUNNING
-
-###
-
-"${BASH_SOURCE[0]%/*}/lxc-device.sh" "${ctid}"
-
-###
-
-"${BASH_SOURCE[0]%/*}/lxc-dmwarmup.sh" "${ctid}"
+# warm up device-mapper
+if lxc-attach -n "${ctid}" -- <<< "type -P dmsetup"; then
+  lxc-attach -n "${ctid}" -- < "${BASH_SOURCE[0]%/*}/../kvm-hosts/check-dm.sh"
+fi

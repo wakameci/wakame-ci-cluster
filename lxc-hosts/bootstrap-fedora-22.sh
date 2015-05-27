@@ -130,8 +130,8 @@ declare rootpass=${rootpass:-root}
 readonly rootfs_path=/var/lib/lxc/${ctid}/rootfs
 readonly hostname=ct${ctid}.$(hostname)
 
-distro_name=centos
-distro_ver=6
+distro_name=fedora
+distro_ver=22
 
 ### create container
 
@@ -147,23 +147,6 @@ install_ifcfg    ${ctid}
 sed -i s,^HOSTNAME=.*,HOSTNAME=${hostname}, ${rootfs_path}/etc/sysconfig/network
 echo ${hostname} > ${rootfs_path}/etc/hostname
 
-### configure /dev/pts
-# PTY allocation request failed on channel 0
-# via http://comments.gmane.org/gmane.linux.kernel.containers.lxc.general/2901
-cat <<-'EOS' > ${rootfs_path}/etc/init/devpts.conf
-	start on startup
-	exec mount -t devpts none /dev/pts -o rw,noexec,nosuid,gid=5,mode=0620
-	EOS
-
-### configure udev
-# lxc-template disables /sbin/start_udevd in /etc/rc.d/rc.sysinit.
-# however device-mapper depends on udevd.
-# if udevd is not running, udevadm command will fail and /dev/mapper/loopNpN will not exist.
-cat <<-'EOS' > ${rootfs_path}/etc/init/lxc-udev.conf
-	start on startup
-	exec /sbin/udevd
-	EOS
-
 ### post-install
 
 #### copy.txt
@@ -171,10 +154,19 @@ cat <<-'EOS' > ${rootfs_path}/etc/init/lxc-udev.conf
 #### execscript
 
 mount -o bind /proc ${rootfs_path}/proc
+mount -o bind /dev  ${rootfs_path}/dev
+mount -o bind /dev/pts ${rootfs_path}/dev/pts
+
+# fedora-release-21-X.rpm does not provide /etc/yum.repos.d/*.repo
+chroot ${rootfs_path} bash -ex <<EOS
+  rpm -ivh http://ftp.jaist.ac.jp/pub/Linux/Fedora/releases/${distro_ver}/Everything/x86_64/os/Packages/f/fedora-repos-${distro_ver}-1.noarch.rpm
+  dnf repolist all
+EOS
 
 chroot ${rootfs_path} bash -ex <<EOS
-  yum install -y curl sudo
-  yum install -y qemu-kvm qemu-img
+  dnf install -y curl sudo
+  dnf install -y qemu-kvm qemu-img
+  dnf install -y parted kpartx e2fsprogs
 EOS
 
 chroot ${rootfs_path} bash -ex <<EOS
@@ -188,6 +180,8 @@ chroot ${rootfs_path} bash -ex <<EOS
   /usr/local/bin/add-github-user.sh t-iwano
 EOS
 
+umount ${rootfs_path}/dev/pts
+umount ${rootfs_path}/dev
 umount ${rootfs_path}/proc
 
 ### start container
