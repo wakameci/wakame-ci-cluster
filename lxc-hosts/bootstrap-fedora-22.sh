@@ -159,7 +159,9 @@ mount -o bind /dev/pts ${rootfs_path}/dev/pts
 
 # fedora-release-21-X.rpm does not provide /etc/yum.repos.d/*.repo
 chroot ${rootfs_path} bash -ex <<EOS
-  rpm -ivh http://ftp.jaist.ac.jp/pub/Linux/Fedora/releases/${distro_ver}/Everything/x86_64/os/Packages/f/fedora-repos-${distro_ver}-1.noarch.rpm
+  rpm -qa fedora-repos | egrep -q fedora-repos || {
+    rpm -ivh http://ftp.jaist.ac.jp/pub/Linux/Fedora/releases/${distro_ver}/Everything/x86_64/os/Packages/f/fedora-repos-${distro_ver}-1.noarch.rpm
+  }
   dnf repolist all
 EOS
 
