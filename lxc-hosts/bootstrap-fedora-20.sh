@@ -158,6 +158,7 @@ mount -o bind /proc ${rootfs_path}/proc
 chroot ${rootfs_path} bash -ex <<EOS
   yum install -y curl sudo
   yum install -y qemu-kvm qemu-img
+  yum install -y parted kpartx e2fsprogs
 EOS
 
 chroot ${rootfs_path} bash -ex <<EOS
