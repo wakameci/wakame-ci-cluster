@@ -167,6 +167,7 @@ chroot ${rootfs_path} bash -ex <<EOS
   dnf install -y curl sudo
   dnf install -y qemu-kvm qemu-img
   dnf install -y parted kpartx e2fsprogs
+  dnf install -y lxc lxc-extra lxc-templates
 EOS
 
 chroot ${rootfs_path} bash -ex <<EOS
