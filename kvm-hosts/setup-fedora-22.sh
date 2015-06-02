@@ -301,7 +301,7 @@ for ifcfg in /etc/sysconfig/network-scripts/ifcfg-{e,p}*; do
   [[ -f ${ifcfg} ]] || continue
   sed -i "s,0=,=," ${ifcfg}
 done
-if systemctl status  NetowrkManager.service; then
+if systemctl status  NetworkManager.service; then
    systemctl stop    NetworkManager.service
 fi
 systemctl start   network.service
