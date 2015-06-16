@@ -48,6 +48,7 @@ $ sudo ./bootstrap-centos-6.sh  [CTID]
 $ sudo ./bootstrap-centos-7.sh  [CTID]
 $ sudo ./bootstrap-fedora-20.sh [CTID]
 $ sudo ./bootstrap-fedora-21.sh [CTID]
+$ sudo ./bootstrap-fedora-22.sh [CTID]
 ```
 
 ### lxc helpers
