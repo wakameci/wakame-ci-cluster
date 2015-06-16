@@ -20,4 +20,5 @@ $ sudo ./setup-centos-6.sh
 $ sudo ./setup-centos-7.sh
 $ sudo ./setup-fedora-20.sh
 $ sudo ./setup-fedora-21.sh
+$ sudo ./setup-fedora-22.sh
 ```
