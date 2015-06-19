@@ -69,6 +69,8 @@ function install_lxc_conf() {
   local ctid=${1}
   local lxc_conf_path=${chroot_dir}/etc/lxc/${ctid}.conf
 
+  mkdir -p ${chroot_dir}/etc/lxc
+
   render_lxc_conf  ${ctid} > ${lxc_conf_path}
   chmod 644 ${lxc_conf_path}
 }
@@ -128,6 +130,8 @@ function install_lxc() {
   local ctid=${1}
 
   mkdir -p ${chroot_dir}/lxc/private/${ctid}
+  mkdir -p ${chroot_dir}/lxc/template/cache/
+  cp /root/Programs/wakame-ci-cluster/boxes/vz.kemumaki.x86_64.tar.gz ${chroot_dir}/lxc/template/cache/
   tar zpxf ${chroot_dir}/lxc/template/cache/vz.kemumaki.x86_64.tar.gz -C ${chroot_dir}/lxc/private/${ctid}/
   sed -i s,^HOSTNAME=.*,HOSTNAME=vm${ctid}, ${chroot_dir}/lxc/private/${ctid}/etc/sysconfig/network
 
@@ -154,6 +158,12 @@ declare ctid1=`expr "${start}" + 0`
 [[ ! -z ${ctid1} ]]
 declare ctid2=`expr ${ctid1} + 1`
 [[ ${ctid1} != ${ctid2} ]]
+
+chroot ${chroot_dir} /bin/bash -ex <<EOS
+yum -y install lxc lxc-templates
+mkdir /cgroup
+echo "cgroup  /cgroup  cgroup  defaults  0   0" >> /etc/fstab
+EOS
 
 install_lxc ${ctid1}
 install_lxc ${ctid2}

@@ -11,6 +11,7 @@ net_mng_br0=192.168.3.0
 name_ovs_br0=vnet-itest-0
 name_ovs_br1=vnet-itest-1
 name_ovs_br2=vnet-itest-2
+name_ovs_br3=vnet-itest-3
 name_mng_br0=vnet-br0
 
 sudo ip link set ${name_ovs_br0} down || true
@@ -27,6 +28,11 @@ sudo ip link set ${name_ovs_br2} down || true
 sudo brctl delbr ${name_ovs_br2} || true
 sudo brctl addbr ${name_ovs_br2}
 sudo ip link set ${name_ovs_br2} up
+
+sudo ip link set ${name_ovs_br3} down || true
+sudo brctl delbr ${name_ovs_br3} || true
+sudo brctl addbr ${name_ovs_br3}
+sudo ip link set ${name_ovs_br3} up
 
 sudo ip link set ${name_mng_br0} down || true
 sudo brctl delbr ${name_mng_br0} || true
