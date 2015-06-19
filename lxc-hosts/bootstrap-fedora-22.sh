@@ -169,7 +169,14 @@ chroot ${rootfs_path} bash -ex <<EOS
   dnf install -y curl sudo
   dnf install -y qemu-kvm qemu-img
   dnf install -y parted kpartx e2fsprogs
-  dnf install -y lxc lxc-extra lxc-templates
+
+  # fedora-22 lxc-1.1.2 does not work.
+  dnf install -y http://ftp.riken.jp/Linux/fedora/releases/21/Everything/x86_64/os/Packages/l/lua-lxc-1.0.6-1.fc21.x86_64.rpm
+  dnf install -y http://ftp.riken.jp/Linux/fedora/releases/21/Everything/x86_64/os/Packages/l/lxc-1.0.6-1.fc21.x86_64.rpm
+  dnf install -y http://ftp.riken.jp/Linux/fedora/releases/21/Everything/x86_64/os/Packages/l/lxc-libs-1.0.6-1.fc21.x86_64.rpm
+  dnf install -y http://ftp.riken.jp/Linux/fedora/releases/21/Everything/x86_64/os/Packages/p/python3-lxc-1.0.6-1.fc21.x86_64.rpm
+  dnf install -y http://ftp.riken.jp/Linux/fedora/releases/21/Everything/x86_64/os/Packages/l/lxc-extra-1.0.6-1.fc21.x86_64.rpm
+  dnf install -y http://ftp.riken.jp/Linux/fedora/releases/21/Everything/x86_64/os/Packages/l/lxc-templates-1.0.6-1.fc21.x86_64.rpm
 EOS
 
 chroot ${rootfs_path} bash -ex <<EOS
