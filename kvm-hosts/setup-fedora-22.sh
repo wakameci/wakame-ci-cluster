@@ -118,7 +118,7 @@ EOS
 
 # enable to run script many times
 # yum install --disablerepo=updates -y ${addpkg}
-yum install -y ${addpkg}
+dnf install -y ${addpkg}
 
 # selinux
 if [[ -f /etc/selinux/config ]]; then
