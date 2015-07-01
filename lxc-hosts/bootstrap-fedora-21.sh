@@ -36,8 +36,7 @@ chroot ${rootfs_path} bash -ex <<EOS
 EOS
 
 . "${BASH_SOURCE[0]%/*}/bootstrap-common-adduser.sh"
-
-umount ${rootfs_path}/proc
+. "${BASH_SOURCE[0]%/*}/bootstrap-common-umount.sh"
 
 ### start container
 
