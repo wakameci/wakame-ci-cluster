@@ -46,16 +46,7 @@ chroot ${rootfs_path} bash -ex <<EOS
   dnf install -y http://ftp.riken.jp/Linux/fedora/releases/21/Everything/x86_64/os/Packages/l/lxc-templates-1.0.6-1.fc21.x86_64.rpm
 EOS
 
-chroot ${rootfs_path} bash -ex <<EOS
-  usermod -L root
-  until curl -fsSkL https://raw.githubusercontent.com/hansode/add-github-user.sh/master/add-github-user.sh -o /usr/local/bin/add-github-user.sh; do
-    sleep 1
-  done
-  chmod +x /usr/local/bin/add-github-user.sh
-  /usr/local/bin/add-github-user.sh axsh
-  /usr/local/bin/add-github-user.sh hansode
-  /usr/local/bin/add-github-user.sh t-iwano
-EOS
+. "${BASH_SOURCE[0]%/*}/bootstrap-common-adduser.sh"
 
 umount ${rootfs_path}/dev/pts
 umount ${rootfs_path}/dev
