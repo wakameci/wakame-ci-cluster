@@ -20,7 +20,7 @@ distro_ver=7
 
 #### execscript
 
-mount -o bind /proc ${rootfs_path}/proc
+. "${BASH_SOURCE[0]%/*}/bootstrap-common-mount.sh"
 
 chroot ${rootfs_path} bash -ex <<EOS
   yum install -y curl sudo

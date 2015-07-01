@@ -20,9 +20,7 @@ distro_ver=22
 
 #### execscript
 
-mount -o bind /proc ${rootfs_path}/proc
-mount -o bind /dev  ${rootfs_path}/dev
-mount -o bind /dev/pts ${rootfs_path}/dev/pts
+. "${BASH_SOURCE[0]%/*}/bootstrap-common-mount.sh"
 
 # fedora-release-21-X.rpm does not provide /etc/yum.repos.d/*.repo
 chroot ${rootfs_path} bash -ex <<EOS
