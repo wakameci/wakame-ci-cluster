@@ -13,7 +13,7 @@ set -e
 set -o pipefail
 set -x
 
-base_if="${1:-"em1"}"
+base_if="${1:-"eth0"}"
 bridge_if="${2:-"kemumakikol0"}"
 
 if ! [[ -f "/etc/sysconfig/network-scripts/ifcfg-${base_if}" ]]; then
