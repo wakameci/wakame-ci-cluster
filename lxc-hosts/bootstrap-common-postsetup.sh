@@ -23,3 +23,8 @@ EOS
 
 # warm up device-mapper
 "${BASH_SOURCE[0]%/*}/lxc-dmwarmup.sh" "${ctid}"
+
+# setup bridge interface
+lxc-attach -n "${ctid}" -- < "${BASH_SOURCE[0]%/*}/setup-kol-pair.sh"
+lxc-attach -n "${ctid}" -- service network  restart
+lxc-attach -n "${ctid}" -- service iptables restart
