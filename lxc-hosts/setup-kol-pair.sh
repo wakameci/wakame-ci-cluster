@@ -13,15 +13,15 @@ set -e
 set -o pipefail
 set -x
 
-base_if=${1:-em1}
-bridge_if=${2:-kemumakikol0}
+base_if="${1:-"em1"}"
+bridge_if="${2:-"kemumakikol0"}"
 
 if ! [[ -f "/etc/sysconfig/network-scripts/ifcfg-${base_if}" ]]; then
   echo "file not found: /etc/sysconfig/network-scripts/ifcfg-${base_if}" >&2
   exit 1
 fi
 
-. /etc/sysconfig/network-scripts/ifcfg-${base_if}
+. "/etc/sysconfig/network-scripts/ifcfg-${base_if}"
 
 function render_ifcfg_bridge() {
   cat <<EOS
@@ -39,7 +39,7 @@ EOS
 }
 
 function install_ifcfg_bridge() {
-  render_ifcfg_bridge | tee /etc/sysconfig/network-scripts/ifcfg-${bridge_if}
+  render_ifcfg_bridge | tee "/etc/sysconfig/network-scripts/ifcfg-${bridge_if}"
 }
 
 function render_ifcfg_ether() {
@@ -52,20 +52,20 @@ EOS
 }
 
 function install_ifcfg_ether() {
-  render_ifcfg_ether | tee /etc/sysconfig/network-scripts/ifcfg-${base_if}
+  render_ifcfg_ether | tee "/etc/sysconfig/network-scripts/ifcfg-${base_if}"
 }
 
-if [[ ${UID} != 0 ]]; then
+if [[ "${UID}" != 0 ]]; then
   echo "Must run as root" >&2
   exit 1
 fi
 
-if [[ -f /etc/sysconfig/network-scripts/ifcfg-${bridge_if} ]]; then
-  echo already exists: /etc/sysconfig/network-scripts/ifcfg-${bridge_if}. 2>&1
+if [[ -f "/etc/sysconfig/network-scripts/ifcfg-${bridge_if}" ]]; then
+  echo "already exists: /etc/sysconfig/network-scripts/ifcfg-${bridge_if}." 2>&1
   exit 1
 fi
-if [[ ! -f /etc/sysconfig/network-scripts/ifcfg-${base_if} ]]; then
-  echo does not exist: /etc/sysconfig/network-scripts/ifcfg-${bridge_if}. 2>&1
+if [[ ! -f "/etc/sysconfig/network-scripts/ifcfg-${base_if}" ]]; then
+  echo "does not exist: /etc/sysconfig/network-scripts/ifcfg-${bridge_if}." 2>&1
   exit 1
 fi
 
@@ -77,7 +77,7 @@ You should run "\$ sudo service network restart"
 EOS
 
 if [[ -f /etc/sysconfig/iptables ]]; then
-  sed -i s,${base_if},${bridge_if},g /etc/sysconfig/iptables
+  sed -i "s,${base_if},${bridge_if},g" /etc/sysconfig/iptables
   cat <<EOS
 You should run "\$ sudo service iptables restart"
 EOS
