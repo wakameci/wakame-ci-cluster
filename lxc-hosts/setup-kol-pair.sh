@@ -16,6 +16,11 @@ set -x
 base_if=${1:-em1}
 bridge_if=${2:-kemumakikol0}
 
+if ! [[ -f "/etc/sysconfig/network-scripts/ifcfg-${base_if}" ]]; then
+  echo "file not found: /etc/sysconfig/network-scripts/ifcfg-${base_if}" >&2
+  exit 1
+fi
+
 . /etc/sysconfig/network-scripts/ifcfg-${base_if}
 
 function render_ifcfg_bridge() {
