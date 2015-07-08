@@ -37,6 +37,7 @@ lxc.mount.entry = proc   ${rootfs_path}/proc                   proc    defaults 
 lxc.mount.entry = sysfs  ${rootfs_path}/sys                    sysfs   defaults        0 0
 lxc.mount.entry = devpts ${rootfs_path}/dev/pts                devpts  gid=5,mode=620  0 0
 
+# lxc.mount.entry = /data     /var/lib/lxc/${ctid}/rootfs/data   none    rw,bind         0 0
 # lxc.mount.entry = /dev/sdX  /var/lib/lxc/${ctid}/rootfs/data   ext4    defaults        0 0
 # lxc.mount.entry = /dev/sdX  /var/lib/lxc/${ctid}/rootfs/var/lib/jenkins/workspace   ext4    defaults        0 0
 
