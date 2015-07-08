@@ -27,8 +27,10 @@ $ sudo lxc-info -n [CTID]
 
 #### Stop the container.
 
+Don't use `lxc-stop -n [CTID]`. Because `lxc-stop` won't setup proper device files for kvm host.
+
 ```
-$ sudo lxc-stop -n [CTID]
+$ sudo ./lxc-stop.sh [CTID]
 ```
 
 #### Start the container
