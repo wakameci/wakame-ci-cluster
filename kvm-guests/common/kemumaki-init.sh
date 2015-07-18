@@ -12,20 +12,72 @@ mnt_path=${mnt_path:-mnt}
 mnt_path=${mnt_path%/}
 raw=${raw:-$(pwd)/box-disk1.raw}
 
-kpartx_output=
+losetup_output=
+
+function rawpart() {
+  local raw="${1:-""}"
+  : ${raw:?"should not be empty"}
+
+  if ! [[ "${UID}" == 0 ]]; then
+    echo "Must run as root">&2
+    return 1
+  fi
+
+  if ! [[ -f "${raw}" ]]; then
+    echo "file not found: ${raw}" >&2
+    return 1
+  fi
+
+  local output="$(losetup --associated "${raw}")"
+  if [[ -n "${output}" ]]; then
+    echo "${output}"
+    return 0
+  fi
+
+  local loopdev="$(losetup --find --show "${raw}")"
+  : ${loopdev:?"should not be empty"}
+
+  local line="$(
+   sfdisk -d "${loopdev}" \
+    | egrep "^/dev/loop" \
+    | awk -F: '{print $2}' \
+    | sed 's, ,,g' \
+    | awk -F, '{print $1,$2}' \
+    | sed 's,=, ,g' \
+    | awk '{print $2,$4}'
+  )"
+
+  if ! [[ -n "${line}" ]]; then
+    echo "no partition" >&2
+    return 0
+  fi
+
+  local i=1
+  local size= start=
+  while read line; do
+    size="${line##* }"
+    start="${line%% *}"
+
+    dmsetup create "$(basename "${loopdev}")p${i}" --table "0 ${size} linear ${loopdev} ${start}"
+    i=$((${i} + 1))
+  done <<< "${line}"
+
+  udevadm settle
+  losetup --associated "${raw}"
+}
 
 function attach_raw() {
   local raw_path=$1
 
-  kpartx_output="$(kpartx -va ${raw_path})"
+  losetup_output="$(rawpart "${raw}")"
   udevadm settle
 }
 
 function mount_raw() {
   local raw_path=$1 mnt_path=$2
 
-  loopdev_root=$(echo "${kpartx_output}" | awk '{print $3}' | sed -n 1,1p) # loopXp1 should be "root".
-  loopdev_swap=$(echo "${kpartx_output}" | awk '{print $3}' | sed -n 2,2p) # loopXp2 should be "swap".
+  loopdev_root=$(echo "${losetup_output}" | awk -F: '{print $1}' | sed -n 1,1p | sed 's,^/dev/,,; s,$,p1,') # loopXp1 should be "root".
+  loopdev_swap=$(echo "${losetup_output}" | awk -F: '{print $1}' | sed -n 2,2p | sed 's,^/dev/,,; s,$,p2,') # loopXp2 should be "swap".
   [[ -n "${loopdev_root}" ]]
 
   local devpath=/dev/mapper/${loopdev_root}
@@ -55,8 +107,6 @@ function umount_raw() {
 # remove DM and loop devices associated with the raw image.
 function detach_raw() {
   local raw_path=$1
-
-  kpartx -vd ${raw_path}
 
   local loop_path=
   for loop_path in $(losetup --associated ${raw_path} | awk -F\: '{print $1}'); do
