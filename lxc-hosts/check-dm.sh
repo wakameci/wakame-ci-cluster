@@ -98,9 +98,6 @@ umount mnt
 rmdir mnt
 
 # 4
-kpartx -vd "${raw}"
-
-# 5
 # remove DM and loop devices associated with the raw image.
 function detach_raw() {
   local raw_path="${1}"
@@ -122,5 +119,5 @@ function detach_raw() {
 
 detach_raw "${raw}"
 
-# 6
+# 5
 rm -f "${raw}"
