@@ -56,7 +56,7 @@ function download_file() {
   local majorver=${versions[0]}
   # -> 7
 
-  curl -fSkLR --retry 3 --retry-delay 3 http://dlc.wakame.axsh.jp/wakameci/kemumaki-box-rhel${majorver}/current/${filename} -o ${filename}.tmp
+  curl -fSkLR --retry 3 --retry-delay 3 http://dlc2.wakame.axsh.jp/wakameci/kemumaki-box-rhel${majorver}/current/${filename} -o ${filename}.tmp
   mv ${filename}.tmp ${filename}
 }
 
