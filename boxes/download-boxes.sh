@@ -15,13 +15,16 @@ boxes="
     kemumaki-6.4-x86_64.kvm.box
     kemumaki-6.5-x86_64.kvm.box
     kemumaki-6.6-x86_64.kvm.box
- lxckemumaki-6.6-x86_64.kvm.box
-  vzkemumaki-6.6-x86_64.kvm.box
+    kemumaki-6.7-x86_64.kvm.box
+ lxckemumaki-6.7-x86_64.kvm.box
+  vzkemumaki-6.7-x86_64.kvm.box
      minimal-6.3-x86_64.kvm.box
      minimal-6.4-x86_64.kvm.box
      minimal-6.5-x86_64.kvm.box
      minimal-6.6-x86_64.kvm.box
+     minimal-6.7-x86_64.kvm.box
    kagechiyo-6.6-x86_64.kvm.box
+   kagechiyo-6.7-x86_64.kvm.box
 
     kemumaki-7.0.1406-x86_64.kvm.box
     kemumaki-7.1.1503-x86_64.kvm.box
