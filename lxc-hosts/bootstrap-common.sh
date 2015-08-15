@@ -88,6 +88,17 @@ lxc.cgroup.devices.allow = c 10:236 rwm
 lxc.cgroup.devices.allow = b 252:* rwm
 # dm-X control/loopXpX
 lxc.cgroup.devices.allow = b 253:* rwm
+
+# vbox
+## 10, 55 /dev/vboxnetctl
+## 10, 56 /dev/vboxdrvu
+## 10, 57 /dev/vboxdrv
+lxc.cgroup.devices.allow = c 10:55 rwm
+lxc.cgroup.devices.allow = c 10:56 rwm
+lxc.cgroup.devices.allow = c 10:57 rwm
+
+# CAP_SYS_MODULE: load/unload module
+lxc.cap.drop = sys_module
 EOS
 }
 
