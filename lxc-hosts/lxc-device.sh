@@ -27,7 +27,16 @@ lxc-attach -n ${ctid} -- bash -ex <<-EOS
   [[ -c /dev/net/tun ]] || {
     mkdir -p     /dev/net
     mknod -m 666 /dev/net/tun c 10 200
-   }
+  }
+  [[ -c /dev/vboxnetctl ]] || {
+    mknod -m 666 /dev/vboxnetctl c 10 55
+  }
+  [[ -c /dev/vboxdrvu ]] || {
+    mknod -m 666 /dev/vboxdrvu   c 10 56
+  }
+  [[ -c /dev/vboxdrv ]] || {
+    mknod -m 666 /dev/vboxdrv    c 10 57
+  }
 EOS
 
 # > PTY allocation request failed on channel 0
