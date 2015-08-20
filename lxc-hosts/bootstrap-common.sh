@@ -17,7 +17,7 @@ function render_lxc_conf() {
 
   cat <<EOS
 lxc.utsname = ${hostname}
-lxc.tty = 6
+#lxc.tty = 6
 #lxc.pts = 1024
 lxc.network.type = veth
 lxc.network.flags = up
