@@ -18,6 +18,12 @@ if [[ -z "${ctid}" ]]; then
   exit 1
 fi
 
+### /etc/mtab
+
+lxc-attach -n ${ctid} -- bash -ex <<-EOS
+  [[ -L /etc/mtab ]] || ln -fs /proc/mounts /etc/mtab
+EOS
+
 ### add device
 
 lxc-attach -n ${ctid} -- bash -ex <<-EOS
