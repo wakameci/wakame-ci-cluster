@@ -120,6 +120,10 @@ EOS
 # yum install --disablerepo=updates -y ${addpkg}
 dnf install -y ${addpkg}
 
+# dnf: AttributeError: 'NoneType' object has no attribute 'encode'
+# - https://bugzilla.redhat.com/show_bug.cgi?id=1246928
+dnf update --enablerepo=updates -y dnf
+
 # selinux
 if [[ -f /etc/selinux/config ]]; then
   sed -i s,SELINUX=enforcing,SELINUX=disabled, /etc/selinux/config
