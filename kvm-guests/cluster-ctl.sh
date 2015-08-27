@@ -19,7 +19,12 @@ case "${1}" in
 
     for node in $(nodes); do
       [[ -d "${node}" ]] || continue
-      (cd ${node} && time sudo ./${1}.sh)
+      (
+        cd ${node}
+        if [[ -x ./${1}.sh ]]; then
+          time sudo ./${1}.sh
+        fi
+      )
     done
     ;;
   *)
