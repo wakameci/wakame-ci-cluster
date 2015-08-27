@@ -12,7 +12,7 @@ function nodes() {
 }
 
 case "${1}" in
-  replace | soft-replace | run | suspend | resume | stop )
+  replace | soft-replace | run | suspend | resume | stop | kill )
     if [[ -f .cluster.sh ]]; then
       . .cluster.sh
     fi
