@@ -5,6 +5,7 @@
 #
 set -e
 set -o pipefail
+set -x
 
 [[ $UID == 0 ]]
 [[ -f box-disk1.raw ]]

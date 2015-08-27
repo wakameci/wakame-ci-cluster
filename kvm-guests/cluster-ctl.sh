@@ -12,14 +12,19 @@ function nodes() {
 }
 
 case "${1}" in
-  replace | soft-replace | run | suspend | resume | stop )
+  replace | soft-replace | run | suspend | resume | stop | kill )
     if [[ -f .cluster.sh ]]; then
       . .cluster.sh
     fi
 
     for node in $(nodes); do
       [[ -d "${node}" ]] || continue
-      (cd ${node} && time sudo ./${1}.sh)
+      (
+        cd ${node}
+        if [[ -x ./${1}.sh ]]; then
+          time sudo ./${1}.sh
+        fi
+      )
     done
     ;;
   *)
