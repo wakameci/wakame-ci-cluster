@@ -10,6 +10,5 @@ set -x
 sudo /bin/bash -e <<EOS
   ../common/stop.sh
   ../common/qcow2-init.sh
-  time sync
   ../common/run.sh
 EOS

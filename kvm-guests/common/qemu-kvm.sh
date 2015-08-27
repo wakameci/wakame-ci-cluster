@@ -65,7 +65,6 @@ function shutdown_remove_pidfile() {
   fi
 
   rm -f ${pidfile}
-  sync
 }
 
 #
